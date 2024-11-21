@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.todo;
+package com.busanit501.helloworld.todo.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
