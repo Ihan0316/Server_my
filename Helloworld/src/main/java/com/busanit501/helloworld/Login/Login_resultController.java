@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "Login_resultController", urlPatterns = "/login/result")
 public class Login_resultController extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
