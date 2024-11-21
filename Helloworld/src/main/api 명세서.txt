@@ -1,0 +1,5 @@
+미니 프로젝트, api 명세서 작성 해보기.
+번호  기능      컨트롤러             url 주소       동작방식     뷰
+1 목록(전체)      BookListController   /book/booklist     get     /WEB-INF/book/bookList.jsp
+2   등록(폼)  BookRegController     /book/bookregister    get     /WEB-INF/book/bookReg.jsp
+3   등록(처리)  BookRegController   /book/bookregister    post    리다이렉트(리스트화면)
