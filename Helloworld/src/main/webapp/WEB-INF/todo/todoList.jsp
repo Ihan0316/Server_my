@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+// JSTL 사용 준비단계
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Todo List</title>
@@ -22,5 +24,14 @@
     ${list[0].title}
   <h3>list 전체 호출</h3>
     ${list}
+
+  <h2>JSTL 연습장</h2>
+<h3>반복문 forEach 이용, var = 변수명, items = "데이터 목록"</h3>
+<ul>
+  <c:forEach var="dto" items="${items}">
+    <li>${dto}</li>
+  </c:forEach>
+</ul>
+
 </body>
 </html>
