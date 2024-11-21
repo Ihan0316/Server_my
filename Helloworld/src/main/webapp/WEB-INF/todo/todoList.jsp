@@ -67,6 +67,11 @@
   </ul>
 
 <h3>변수 사용하기</h3>
-  <c:set var="todoDTO" value="${list[0]}"></c:set>
+  <c:set var="todoDTO" value="${list[0]}"/>
+    <c:forEach var="dto" items="${list}">
+      <c:if test="${dto.tno == todoDTO.tno}">
+        ${dto}
+      </c:if>
+    </c:forEach>
 </body>
 </html>
