@@ -14,11 +14,11 @@ import java.io.IOException;
 public class BookReadController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("doGet BookReadController 하나 조회 예시");
+        System.out.println("doGet TodoReadController 하나 조회 예시");
         // 클릭한 게시글 번호를 가지고 와야함
         Long tno = Long.parseLong(request.getParameter("tno"));
 
-        // 서비스에서 Book 더미 데이터를 조회 후,
+        // 서비스에서 todo 더미 데이터를 조회 후,
         BookDTO bookDTO = BookService.INSTANCE.getOne(tno);
 
         // 화면에 전달하기
