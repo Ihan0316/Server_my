@@ -13,5 +13,7 @@
 <body>
   <h1>Todo List 목록화면</h1>
     <a href="/todo/register">글쓰기 폼 이동</a>
+<h2>더미 데이터 단순 출력</h2>
+${list}
 </body>
 </html>

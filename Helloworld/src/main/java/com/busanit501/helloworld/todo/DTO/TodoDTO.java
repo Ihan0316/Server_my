@@ -1,49 +1,56 @@
 package com.busanit501.helloworld.todo.DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class TodoDTO {
     private Long tno;
     private String title;
-    private Date dueDate;
+    private LocalDate dueDate;
     private boolean finished;
-    
-    // getter, setter, tostring 재정의
-    // getter
+
+    // 게터/세터/toString, 재정의.
+    // 자바, 소스 -> 반자동으로 -> 롬복 라이브러리 사용법,
+
     public Long getTno() {
+
         return tno;
     }
 
     public String getTitle() {
+
         return title;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
+
         return dueDate;
     }
 
     public boolean isFinished() {
+
         return finished;
     }
 
     public void setTno(Long tno) {
+
         this.tno = tno;
     }
 
-    // setter
     public void setTitle(String title) {
+
         this.title = title;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
+
         this.dueDate = dueDate;
     }
 
     public void setFinished(boolean finished) {
+
         this.finished = finished;
     }
 
-    //toString
     @Override
     public String toString() {
         return "TodoDTO{" +
@@ -53,4 +60,5 @@ public class TodoDTO {
                 ", finished=" + finished +
                 '}';
     }
+
 }
