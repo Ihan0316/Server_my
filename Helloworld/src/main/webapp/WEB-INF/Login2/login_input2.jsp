@@ -11,7 +11,7 @@
     <title>Login_input</title>
 </head>
 <body>
-<%--<form method="POST" action="login_result.jsp">--%>
+<%--<form method="POST" action="login_result2.jsp">--%>
 <form method="POST" action="/login/result2">
     <h4>LOGIN 화면 접근을 서블릿으로 해보기 미니실습222</h4>
     <label>

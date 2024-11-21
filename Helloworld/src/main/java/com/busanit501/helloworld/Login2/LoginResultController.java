@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 public class LoginResultController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("doPost,LoginResultController 서블릿을 경유해서 로직 처리");
         String username2 = request.getParameter("username2");
         String password2 = request.getParameter("password2");
 

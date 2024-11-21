@@ -14,7 +14,7 @@ public class Login_inputController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doGet 호출");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Login/login_input.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Login/login_input.jsp");
         dispatcher.forward(request, response);
     }
 }
