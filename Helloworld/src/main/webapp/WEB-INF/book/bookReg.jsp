@@ -15,6 +15,6 @@
 <form action= "/book/bookregister" method="post">
   <button type="submit">추가</button>
 </form>
-
+<a href="/">메인화면</a>
 </body>
 </html>

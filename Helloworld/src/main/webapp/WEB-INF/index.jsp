@@ -12,5 +12,6 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a href="/login/input2">Login</a>
+<a href="/book/booklist">BookList</a>
 </body>
 </html>
