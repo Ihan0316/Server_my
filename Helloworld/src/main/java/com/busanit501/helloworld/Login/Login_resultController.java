@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "Login_resultController2", urlPatterns = "/login/result2")
+@WebServlet(name = "Login_resultController", urlPatterns = "/login/result")
 public class Login_resultController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username2");
-        String password = request.getParameter("password2");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
