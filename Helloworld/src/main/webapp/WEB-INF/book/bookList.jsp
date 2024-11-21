@@ -11,7 +11,7 @@
     <title>Book List</title>
 </head>
 <body>
-<h1>Book List</h1>
-<a href="/book/register">책 추가 이동</a>
+<h1>Book List 화면</h1>
+<a href="/book/bookregister">책 추가 이동</a>
 </body>
 </html>

@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Book의 책추가 폼 화면</h1>
-<form action= "/book/register" method="post">
+<form action= "/book/bookregister" method="post">
   <button type="submit">추가</button>
 </form>
 
