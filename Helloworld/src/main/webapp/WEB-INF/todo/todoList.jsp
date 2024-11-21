@@ -67,6 +67,6 @@
   </ul>
 
 <h3>변수 사용하기</h3>
-  <c:set var="변수명" value="변수에 담을 값"></c:set>
+  <c:set var="todoDTO" value="${list[0]}"></c:set>
 </body>
 </html>
