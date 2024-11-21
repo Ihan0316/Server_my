@@ -3,3 +3,4 @@
 1 목록(전체)      BookListController   /book/booklist     get     /WEB-INF/book/bookList.jsp
 2   등록(폼)  BookRegController     /book/bookregister    get     /WEB-INF/book/bookReg.jsp
 3   등록(처리)  BookRegController   /book/bookregister    post    리다이렉트(리스트화면)
+4 조회(한개)    BookReadController   /book/bookread       get     /WEB-INF/book/bookRead.jsp
