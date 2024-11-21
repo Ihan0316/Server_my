@@ -53,7 +53,7 @@ public class BookDTO {
 
     @Override
     public String toString() {
-        return "TodoDTO{" +
+        return "BookDTO{" +
                 "tno=" + tno +
                 ", title='" + title + '\'' +
                 ", dueDate=" + dueDate +
