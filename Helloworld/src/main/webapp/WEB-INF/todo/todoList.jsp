@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-// JSTL 사용 준비단계
+<%--JSTL 사용 준비단계--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -26,12 +26,47 @@
     ${list}
 
   <h2>JSTL 연습장</h2>
-<h3>반복문 forEach 이용, var = 변수명, items = "데이터 목록"</h3>
-<ul>
-  <c:forEach var="dto" items="${items}">
-    <li>${dto}</li>
-  </c:forEach>
-</ul>
+  <h3>반복문 forEach 이용, var = 변수명, items = "데이터 목록"</h3>
+  <ul>
+    <c:forEach var="dto" items="${list}">
+      <li>${dto}</li>
+    </c:forEach>
+  </ul>
 
+  <h3>반복문 forEach 이용, var = 변수명, items = "데이터 목록", begin, end 이용 해보기</h3>
+  <ul>
+    <c:forEach var="dto" items="${list}" begin="1" end="5">
+      <li>${dto}</li>
+    </c:forEach>
+  </ul>
+
+  <h3> if, choose 조건문 확인 해보기</h3>
+  <ul>
+    <c:forEach var="dto" items="${list}">
+      <c:if test="${dto.tno % 2 == 0} ">
+        <li>짝수, ${dto}</li>
+      </c:if>
+      <c:if test="${dto.tno % 2 != 0}">
+        <li>홀수, ${dto}</li>
+      </c:if>
+    </c:forEach>
+  </ul>
+
+<h3>choose 사용해서 if와 else 효과</h3>
+  <ul>
+    <c:forEach var="dto" items="${list}">
+      <c:choose>
+        <c:when test="${dto.tno % 2 == 0}">
+          <li> 짝수 , ${dto}</li>
+        </c:when>
+        <c:otherwise>
+          <li>홀수, ${dto}</li>
+        </c:otherwise>
+      </c:choose>
+    </c:forEach>
+  </ul>
+
+<h3>변수 사용하기</h3>
+  <c:set var="변수명" value="변수에 담을 값"></c:set>
 </body>
 </html>
