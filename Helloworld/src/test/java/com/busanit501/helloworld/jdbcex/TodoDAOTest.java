@@ -1,10 +1,12 @@
 package com.busanit501.helloworld.jdbcex;
 
 import com.busanit501.helloworld.JDBCex.dao.TodoDAO;
+import com.busanit501.helloworld.JDBCex.dto.TodoVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class TodoDAOTest {
     private TodoDAO todoDAO;
@@ -23,5 +25,17 @@ public class TodoDAOTest {
     @Test
     public void getTime2() throws SQLException {
         System.out.println("sql 전달 후, 시간 조회 확인용 자동 반납 @Cleanup: "+todoDAO.getTime2());
+    }
+
+    @Test
+    public void insertTest() throws Exception{
+        // 화면에서 데이터를 입력 받아와서, 모델에 담고, 모델에서 꺼네지만, 더미 데이터 사용
+        // 기본 인스턴스 사용방법
+//        TodoVO todoVO = new TodoVO();
+//        todoVO.setTitle("오늘 점심 뭐드셨나여");
+//        todoVO.setDueDate(LocalDate.of(2024, 12, 31));
+        // Builder 패턴으로 인스턴스 만드는 방법
+        TodoVO todoVO1 = TodoVO.builder().title("샘플 디비 작성 테스트").dueDate(LocalDate.of(2024, 12, 31)).build();
+        todoDAO.insert(todoVO1);
     }
 }
