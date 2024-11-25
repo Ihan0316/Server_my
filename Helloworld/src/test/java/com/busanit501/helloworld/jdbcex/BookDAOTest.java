@@ -23,8 +23,8 @@ public class BookDAOTest {
     // DB에 데이터 추가
     @Test
     public void insertTest() throws Exception{
-        BookVO bookVO1 = BookVO.builder().title("책1").dueDate(LocalDate.now()).build();
-        bookDAO.insert(bookVO1);
+        BookVO bookVO1 = BookVO.builder().title("책1").dueDate(LocalDate.now()).bno(2L).build();
+        bookDAO.insertBook(bookVO1);
     }
 
     // 전체 조회 테스트
@@ -45,7 +45,7 @@ public class BookDAOTest {
     // 하나 삭제 테스트
     @Test
     public void deleteTest() throws SQLException {
-        Long bno = 1L;
+        Long bno = 2L;
         bookDAO.deleteBook(bno);
     }
 
