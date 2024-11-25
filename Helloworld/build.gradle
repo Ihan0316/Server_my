@@ -50,6 +50,11 @@ dependencies {
     //HikariCP 설치
     // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '6.2.1'
+
+    // 6
+    // modelmapper 설치 (DTO -> VO로 변환)
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
 }
 
 test {
