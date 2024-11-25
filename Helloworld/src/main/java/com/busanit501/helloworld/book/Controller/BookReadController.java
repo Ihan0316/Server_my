@@ -1,7 +1,7 @@
-package com.busanit501.helloworld.todo.controller;
+package com.busanit501.helloworld.book.Controller;
 
-import com.busanit501.helloworld.todo.dto.TodoDTO;
-import com.busanit501.helloworld.todo.service.TodoService;
+import com.busanit501.helloworld.book.DTO.BookDTO;
+import com.busanit501.helloworld.book.Service.BookService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "TodoReadController", urlPatterns = "/todo/read")
-public class TodoReadController extends HttpServlet {
+@WebServlet(name = "BookReadController", urlPatterns = "/book/read")
+public class BookReadController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("doGet TodoReadController 하나 조회 예시");
@@ -19,10 +19,10 @@ public class TodoReadController extends HttpServlet {
         Long tno = Long.parseLong(request.getParameter("tno"));
 
         // 서비스에서 todo 더미 데이터를 조회 후,
-        TodoDTO todoDTO = TodoService.INSTANCE.getOne(tno);
+        BookDTO bookDTO = BookService.INSTANCE.getOne(tno);
 
         // 화면에 전달하기
-        request.setAttribute("dto", todoDTO);
-        request.getRequestDispatcher("/WEB-INF/todo/todoRead.jsp").forward(request, response);
+        request.setAttribute("dto", bookDTO);
+        request.getRequestDispatcher("/WEB-INF/book/bookRead.jsp").forward(request, response);
     }
 }

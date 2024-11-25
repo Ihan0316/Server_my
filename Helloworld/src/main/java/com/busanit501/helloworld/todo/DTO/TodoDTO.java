@@ -1,8 +1,8 @@
-package com.busanit501.helloworld.book.dto;
+package com.busanit501.helloworld.todo.DTO;
 
 import java.time.LocalDate;
 
-public class BookDTO {
+public class TodoDTO {
     private Long tno;
     private String title;
     private LocalDate dueDate;
@@ -53,7 +53,7 @@ public class BookDTO {
 
     @Override
     public String toString() {
-        return "BookDTO{" +
+        return "TodoDTO{" +
                 "tno=" + tno +
                 ", title='" + title + '\'' +
                 ", dueDate=" + dueDate +

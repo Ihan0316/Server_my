@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.book.controller;
+package com.busanit501.helloworld.book.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
