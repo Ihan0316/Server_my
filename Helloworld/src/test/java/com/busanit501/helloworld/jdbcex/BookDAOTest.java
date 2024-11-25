@@ -1,6 +1,5 @@
 package com.busanit501.helloworld.jdbcex;
 
-import com.busanit501.helloworld.JDBCex.dto.TodoVO;
 import com.busanit501.helloworld.book.DAO.BookDAO;
 import com.busanit501.helloworld.book.VO.BookVO;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ public class BookDAOTest {
     // 하나조회 테스트
     @Test
     public void getOneTest() throws SQLException {
-        Long bno = 2L;
+        Long bno = 3L;
         BookVO bookVO = bookDAO.selectOne(bno);
         System.out.println(bookVO);
     }
