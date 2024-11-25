@@ -1,7 +1,6 @@
 package com.busanit501.helloworld.book.DAO;
 
 import com.busanit501.helloworld.JDBCex.dao.ConnectionUtil;
-import com.busanit501.helloworld.JDBCex.vo.TodoVO;
 import com.busanit501.helloworld.book.VO.BookVO;
 import lombok.Cleanup;
 
@@ -61,7 +60,7 @@ public class BookDAO {
 
     // 4. 수정 update
     public void updateBook(BookVO bookVO) throws SQLException {
-        String sql = " update book_list set title=?, dueDate=?, finished=?" +
+        String sql = "update book_list set title=?, dueDate=?, finished=?" +
                 " where bno=?";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
