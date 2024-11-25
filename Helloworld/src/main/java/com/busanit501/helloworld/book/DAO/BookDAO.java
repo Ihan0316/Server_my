@@ -26,7 +26,6 @@ public class BookDAO {
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
         @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
-        // 넘어온 데이터를 임시로 보관할 리스트 인스턴스 만들고, 반복문 통해서 넘어온 각 행을 리스트에 요소로 하나씩 담기
         List<BookVO> list = new ArrayList<>();
         while (resultSet.next()) {
             BookVO bookVO = BookVO.builder()

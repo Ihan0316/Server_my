@@ -19,12 +19,14 @@ public class BookDAOTest {
         bookDAO = new BookDAO();
     }
 
+    // DB에 데이터 추가
     @Test
     public void insertTest() throws Exception{
         BookVO bookVO1 = BookVO.builder().title("책1").dueDate(LocalDate.of(2024, 12, 31)).build();
         bookDAO.insert(bookVO1);
     }
 
+    // 전체 조회 테스트
     @Test
     public void testList() throws SQLException {
         List<BookVO> list = bookDAO.selectAllBook();
@@ -34,8 +36,8 @@ public class BookDAOTest {
     // 하나조회 테스트
     @Test
     public void getOneTest() throws SQLException {
-        Long tno = 3L;
-        BookVO bookVO = bookDAO.selectOne(tno);
+        Long bno = 2L;
+        BookVO bookVO = bookDAO.selectOne(bno);
         System.out.println(bookVO);
     }
 }
