@@ -23,7 +23,8 @@ public class BookDAOTest {
     // DB에 데이터 추가
     @Test
     public void insertTest() throws Exception{
-        BookVO bookVO1 = BookVO.builder().title("책1").dueDate(LocalDate.now()).bno(2L).build();
+        Long bno = 2L;
+        BookVO bookVO1 = BookVO.builder().title("책1").dueDate(LocalDate.now()).bno(bno).build();
         bookDAO.insertBook(bookVO1);
     }
 
