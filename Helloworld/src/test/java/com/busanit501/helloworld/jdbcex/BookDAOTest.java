@@ -1,10 +1,12 @@
 package com.busanit501.helloworld.jdbcex;
 
+import com.busanit501.helloworld.JDBCex.vo.TodoVO;
 import com.busanit501.helloworld.book.DAO.BookDAO;
 import com.busanit501.helloworld.book.VO.BookVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.print.Book;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -32,11 +34,30 @@ public class BookDAOTest {
         list.forEach(vo -> System.out.println(vo));
     }
 
-    // 하나조회 테스트
+    // 하나 조회 테스트
     @Test
     public void getOneTest() throws SQLException {
         Long bno = 3L;
         BookVO bookVO = bookDAO.selectOne(bno);
         System.out.println(bookVO);
+    }
+
+    // 하나 삭제 테스트
+    @Test
+    public void deleteTest() throws SQLException {
+        Long bno = 3L;
+        bookDAO.deleteBook(bno);
+    }
+
+    // 수정 테스트
+    @Test
+    public void updateTest() throws SQLException {
+        BookVO bookVO = BookVO.builder()
+                .bno(3L)
+                .title("수정 테스트 중")
+                .finished(true)
+                .dueDate(LocalDate.of(2024, 11, 25))
+                .build();
+        bookDAO.updateBook(bookVO);
     }
 }

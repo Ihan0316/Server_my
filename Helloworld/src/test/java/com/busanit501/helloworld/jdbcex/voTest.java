@@ -1,6 +1,5 @@
 package com.busanit501.helloworld.jdbcex;
 
-import com.busanit501.helloworld.JDBCex.dto.TodoVO;
 import org.junit.jupiter.api.Test;
 
 public class voTest {

@@ -1,6 +1,6 @@
 package com.busanit501.helloworld.JDBCex.dao;
 
-import com.busanit501.helloworld.JDBCex.dto.TodoVO;
+import com.busanit501.helloworld.JDBCex.vo.TodoVO;
 import lombok.Cleanup;
 
 import java.sql.*;
@@ -60,6 +60,28 @@ public class TodoDAO {
                 .finished(resultSet.getBoolean("finished"))
                 .build();
         return todoVO;
+    }
+
+    // 수정 update
+    public void updateOne(TodoVO todoVO) throws SQLException {
+        String sql = " update tbl_todo set title=?, dueDate=?, finished=?" +
+                " where tno=?";
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, todoVO.getTitle());
+        preparedStatement.setDate(2, Date.valueOf(todoVO.getDueDate()));
+        preparedStatement.setBoolean(3,todoVO.isFinished());
+        preparedStatement.setLong(4,todoVO.getTno());
+        preparedStatement.executeUpdate();
+    }
+
+    // 삭제 delete
+    public void deleteTodo(Long tno) throws SQLException {
+        String sql = "delete from tbl_todo where tno =?";
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setLong(1, tno);
+        preparedStatement.executeUpdate();
     }
 
     /// ////////////////////////////////////////

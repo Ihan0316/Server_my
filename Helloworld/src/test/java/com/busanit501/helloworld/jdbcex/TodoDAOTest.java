@@ -1,7 +1,7 @@
 package com.busanit501.helloworld.jdbcex;
 
 import com.busanit501.helloworld.JDBCex.dao.TodoDAO;
-import com.busanit501.helloworld.JDBCex.dto.TodoVO;
+import com.busanit501.helloworld.JDBCex.vo.TodoVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -54,4 +54,26 @@ public class TodoDAOTest {
         TodoVO todoVO = todoDAO.selectOne(tno);
         System.out.println(todoVO);
     }
+
+    // 하나 삭제 테스트
+    @Test
+    public void deleteTest() throws SQLException {
+        Long tno = 3L;
+        todoDAO.deleteTodo(tno);
+    }
+
+    // 수정 테스트
+    @Test
+    public void updateTest() throws SQLException {
+        // 실제 작업은 내용을 화면에서 받아오는 대신,
+        // 하드 코딩으로 값을 더미로 테스트.
+        TodoVO todoVO = TodoVO.builder()
+                .tno(3L)
+                .title("수정 테스트 중")
+                .finished(true)
+                .dueDate(LocalDate.of(2024, 11, 25))
+                .build();
+        todoDAO.updateOne(todoVO);
+    }
+
 }
