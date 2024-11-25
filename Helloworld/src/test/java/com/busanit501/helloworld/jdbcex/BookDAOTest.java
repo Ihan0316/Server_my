@@ -51,8 +51,9 @@ public class BookDAOTest {
     // 수정 테스트
     @Test
     public void updateTest() throws SQLException {
+        Long bno = 3L;
         BookVO bookVO = BookVO.builder()
-                .bno(3L)
+                .bno(bno)
                 .title("수정 테스트 중")
                 .finished(true)
                 .dueDate(LocalDate.of(2024, 11, 25))
