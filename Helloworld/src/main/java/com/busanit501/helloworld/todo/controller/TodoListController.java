@@ -1,7 +1,7 @@
-package com.busanit501.helloworld.todo.Controller;
+package com.busanit501.helloworld.todo.controller;
 
-import com.busanit501.helloworld.todo.DTO.TodoDTO;
-import com.busanit501.helloworld.todo.Service.TodoService;
+import com.busanit501.helloworld.todo.dto.TodoDTO;
+import com.busanit501.helloworld.todo.service.TodoService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

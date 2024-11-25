@@ -1,6 +1,6 @@
-package com.busanit501.helloworld.book.Service;
+package com.busanit501.helloworld.book.service;
 
-import com.busanit501.helloworld.book.DTO.BookDTO;
+import com.busanit501.helloworld.book.dto.BookDTO;
 
 import java.time.LocalDate;
 

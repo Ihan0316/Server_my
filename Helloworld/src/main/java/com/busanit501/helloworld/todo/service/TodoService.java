@@ -1,9 +1,8 @@
-package com.busanit501.helloworld.todo.Service;
+package com.busanit501.helloworld.todo.service;
 
-import com.busanit501.helloworld.todo.DTO.TodoDTO;
+import com.busanit501.helloworld.todo.dto.TodoDTO;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
