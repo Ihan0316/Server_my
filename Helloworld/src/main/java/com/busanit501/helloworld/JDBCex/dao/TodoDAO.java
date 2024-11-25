@@ -4,6 +4,8 @@ import com.busanit501.helloworld.JDBCex.dto.TodoVO;
 import lombok.Cleanup;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TodoDAO {
 
@@ -23,6 +25,44 @@ public class TodoDAO {
         preparedStatement.executeUpdate();
     } // insert
 
+    // 2. select DB에서 전체 조회
+    public List<TodoVO> selectALL() throws SQLException {
+        String sql = "select * from tbl_todo";
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+        // 넘어온 데이터를 임시로 보관할 리스트 인스턴스 만들고, 반복문 통해서 넘어온 각 행을 리스트에 요소로 하나씩 담기
+        List<TodoVO> list = new ArrayList<>();
+        while (resultSet.next()) {
+            TodoVO todoVO = TodoVO.builder()
+                    .tno(resultSet.getLong("tno"))
+                    .title(resultSet.getString("title"))
+                    .dueDate(resultSet.getDate("dueDate").toLocalDate())
+                    .finished(resultSet.getBoolean("finished"))
+                    .build();
+            list.add(todoVO);
+        }
+        return list;
+    }// select
+
+    // 3. 하나 조회하기
+    public TodoVO selectOne(Long tno) throws SQLException {
+        String sql = "select * from tbl_todo where tno = ?";
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setLong(1, tno);
+        @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        TodoVO todoVO = TodoVO.builder()
+                .tno(resultSet.getLong("tno"))
+                .title(resultSet.getString("title"))
+                .dueDate(resultSet.getDate("dueDate").toLocalDate())
+                .finished(resultSet.getBoolean("finished"))
+                .build();
+        return todoVO;
+    }
+
+    /// ////////////////////////////////////////
     public String getTime() {
         String now = null;
         // hikariCP 이용해서,

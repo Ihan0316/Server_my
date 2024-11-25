@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class TodoDAOTest {
     private TodoDAO todoDAO;
@@ -37,5 +38,20 @@ public class TodoDAOTest {
         // Builder 패턴으로 인스턴스 만드는 방법
         TodoVO todoVO1 = TodoVO.builder().title("샘플 디비 작성 테스트").dueDate(LocalDate.of(2024, 12, 31)).build();
         todoDAO.insert(todoVO1);
+    }
+
+    // 전체 목록 조회 테스트
+    @Test
+    public void testList() throws SQLException {
+        List<TodoVO> list = todoDAO.selectALL();
+        list.forEach(vo -> System.out.println(vo));
+    }
+
+    // 하나조회 테스트
+    @Test
+    public void getOneTest() throws SQLException {
+        Long tno = 3L;
+        TodoVO todoVO = todoDAO.selectOne(tno);
+        System.out.println(todoVO);
     }
 }

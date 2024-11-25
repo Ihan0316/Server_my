@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.book.DTO;
+package com.busanit501.helloworld.book.VO;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class BookVO {
-    private Long tno;
+    private Long bno;
     private String title;
     private LocalDate dueDate;
     private boolean finished;
