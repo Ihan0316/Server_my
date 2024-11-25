@@ -11,8 +11,8 @@
     <title>Book Read</title>
 </head>
 <body>
-  <h1>tno 번호로 하나 조회하는 화면, 상세보기와 같음</h1>
-  tno : ${dto.tno}
+  <h1>fno 번호로 하나 조회하는 화면, 상세보기와 같음</h1>
+  fno : ${dto.fno}
   title : ${dto.title}
   dueDate : ${dto.dueDate}
 </body>

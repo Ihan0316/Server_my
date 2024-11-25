@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 
 public class BookDTO {
-    private Long tno;
+    private Long fno;
     private String title;
     private LocalDate dueDate;
     private boolean finished;
@@ -12,9 +12,9 @@ public class BookDTO {
     // 게터/세터/toString, 재정의.
     // 자바, 소스 -> 반자동으로 -> 롬복 라이브러리 사용법,
 
-    public Long getTno() {
+    public Long getFno() {
 
-        return tno;
+        return fno;
     }
 
     public String getTitle() {
@@ -32,9 +32,9 @@ public class BookDTO {
         return finished;
     }
 
-    public void setTno(Long tno) {
+    public void setFno(Long fno) {
 
-        this.tno = tno;
+        this.fno = fno;
     }
 
     public void setTitle(String title) {
@@ -55,7 +55,7 @@ public class BookDTO {
     @Override
     public String toString() {
         return "BookDTO{" +
-                "tno=" + tno +
+                "fno=" + fno +
                 ", title='" + title + '\'' +
                 ", dueDate=" + dueDate +
                 ", finished=" + finished +

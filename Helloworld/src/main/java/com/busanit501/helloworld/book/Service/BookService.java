@@ -14,7 +14,7 @@ public enum BookService {
         // 실제로는 DB에서 받아와야함.
         // 더미 데이터 이용
         BookDTO bookDTO = new BookDTO();
-        bookDTO.setTno(5L);
+        bookDTO.setFno(5L);
         bookDTO.setTitle("하나 조회 더미 데이터");
         bookDTO.setDueDate(LocalDate.now());
         return bookDTO;
@@ -25,7 +25,7 @@ public enum BookService {
                     // 10 반복 해서, 더미 인스턴스 10개 생성,
                     BookDTO bookDTO = new BookDTO();
                     bookDTO.setTitle("테스트AA " + i);
-                    bookDTO.setTno((long) i);
+                    bookDTO.setFno((long) i);
                     bookDTO.setDueDate(LocalDate.now());
                     return  bookDTO;
                 }).collect(Collectors.toList());
