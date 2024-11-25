@@ -45,7 +45,7 @@ public class BookDAOTest {
     // 하나 삭제 테스트
     @Test
     public void deleteTest() throws SQLException {
-        Long bno = 3L;
+        Long bno = 1L;
         bookDAO.deleteBook(bno);
     }
 
