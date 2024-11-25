@@ -1,11 +1,10 @@
 package com.busanit501.helloworld.jdbcex;
 
-import com.busanit501.helloworld.JDBCex.dao.BookDAO;
-import com.busanit501.helloworld.JDBCex.dto.BookVO;
+import com.busanit501.helloworld.book.DAO.BookDAO;
+import com.busanit501.helloworld.book.DTO.BookVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class BookDAOTest {

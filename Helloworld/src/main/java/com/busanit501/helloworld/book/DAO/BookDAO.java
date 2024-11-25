@@ -1,6 +1,7 @@
-package com.busanit501.helloworld.JDBCex.dao;
+package com.busanit501.helloworld.book.DAO;
 
-import com.busanit501.helloworld.JDBCex.dto.BookVO;
+import com.busanit501.helloworld.JDBCex.dao.ConnectionUtil;
+import com.busanit501.helloworld.book.DTO.BookVO;
 import lombok.Cleanup;
 
 import java.sql.*;
@@ -8,7 +9,6 @@ import java.sql.*;
 public class BookDAO {
 
     public void insert(BookVO bookVO) throws SQLException {
-
         String sql = "insert into book_list(title, dueDate, finished)" + "values(?,?,?)";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);

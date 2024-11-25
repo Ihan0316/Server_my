@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.JDBCex.dto;
+package com.busanit501.helloworld.book.DTO;
 
 import lombok.Builder;
 import lombok.Data;

@@ -17,5 +17,15 @@
 
 <h2>Book List 하나 조회 더미</h2>
 <a href="/book/read?tno=5">하나 조회</a>
+
+<h2>더미 데이터 단순 출력</h2>
+<h3>list 중에서 list[0]</h3>
+${list[0]}
+<h3>list 중에서 list[0].tno</h3>
+${list[0].tno}
+<h3>list 중에서 list[0].title</h3>
+${list[0].title}
+<h3>list 전체 호출</h3>
+${list}
 </body>
 </html>
