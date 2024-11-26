@@ -4,10 +4,13 @@ import com.busanit501.helloworld.JDBCex.dao.TodoDAO;
 import com.busanit501.helloworld.JDBCex.dto.TodoDTO;
 import com.busanit501.helloworld.JDBCex.util.MapperUtil;
 import com.busanit501.helloworld.JDBCex.vo.TodoVO;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
 
+// 설정1
+@Log4j2
 public enum TodoService {
     INSTANCE;
     // 2가지를 다른 클래스에 의존
@@ -43,7 +46,10 @@ public enum TodoService {
 
         // 도구 사용시
         TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
-        System.out.println("todoVO" + todoVO);
+
+        // 기존 로깅 기록 출력
+//        System.out.println("todoVO" + todoVO);
+        log.info("todoVO" + todoVO);
 
         // DAO에 외주 맡기기
         todoDAO.insert(todoVO);
