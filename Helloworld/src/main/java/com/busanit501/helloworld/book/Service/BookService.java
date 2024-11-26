@@ -1,8 +1,13 @@
 package com.busanit501.helloworld.book.Service;
 
+import com.busanit501.helloworld.book.util.MapperUtil;
+import com.busanit501.helloworld.book.DAO.BookDAO;
 import com.busanit501.helloworld.book.DTO.BookDTO;
+import com.busanit501.helloworld.book.VO.BookVO;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +16,14 @@ import java.util.stream.IntStream;
 @Log4j2
 public enum BookService {
     INSTANCE;
+    private BookDAO bookDAO;
+    private ModelMapper modelMapper;
+
+    BookService(){
+        bookDAO = new BookDAO();
+        modelMapper = MapperUtil.INSTANCE.get();
+    }
+
     public BookDTO getOne(Long bno){
         // 실제로는 DB에서 받아와야함.
         // 더미 데이터 이용
@@ -31,5 +44,23 @@ public enum BookService {
                     return  bookDTO;
                 }).collect(Collectors.toList());
         return bookList;
+    }
+
+    public void register (BookDTO bookDTO) throws SQLException {
+        BookVO bookVO = modelMapper.map(bookDTO, BookVO.class);
+
+        log.info("bookVO" + bookVO);
+
+        bookDAO.insertBook(bookVO);
+    }
+
+    // 2. 전체 조회
+    public List<BookDTO> listAll() throws SQLException {
+        List<BookVO> voList = bookDAO.selectAllBook();
+        log.info("voList" + voList);
+
+        List<BookDTO> dtoList = voList.stream().map(vo ->
+                modelMapper.map(vo, BookDTO.class)).collect(Collectors.toList());
+        return dtoList;
     }
 }
