@@ -14,5 +14,6 @@
 <a href="/login/input2">Login</a>
 <a href="/book/booklist">BookList</a>
 <a href="/todo/list">TodoList</a>
+<a href="todo/list2">TodoList2</a>
 </body>
 </html>

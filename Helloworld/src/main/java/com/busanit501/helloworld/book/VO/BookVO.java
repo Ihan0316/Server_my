@@ -4,8 +4,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-// 롬복 사용하기
-
 @Data
 @Builder
 @NoArgsConstructor

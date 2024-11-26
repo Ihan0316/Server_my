@@ -12,13 +12,12 @@ public class BookDAO {
 
     // 1. 삽입 insert
     public void insertBook(BookVO bookVO) throws SQLException {
-        String sql = "insert into book_list(title, dueDate, finished, bno)" + "values(?,?,?,?)";
+        String sql = "insert into book_list(title, dueDate, finished)" + "values(?,?,?)";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, bookVO.getTitle());
         preparedStatement.setDate(2, Date.valueOf(bookVO.getDueDate()));
         preparedStatement.setBoolean(3, bookVO.isFinished());
-        preparedStatement.setLong(4, bookVO.getBno());
         preparedStatement.executeUpdate();
     } // insert
 

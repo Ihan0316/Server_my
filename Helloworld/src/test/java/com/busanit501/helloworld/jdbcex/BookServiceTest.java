@@ -23,18 +23,14 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testInsert() {
-        try {
-            BookDTO bookDTO = BookDTO.builder()
-                    .title("샘플 작업 11/26")
-                    .dueDate(LocalDate.now())
-                    .build();
+    public void testInsert() throws SQLException {
+        // 더미 데이터 화면에서 전달 받은 TOdoDTO
+        BookDTO bookDTO = BookDTO.builder()
+                .title("샘플 작업 11/26")
+                .dueDate(LocalDate.now())
+                .build();
 
-            bookService.register(bookDTO);
-        } catch (SQLException e) {
-            log.error("SQLException occurred while registering the book: ", e);
-            fail("SQLException should not occur");
-        }
+        bookService.register(bookDTO);
     }
 
     @Test
