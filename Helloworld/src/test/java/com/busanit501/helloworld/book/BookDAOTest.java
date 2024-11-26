@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.jdbcex;
+package com.busanit501.helloworld.book;
 
 import com.busanit501.helloworld.book.DAO.BookDAO;
 import com.busanit501.helloworld.book.VO.BookVO;

@@ -63,4 +63,14 @@ public enum BookService {
                 modelMapper.map(vo, BookDTO.class)).collect(Collectors.toList());
         return dtoList;
     }
+
+    public BookDTO get(Long bno) throws SQLException {
+        log.info("bno" + bno);
+        // db에서 하나 조회 결과 받기
+        BookVO bookVO = bookDAO.selectOne(bno);
+        // vo -> dto
+        BookDTO bookDTO = modelMapper.map(bookVO, BookDTO.class);
+
+        return bookDTO;
+    }
 }

@@ -58,7 +58,8 @@ public enum TodoService {
         todoDAO.insert(todoVO);
     }
 
-    // 2. 전체 조회
+    // 2
+    // 전체 조회
     public List<TodoDTO> listAll() throws SQLException {
         List<TodoVO> voList = todoDAO.selectALL();
         log.info("voList" + voList);
@@ -77,5 +78,17 @@ public enum TodoService {
         List<TodoDTO> dtoList = voList.stream().map(vo ->
                 modelMapper.map(vo, TodoDTO.class)).collect(Collectors.toList());
         return dtoList;
+    }
+
+    // 3
+    // 하나 조회
+    public TodoDTO get(Long tno) throws SQLException {
+        log.info("tno" + tno);
+        // db에서 하나 조회 결과 받기
+        TodoVO todoVO = todoDAO.selectOne(tno);
+        // vo -> dto
+        TodoDTO todoDTO = modelMapper.map(todoVO, TodoDTO.class);
+
+        return todoDTO;
     }
 }

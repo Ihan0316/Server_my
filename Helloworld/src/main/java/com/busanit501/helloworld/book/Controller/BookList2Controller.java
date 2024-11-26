@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Log4j2 // log.info 형식으로 출력
-@WebServlet(name = "BookList2Controller", urlPatterns = "/book/booklist2")
+@WebServlet(name = "BookList2Controller", urlPatterns = "/book/list2")
 public class BookList2Controller extends HttpServlet {
     private BookService bookService = BookService.INSTANCE;
     // 외주 시키기 service

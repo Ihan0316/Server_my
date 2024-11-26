@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.jdbcex;
+package com.busanit501.helloworld.book;
 
 import com.busanit501.helloworld.book.DTO.BookDTO;
 import com.busanit501.helloworld.book.Service.BookService;
@@ -39,5 +39,11 @@ public class BookServiceTest {
         for(BookDTO bookDTO:dtoList) {
             log.info(bookDTO);
         }
+    }
+
+    @Test
+    public void testSelectOne() throws SQLException {
+        BookDTO bookDTO = bookService.get(3L);
+        log.info(bookDTO);
     }
 }

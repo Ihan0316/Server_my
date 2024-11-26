@@ -37,4 +37,10 @@ public class TodoServiceTest {
             log.info(todoDTO);
         }
     }
-}
+
+    @Test
+    public void testSelectOne() throws SQLException {
+        TodoDTO todoDTO = todoService.get(13L);
+        log.info(todoDTO);
+        }
+    }
