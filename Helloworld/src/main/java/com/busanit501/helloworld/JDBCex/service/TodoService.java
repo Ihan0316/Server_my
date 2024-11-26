@@ -8,6 +8,9 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 // 설정1
 @Log4j2
@@ -53,5 +56,26 @@ public enum TodoService {
 
         // DAO에 외주 맡기기
         todoDAO.insert(todoVO);
+    }
+
+    // 2. 전체 조회
+    public List<TodoDTO> listAll() throws SQLException {
+        List<TodoVO> voList = todoDAO.selectALL();
+        log.info("voList" + voList);
+        // stream 안하는 코드
+//        List<TodoDTO> dtoList2 = new ArrayList<>();
+//        for (TodoVO todoVO:voList){
+//            TodoDTO todoDTO = new TodoDTO();
+//            todoDTO.setTno(todoVO.getTno());
+//            todoDTO.setTitle(todoVO.getTitle());
+//            todoDTO.setDueDate(todoVO.getDueDate());
+//            todoDTO.setFinished(todoVO.isFinished());
+//            dtoList2.add(todoDTO);
+//        }
+        // 화면에 전달시 vo -> dto로 변환
+        // stream 병렬처리 하면 간결해짐
+        List<TodoDTO> dtoList = voList.stream().map(vo ->
+                modelMapper.map(vo, TodoDTO.class)).collect(Collectors.toList());
+        return dtoList;
     }
 }

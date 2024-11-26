@@ -3,7 +3,6 @@ package com.busanit501.helloworld.JDBCex.util;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 
 public enum MapperUtil {
     // final static 사용됨
