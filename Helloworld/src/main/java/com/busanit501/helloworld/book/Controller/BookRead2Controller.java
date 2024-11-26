@@ -21,7 +21,6 @@ public class BookRead2Controller extends HttpServlet {
         try {
             Long bno = Long.parseLong(request.getParameter("bno"));
             BookDTO bookDTO = bookService.get(bno);
-            // 화면에 전달하기
             request.setAttribute("dto", bookDTO);
             request.getRequestDispatcher("/WEB-INF/book/bookRead2.jsp").forward(request, response);
         } catch (SQLException e) {
