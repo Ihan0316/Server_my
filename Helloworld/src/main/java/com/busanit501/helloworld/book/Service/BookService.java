@@ -1,12 +1,14 @@
 package com.busanit501.helloworld.book.Service;
 
 import com.busanit501.helloworld.book.DTO.BookDTO;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Log4j2
 public enum BookService {
     INSTANCE;
     public BookDTO getOne(Long bno){
@@ -30,6 +32,4 @@ public enum BookService {
                 }).collect(Collectors.toList());
         return bookList;
     }
-
-
 }
