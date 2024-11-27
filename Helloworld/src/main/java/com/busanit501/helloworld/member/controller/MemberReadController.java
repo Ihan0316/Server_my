@@ -20,7 +20,6 @@ public class MemberReadController extends HttpServlet {
         System.out.println("doGet MemberReadController 하나 조회 예제");
 
         try {
-            // 클릭한 게시글 번호를 가지고 와야함.
             Long mno = Long.parseLong(request.getParameter("mno"));
             MemberDTO memberDTO = memberService.get(mno);
             request.setAttribute("dto", memberDTO);

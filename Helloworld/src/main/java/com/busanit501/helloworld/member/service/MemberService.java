@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// 설정1
 @Log4j2
 public enum MemberService {
     INSTANCE;

@@ -21,9 +21,7 @@ public class MemberListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("doGet TodoList2Controller 확인");
         try {
-            // 서비스에 외주 주고, 전체 목록 리스트 받아오기.
             List<MemberDTO> memberList = memberService.listAll();
-            // 화면에 데이터 전달. + 화면에 데이터 탑재된 화면을 -> 웹브라우저에게 전달.
             request.setAttribute("list", memberList);
             request.getRequestDispatcher("/WEB-INF/member/memberList.jsp")
                     .forward(request, response);

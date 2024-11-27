@@ -10,6 +10,8 @@ import java.util.List;
 
 public class MemberDAO {
 
+    // 1
+    // insert 입력
     public void insert(MemberVO memberVO) throws SQLException {
 
         String sql = "insert into member (name, dueDate, finished) " +
@@ -22,7 +24,7 @@ public class MemberDAO {
         preparedStatement.executeUpdate();
     } //insert
 
-    //2
+    // 2
     // select , DB에서 전체 조회.
     public List<MemberVO> selectAll() throws SQLException {
         String sql = "select * from member";
@@ -43,7 +45,8 @@ public class MemberDAO {
         return list;
     }
 
-    //3, 하나 조회. 상세보기.
+    // 3
+    // 하나 조회. 상세보기.
     public MemberVO selectOne(Long mno) throws SQLException {
         String sql = "select * from member where mno = ?";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
@@ -61,8 +64,8 @@ public class MemberDAO {
         return memberVO;
     }
 
-    // 수정.
-    // update,
+    // 4
+    // 수정, update,
     public void updateOne(MemberVO memberVO) throws SQLException {
         String sql = " update member set name=?, dueDate=?, finished=?" +
                 " where mno=?";
@@ -76,8 +79,8 @@ public class MemberDAO {
 
     }
 
-    //삭제,
-    // delete,
+    // 5
+    //삭제, delete
     public void deleteMember(Long mno) throws SQLException {
         String sql = "delete from member where mno =?";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
