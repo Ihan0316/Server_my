@@ -28,7 +28,7 @@ public enum FoodService {
         modelMapper = MapperUtil.INSTANCE.get();
     }
 
-    //1
+    // 1
     // register
     public void register(FoodDTO foodDTO) throws SQLException {
         FoodVO foodVO = modelMapper.map(foodDTO, FoodVO.class);
@@ -36,7 +36,7 @@ public enum FoodService {
         foodDAO.insert(foodVO);
     } // register
 
-    //2
+    // 2
     // 전체 조회
     public List<FoodDTO> listAll() throws SQLException {
         List<FoodVO> voList = foodDAO.selectAll();
@@ -46,36 +46,28 @@ public enum FoodService {
         return dtoList;
     }
 
-    //3
+    // 3
     // 하나 조회, 상세보기.
     public FoodDTO get(Long fno) throws SQLException {
         log.info("fno : " + fno);
-        ///  디비에서 하나 조회 결과 받았음.
         FoodVO foodVO = foodDAO.selectOne(fno);
-        // VO -> DTO 변환 작업.
         FoodDTO foodDTO = modelMapper.map(foodVO,FoodDTO.class);
         return foodDTO;
 
     }
 
-    //4 수정 기능
+    // 4
+    // 수정 기능
     public void update(FoodDTO foodDTO) throws SQLException {
-        // 화면에서 넘겨 받은 데이터는 TodoDTO 타입 박스에 담겨서 오고,
-        // DAO 계층에서 박스의 타입 TodoVO 사용하니, 변환 작업 필요함.
-        // 항상 데이터가 전달 유무 확인.
         log.info("todoDTO : " + foodDTO);
         FoodVO foodVO = modelMapper.map(foodDTO, FoodVO.class);
         foodDAO.updateOne(foodVO);
 
     }
 
-    //5 삭제 기능.
+    // 5
+    // 삭제 기능.
     public void delete(Long fno) throws SQLException {
         foodDAO.deleteFood(fno);
     }
-
 }
-
-
-// 예시, TodoService.INSTANCe
-// private final String str = "test";

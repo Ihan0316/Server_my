@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>jdbcex 작업 중. tno 번호로 수정화면 역할. </h1>
+    <h1>food 작업 중. fno 번호로 수정화면 역할. </h1>
     <form action="/food/update?fno=${dto.fno}" method="post">
     <div>
         <input type="text" name="fno" value="${dto.fno}" readonly>

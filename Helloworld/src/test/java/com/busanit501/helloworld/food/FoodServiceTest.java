@@ -45,7 +45,7 @@ public class FoodServiceTest {
     // 하나조회, 상세보기.
     @Test
     public void testSelectOne() throws SQLException {
-        FoodDTO foodDTO = foodService.get(9L);
+        FoodDTO foodDTO = foodService.get(3L);
         log.info("하나 조회. foodDTO " + foodDTO);
     }
 
