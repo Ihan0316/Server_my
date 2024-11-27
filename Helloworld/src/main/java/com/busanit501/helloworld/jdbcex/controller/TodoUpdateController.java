@@ -50,6 +50,7 @@ public class TodoUpdateController extends HttpServlet {
         // 넘어온 값의 형태 : 문자열 : "on"
         String finished = request.getParameter("finished");
         log.info("finished : " + finished);
+
         boolean checkFinished = false;
         if(finished.equals("on")){
             checkFinished = true;

@@ -43,7 +43,7 @@ public class FoodUpdateController extends HttpServlet {
         log.info("finished : " + finished);
 
         boolean checkFinished = false;
-        if ("on".equals(finished)) {
+        if (finished.equals("on")) {
             checkFinished = true;
         }
 

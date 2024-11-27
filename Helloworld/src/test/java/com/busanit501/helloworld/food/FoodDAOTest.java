@@ -61,7 +61,7 @@ public class FoodDAOTest {
         // 하드 코딩으로 값을 더미로 테스트.
         FoodVO foodVO = FoodVO.builder()
                 .fno(3L)
-                .title("수정 테스트 중")
+                .title("수정 테스트 중222")
                 .finished(true)
                 .dueDate(LocalDate.of(2024, 11, 25))
                 .build();
