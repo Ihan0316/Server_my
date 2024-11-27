@@ -2,8 +2,6 @@ package com.busanit501.helloworld.food.controller;
 
 import com.busanit501.helloworld.food.dto.FoodDTO;
 import com.busanit501.helloworld.food.service.FoodService;
-import com.busanit501.helloworld.todo.dto.TodoDTO;
-import com.busanit501.helloworld.todo.service.TodoService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @Log4j2
-@WebServlet(name = "TodoReadController", urlPatterns = "/food/read")
+@WebServlet(name = "FoodReadController", urlPatterns = "/food/read")
 public class FoodReadController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

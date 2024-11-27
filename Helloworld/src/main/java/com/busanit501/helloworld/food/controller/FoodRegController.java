@@ -2,8 +2,6 @@ package com.busanit501.helloworld.food.controller;
 
 import com.busanit501.helloworld.food.dto.FoodDTO;
 import com.busanit501.helloworld.food.service.FoodService;
-import com.busanit501.helloworld.jdbcex.dto.TodoDTO;
-import com.busanit501.helloworld.jdbcex.service.TodoService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

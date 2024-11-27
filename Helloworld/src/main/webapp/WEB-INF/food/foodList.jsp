@@ -16,7 +16,7 @@
   <h1>foodList 목록화면. </h1>
     <a href="/food/register">글쓰기 폼이동</a>
   <h2>foodRead 하나 조회 더미 </h2>
-  <a href="/food/read?fno=5">하나 조회</a>
+  <a href="/food/read?fno=1">하나 조회</a>
 
   <h2>JSTL 연습장</h2>
   <h3>반복문, forEach 이용, var=변수명, items="데이터 목록" , 더 많이 사용함</h3>
