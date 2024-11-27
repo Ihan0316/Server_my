@@ -28,9 +28,12 @@
 <div>
     <button type="submit">수정하기</button>
     <br>
-    <a href="/food/delete?fno=${dto.fno}">삭제</a>
-    <a href="/food/list">목록가기</a>
 </div>
     </form>
+<form action="/food/delete?fno=${dto.fno}" method="post">
+    <button type="submit">삭제</button>
+</form>
+
+    <a href="/food/list">목록가기</a>
 </body>
 </html>
