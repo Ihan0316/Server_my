@@ -30,5 +30,6 @@
       </li>
     </c:forEach>
   </ul>
+<a href="Hello-servlet">메인화면</a>
 </body>
 </html>
