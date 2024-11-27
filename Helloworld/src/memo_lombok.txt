@@ -19,6 +19,12 @@ build.gradle 파일에서
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
 
+// 검색
+// https://mvnrepository.com/artifact/org.projectlombok/lombok
+compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+
+
+
 확인.
 예)
 @getter , 어노테이션만 붙이면, 바로 사용가능함.

@@ -20,6 +20,10 @@ DBCP, C3PO, 라이브러리, 커넥션 풀 관련 기능들,
 도구 이용하기 위해서, build.gradle 설치 후, 적용하기.
 
   //Hikari Cp 설치
-// https://mvnrepository.com/artifact/com.zaxxer/HikariCP
-implementation group: 'com.zaxxer', name: 'HikariCP', version: '6.2.1'
+    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.1.0'
+
+    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '6.2.1'
+
 

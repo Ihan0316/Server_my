@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "IndexController", urlPatterns = "/")
-public class IndexController extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        System.out.println("doGet.Index 가 호출 됨");
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
-        dispatcher.forward(request, response);
+public class IndexController  extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        System.out.println("doGet. index가 호출이 됨.");
+        RequestDispatcher dispatcher
+                = request.getRequestDispatcher("/WEB-INF/index.jsp");
+        dispatcher.forward(request,response);
     }
 }
