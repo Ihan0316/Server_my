@@ -1,7 +1,6 @@
 package com.busanit501.helloworld.member.dao;
 
 import com.busanit501.helloworld.jdbcex.dao.ConnectionUtil;
-import com.busanit501.helloworld.jdbcex.vo.TodoVO;
 import com.busanit501.helloworld.member.vo.MemberVO;
 import lombok.Cleanup;
 

@@ -1,6 +1,6 @@
 package com.busanit501.helloworld.member.controller;
 
-import com.busanit501.helloworld.jdbcex.service.TodoService;
+import com.busanit501.helloworld.member.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 @Log4j2
 @WebServlet(name = "MemberDeleteController", urlPatterns = "/member/delete")
 public class MemberDeleteController extends HttpServlet {
-    private TodoService todoService = TodoService.INSTANCE;
+    private MemberService memberService = MemberService.INSTANCE;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class MemberDeleteController extends HttpServlet {
         //
         log.info("doPost MemberDeleteController 확인");
         try {
-           todoService.delete(mno);
+           memberService.delete(mno);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

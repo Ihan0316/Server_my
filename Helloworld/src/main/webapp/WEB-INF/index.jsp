@@ -13,6 +13,7 @@
         <a href="/todo/list">todo-list</a>
         <a href="/todo/list2">todo-list2</a>
         <a href="/food/list">food-list</a>
+        <a href="/member/list">member-list</a>
         <button><a href="/login/input">로그인</a></button>
 </body>
 </html>

@@ -1,7 +1,5 @@
 package com.busanit501.helloworld.member.controller;
 
-import com.busanit501.helloworld.jdbcex.dto.TodoDTO;
-import com.busanit501.helloworld.jdbcex.service.TodoService;
 import com.busanit501.helloworld.member.dto.MemberDTO;
 import com.busanit501.helloworld.member.service.MemberService;
 
