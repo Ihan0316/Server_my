@@ -10,7 +10,8 @@ import java.time.LocalDate;
 //@ToString
 // VO(Value Object)
 // 사용 용도, 직접적인 데이터베이스에 반영하는 클래스
-@Data
+@Getter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
