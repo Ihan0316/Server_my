@@ -72,6 +72,8 @@ public class TodoRead2Controller extends HttpServlet {
     } // doGet
 
     // findCookie , 메서드 추가.
+    // 역할 1-찾는 쿠키 이름의 쿠키를 반환
+    // 쿠키가 없다면 쿠키를 생성(쿠키이름 : viewTodos)
     private Cookie findCookie(Cookie[] cookies, String name) {
         Cookie findCookie = null;
         // 쿠키가 있는 경우
@@ -91,10 +93,7 @@ public class TodoRead2Controller extends HttpServlet {
             findCookie = new Cookie("viewTodos", "");
             findCookie.setPath("/");
             findCookie.setMaxAge(60*60*24);
-        }
-
+        } // if
         return findCookie;
     } // method
-
-
-}// class
+} // class
