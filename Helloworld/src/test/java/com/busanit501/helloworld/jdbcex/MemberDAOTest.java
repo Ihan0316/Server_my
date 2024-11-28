@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Log4j2
 public class MemberDAOTest {
@@ -24,5 +25,11 @@ public class MemberDAOTest {
         String mpw = "1234";
         MemberVO memberVO = memberDAO.getMemberWithMpw(mid, mpw);
         log.info("memberVO 조회 확인" + memberVO);
+    }
+
+    @Test
+    public void updateUUIDTest() throws SQLException {
+        String uuid = UUID.randomUUID().toString();
+        memberDAO.updateUuid("lsy", uuid);
     }
 }

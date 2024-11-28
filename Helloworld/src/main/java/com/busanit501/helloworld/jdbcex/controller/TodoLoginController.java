@@ -34,15 +34,20 @@ public class TodoLoginController extends HttpServlet {
         // 상태변수
         boolean rememberMe = auto != null && auto.equals("on");
 
-        // 랜덤함 문자열 생성 uuid 중복 되지 않는 문자열을 랜덤하게 생성
-        if(rememberMe) {
-            String uuid = UUID.randomUUID().toString();
-        }
-
+        // 서비스에 외주주기
         // 디비에 가서 해당 유저가 있으면 임시로 세션에 저장
         // 임의로 세션 동작 여부만 확인 중
         try {
             MemberDTO memberDTO = MemberService.INSTANCE.login(mid, mpw);
+            if(rememberMe) {
+                // 랜덤함 문자열 생성 uuid 중복 되지 않는 문자열을 랜덤하게 생성
+                String uuid = UUID.randomUUID().toString();
+                // 디비에 uuid 업데이트 하는 경우
+                MemberService.INSTANCE.updateUuid(mid, uuid);
+                // 현재 로그인한 memberDTO, uuid 업데이트가 안된 상태
+                // 업데이트 해주고, 세션에 저장
+                memberDTO.setUuid(uuid);
+            }
             // 세션에, 위의 로그인 정보를 저장
             HttpSession session = request.getSession();
             session.setAttribute("loginInfo", memberDTO);

@@ -31,4 +31,15 @@ public class MemberDAO {
 
         return memberVO;
     }
+
+    // uuid를 넣기
+    public void updateUuid(String mid, String uuid) throws SQLException {
+        String query = "update tbl_member set uuid=? where mid=?";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, uuid);
+        preparedStatement.setString(2, mid);
+        preparedStatement.executeUpdate();
+    }
 }

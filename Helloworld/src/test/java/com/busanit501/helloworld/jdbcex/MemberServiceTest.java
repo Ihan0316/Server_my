@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Log4j2
 public class MemberServiceTest {
@@ -22,5 +23,12 @@ public class MemberServiceTest {
     public void testInsert() throws SQLException {
         MemberDTO memberDTO = memberService.login("lsy", "1234");
         log.info("MemberService loginTest" + memberDTO.toString());
+    }
+
+    //uuid 테스트
+    @Test
+    public void updateUuid() throws SQLException {
+        String uuid = UUID.randomUUID().toString();
+        memberService.updateUuid("lsy2", uuid);
     }
 }
