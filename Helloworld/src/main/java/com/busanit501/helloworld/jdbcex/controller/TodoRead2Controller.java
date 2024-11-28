@@ -40,11 +40,11 @@ public class TodoRead2Controller extends HttpServlet {
 
             //1) 쿠키 조회하기. - 전체 쿠키 내용중에서, 내가 찾는 쿠키가 있니?
 //            findCookie(전체 쿠키 배열, 찾고자하는 쿠키 이름) -> 반환 해당 쿠키,
-           Cookie findCookie = findCookie(request.getCookies(), "viewTodos");
-           // 쿠키의 값을 조회하기.
-           String cookieValue = findCookie.getValue();
-           log.info("cookieValue : " + cookieValue);
-           // 상태 변수,
+            Cookie findCookie = findCookie(request.getCookies(), "viewTodos");
+            // 쿠키의 값을 조회하기.
+            String cookieValue = findCookie.getValue();
+            log.info("cookieValue : " + cookieValue);
+            // 상태 변수,
             // 조회한 게시글 번호 ->예시) cookieValue =  "1-3-5-7-"
             boolean exists = false;
             // 기본 유효성 체크, 쿠키의 존재 및, 내용의 존재여부 확인
@@ -56,7 +56,7 @@ public class TodoRead2Controller extends HttpServlet {
             if(!exists) {
                 cookieValue += tno+"-";
                 findCookie.setValue(cookieValue);
-                findCookie.setMaxAge(60);
+                findCookie.setMaxAge(60*60*24);
                 findCookie.setPath("/");
                 // 무조건 서버에서 응답 해주기.
                 response.addCookie(findCookie);
@@ -68,12 +68,11 @@ public class TodoRead2Controller extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-
     } // doGet
 
     // findCookie , 메서드 추가.
-    // 역할 1-찾는 쿠키 이름의 쿠키를 반환
-    // 쿠키가 없다면 쿠키를 생성(쿠키이름 : viewTodos)
+    // 역할, 1) 찾는 쿠키 이름의 쿠키를 반환
+    // 2) 쿠키가 없다면 쿠키를 생성.(쿠키 이름: viewTodos)
     private Cookie findCookie(Cookie[] cookies, String name) {
         Cookie findCookie = null;
         // 쿠키가 있는 경우
@@ -93,7 +92,8 @@ public class TodoRead2Controller extends HttpServlet {
             findCookie = new Cookie("viewTodos", "");
             findCookie.setPath("/");
             findCookie.setMaxAge(60*60*24);
-        } // if
+        }
+
         return findCookie;
     } // method
-} // class
+}// class

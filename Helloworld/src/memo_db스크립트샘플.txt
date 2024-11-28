@@ -24,4 +24,6 @@ create table tbl_member (
 insert into tbl_member ( mid, mpw, mname) values ('lsy','1234','이상용1');
 insert into tbl_member ( mid, mpw, mname) values ('lsy2','1234','이상용2');
 
+alter table tbl_member add column uuid varchar(50);
+
 select * from tbl_member;

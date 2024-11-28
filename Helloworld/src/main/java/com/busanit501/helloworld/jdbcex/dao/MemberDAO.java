@@ -31,7 +31,7 @@ public class MemberDAO {
                 .build();
 
         return memberVO;
-    }
+    } //
 
     public void updateUuid(String mid, String uuid) throws SQLException {
         String query = "update tbl_member set uuid=? where mid=?";
@@ -41,9 +41,9 @@ public class MemberDAO {
         preparedStatement.setString(1, uuid);
         preparedStatement.setString(2, mid);
         preparedStatement.executeUpdate();
-    }
+    } //
 
-    // uuid로 유저 id 검색
+    //uuid로 유저를 검색하는 기능.
     public MemberVO getMemberWithUuid(String uuid) throws SQLException {
         String query = "select * from tbl_member where uuid=?";
         // 결과 데이터를 담아둘 임시 박스 MemberVO
@@ -52,6 +52,7 @@ public class MemberDAO {
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, uuid);
+
         @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         memberVO = MemberVO.builder()

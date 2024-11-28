@@ -50,6 +50,11 @@ public class TodoLoginController extends HttpServlet {
                 // 현재 로그인한 memberDTO, uuid 업데이트가 안된 상태임.
                 // 업데이트 해주고, 세션에 저장할 예정.
                 memberDTO.setUuid(uuid);
+
+                Cookie rememberCookie = new Cookie("rememberMe", uuid);
+                rememberCookie.setPath("/");
+                rememberCookie.setMaxAge(60*60*24*7);
+                response.addCookie(rememberCookie);
             }
 
             // 세션에, 위의 로그인 정보를 저장,
