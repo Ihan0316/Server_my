@@ -88,7 +88,7 @@ OSI 7계층.
 
 생성/전송 ,
 비교,
-시스템이 제공해주는 쿠기
+시스템이 제공해주는 쿠키
 -  키명 :JSESSIONID, 값: 랜덤한 문자열로 구성. 톰캣서버에 최초로 접근시 발행해주는 값.
 - 유효기간 지정.
 - 메모리상에 보관,
@@ -121,7 +121,7 @@ test <- decoding <- 1234@@ , 디코딩
         viewTodoCookie.setValue(todoListResult);
         // 쿠키 의 생존 주기, 하루.
         viewTodoCookie.setMaxAge(60 * 60 * 24);
-        // 해당 쿠기의 적용 범위. /todo/list
+        // 해당 쿠키의 적용 범위. /todo/list
         viewTodoCookie.setPath("/");
 
 쿠키 전달,
@@ -130,7 +130,7 @@ test <- decoding <- 1234@@ , 디코딩
 
 쿠키 값 가져오기
 private Cookie findCookie(Cookie[] cookies, String cookieName) {
-    // 찾은 쿠키를 담을 임시 쿠기.
+    // 찾은 쿠키를 담을 임시 쿠키.
     Cookie targetCookie = null;
 
     if(cookies != null && cookies.length >0) {
