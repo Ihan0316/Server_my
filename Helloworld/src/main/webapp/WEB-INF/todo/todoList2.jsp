@@ -24,6 +24,8 @@
 </br>
   임시 조회한 게시글 번호 정보 : ${cookie.viewTodos.value}
 
+임시 조회한 유저 uuid 정보 : ${loginInfo.uuid}
+
 <form action="/logout" method="post">
   <button type="submit">로그아웃</button>
 </form>

@@ -29,7 +29,7 @@ public enum MemberService {
     }
 
     public void updateUuid(String mid, String uuid) throws SQLException {
-        memberDAO.updateUuid(mid, uuid);
+        memberDAO.updateUuid(mid,uuid);
     }
 
 }
