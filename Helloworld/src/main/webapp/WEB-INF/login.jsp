@@ -21,10 +21,11 @@
 <c:if test="${param.result == 'error'}">
     <h1>로그인 정보 다시 확인 후 로그인 해주세요</h1>
 </c:if>
-<form action="/login" method="post">
-  <input type="text" name="mid">
-  <input type="text" name="mpw">
-  <button type="submit">로그인</button>
-</form>
+    <form action="/login" method="post">
+        <input type="text" name="mid">
+        <input type="text" name="mpw">
+        <input type="checkbox" name="auto">
+        <button type="submit">로그인</button>
+    </form>
 </body>
 </html>
