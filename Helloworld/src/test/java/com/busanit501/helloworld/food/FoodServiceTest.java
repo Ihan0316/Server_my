@@ -36,7 +36,7 @@ public class FoodServiceTest {
     // 전체 조회
     @Test
     public void testSelectAll() throws SQLException {
-         List<FoodDTO> dtoList = foodService.listAll();
+        List<FoodDTO> dtoList = foodService.listAll();
         for (FoodDTO foodDTO:dtoList) {
             log.info(foodDTO);
         }
