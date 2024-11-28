@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class FMemberDAO {
 
     public FMemberVO getMemberWithMpw(String mid, String mpw) throws SQLException {
-        String query = "select * from tbl_member where mid=? and mpw=?";
+        String query = "select * from tbl_fmember where mid=? and mpw=?";
         FMemberVO fmemberVO = null;
 
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();

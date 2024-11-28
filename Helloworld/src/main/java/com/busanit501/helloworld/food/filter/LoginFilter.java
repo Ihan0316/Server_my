@@ -34,7 +34,7 @@ public class LoginFilter implements Filter {
         }
         // 2번째 이후의 방문, 세션이라는 저장공간
         // 키 : loginInfo, 값 : 로그인한 유저의 아이디를 기록
-        if(session.getAttribute("loginInfo") == null){
+        if(session.getAttribute("floginInfo") == null){
             log.info("2번째 이후로 서버에 요청을 했고, 로그인 정보는 없는 경우");
             // 로그인 컨트롤러가 아직 없음.
             response.sendRedirect("/flogin");
@@ -42,10 +42,10 @@ public class LoginFilter implements Filter {
         }
         // 임시로, 최초도 아니고, 로그인 처리가 되었다면
         // 정상적으로 접근하는 페이지로 이동 시켜 줄게
-        if(session.getAttribute("loginInfo") != null) {
+        if(session.getAttribute("floginInfo") != null) {
 //            String result = (String) session.getAttribute("loginInfo");
-            FMemberDTO fmemberDTO = (FMemberDTO) session.getAttribute("loginInfo");
-            log.info("session.getAttribute(\"loginInfo\") fmemberDTO : " + fmemberDTO);
+            FMemberDTO fmemberDTO = (FMemberDTO) session.getAttribute("floginInfo");
+            log.info("session.getAttribute(\"floginInfo\") fmemberDTO : " + fmemberDTO);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

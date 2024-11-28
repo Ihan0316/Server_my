@@ -21,7 +21,7 @@ public class FoodLoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("FoodLoginController doGet ");
-        request.getRequestDispatcher("/WEB-INF/login.jsp")
+        request.getRequestDispatcher("/WEB-INF/flogin.jsp")
                 .forward(request,response);
     }
     // 로직처리
@@ -37,7 +37,7 @@ public class FoodLoginController extends HttpServlet {
             FMemberDTO fMemberDTO = FMemberService.INSTANCE.login(mid, mpw);
             // 세션에, 위의 로그인 정보를 저장
             HttpSession session = request.getSession();
-            session.setAttribute("loginInfo", fMemberDTO);
+            session.setAttribute("floginInfo", fMemberDTO);
             response.sendRedirect("/food/list");
         } catch (SQLException e) {
             response.sendRedirect("flogin?result=error");

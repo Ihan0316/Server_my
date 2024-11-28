@@ -20,7 +20,7 @@ public class FoodLogoutController extends HttpServlet {
         log.info("FoodLogoutController doPost");
 
         HttpSession session = request.getSession();
-        session.removeAttribute("loginInfo");
+        session.removeAttribute("floginInfo");
         session.invalidate();
 
         response.sendRedirect("/flogin");
