@@ -1,5 +1,6 @@
 package com.busanit501.helloworld.jdbcex;
 
+
 import com.busanit501.helloworld.jdbcex.dto.MemberDTO;
 import com.busanit501.helloworld.jdbcex.service.MemberService;
 import lombok.extern.log4j.Log4j2;
@@ -30,5 +31,12 @@ public class MemberServiceTest {
     public void updateUuid() throws SQLException {
         String uuid = UUID.randomUUID().toString();
         memberService.updateUuid("lsy2", uuid);
+    }
+
+    @Test
+    public void getMemberWithUuidSearch() throws SQLException {
+        // 각자 테이블의 유저의uuid를 직접 복사해서 붙여넣기.
+        // 각각 전부 다 달라요.
+        memberService.getMemberWithUuidService("bbe10151-3121-4013-917e-edaf3b248ff4");
     }
 }

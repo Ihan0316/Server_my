@@ -12,15 +12,16 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 @Log4j2
-@WebServlet(name = "TodoLoginController" , urlPatterns = "/login")
+@WebServlet(name = "LoginController", urlPatterns = "/login")
 public class TodoLoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.info("TodoLoginController doGet ");
+        log.info("LoginController doGet ");
         request.getRequestDispatcher("/WEB-INF/login.jsp")
-                .forward(request,response);
+                .forward(request, response);
     }
-    // 로직처리
+
+    // 로직 처리,
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("LoginController doPost ");
@@ -30,6 +31,8 @@ public class TodoLoginController extends HttpServlet {
         String auto = request.getParameter("auto");
         // 상태 변수,
         boolean rememberMe = auto != null && auto.equals("on");
+
+
 
         // 디비에가서, 해당 유저가 있으면, 임시로 세션에 저장,
         // 예외처리도 없음.
@@ -48,6 +51,7 @@ public class TodoLoginController extends HttpServlet {
                 // 업데이트 해주고, 세션에 저장할 예정.
                 memberDTO.setUuid(uuid);
             }
+
             // 세션에, 위의 로그인 정보를 저장,
             HttpSession session = request.getSession();
             session.setAttribute("loginInfo", memberDTO);
@@ -55,5 +59,6 @@ public class TodoLoginController extends HttpServlet {
         } catch (SQLException e) {
             response.sendRedirect("/login?result=error");
         }
+
     }
 }

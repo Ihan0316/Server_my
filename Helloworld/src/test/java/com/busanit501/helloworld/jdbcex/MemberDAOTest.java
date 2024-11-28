@@ -32,4 +32,12 @@ public class MemberDAOTest {
         String uuid = UUID.randomUUID().toString();
         memberDAO.updateUuid("lsy", uuid);
     }
+
+    @Test
+    public void getMemberWithUuidTest() throws SQLException {
+        // 각자 테이블의 유저의 uuid를 직접 복붙
+        MemberVO memberVO = memberDAO.getMemberWithUuid("bbe10151-3121-4013-917e-edaf3b248ff4");
+        log.info("memberVO : " + memberVO);
+    }
+    
 }

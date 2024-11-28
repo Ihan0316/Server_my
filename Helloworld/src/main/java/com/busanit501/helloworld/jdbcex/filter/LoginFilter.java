@@ -39,6 +39,12 @@ public class LoginFilter implements Filter {
             response.sendRedirect("/login");
             return;
         }
+        // 자동 로그인 프로세스
+        // PageScope, HttpServletRequest, HttpSession, Application
+        // HttpServletRequest에서 모든 쿠키를 검색해서, rememberMe 이름을 찾는다.
+        // 만약 해당 쿠키가 있고, 값도 있다면, DB에 조회해서, 쿠키의 값, DB값의 일치를 판단
+        // loginInfo MemberDTO의 값 설정
+
         // 임시로, 최초도 아니고, 로그인 처리가 되었다면
         // 정상적으로 접근하는 페이지로 이동 시켜 줄게
         if(session.getAttribute("loginInfo") != null) {
