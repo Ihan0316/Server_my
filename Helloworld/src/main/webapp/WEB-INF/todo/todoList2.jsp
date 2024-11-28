@@ -18,7 +18,9 @@
   <h2>todoRead 하나 조회 더미 </h2>
   <a href="/todo/read2?tno=5">하나 조회</a>
 
-
+<form action="/logout" method="post">
+  <button type="submit">로그아웃</button>
+</form>
 
   <h2>JSTL 연습장</h2>
 <h3>반복문, forEach 이용, var=변수명, items="데이터 목록" , 더 많이 사용함</h3>
