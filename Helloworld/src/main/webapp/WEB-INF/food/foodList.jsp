@@ -13,6 +13,15 @@
     <title>Title</title>
 </head>
 <body>
+
+<h1>로그인 한 유저 표시</h1>
+<h2>${loginInfo.mname}님 환영합니다.</h2>
+임시 로그인한 유저${loginInfo}
+
+<form action="/logout" method="post">
+  <button type="submit">로그아웃</button>
+</form>
+
   <h1>foodList 목록화면. </h1>
     <a href="/food/register">글쓰기 폼이동</a>
   <h2>foodRead 하나 조회 더미 </h2>

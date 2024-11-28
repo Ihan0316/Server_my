@@ -52,6 +52,20 @@ session.getAttribute("loginInfo") 의 반환 값, Object 라서, 다운 캐스�
 정보가 노출이 되어도, 상관없는 임시 데이터,
 쇼핑몰에서
 
+ EL 표기법으로 , 화면에서, 서버로 부터 넘어온 데이터 조회하는 과정.
+ 데이터를 검색하는 범위
+1) page Scope : JSP에서 EL을 이용시 <c:set> 지정한 변수를 검색.
+검색시 없다면, 다음 단계로 찾으러 가기.
+
+2) Request Scope : HttpServletRequest , setAttribute() 를 저장한 변수를 검색.
+검색시 없다면, 다음 단계로 찾으러 가기.
+
+3) Session Scope : HttpSession을 이용해서, setAttribute() 이용해서 저장한 변수를 검색.
+검색시 없다면, 다음 단계로 찾으러 가기.
+예시) , 로그인 후, 세션에, 키: loginInfo , 값 : MemberDTO
+
+4) Application Scope : ServletContext 에서, setAttribute()이용해서 저장한 변수를 검색.
+마지막, 여기 없으면, 진짜 없다.
 
 참고,
 OSI 7계층.

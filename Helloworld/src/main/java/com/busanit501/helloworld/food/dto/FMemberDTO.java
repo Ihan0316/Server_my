@@ -1,4 +1,4 @@
-package com.busanit501.helloworld.jdbcex.dto;
+package com.busanit501.helloworld.food.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDTO {
+public class FMemberDTO {
     private String mid;
     private String mpw;
     private String mname;

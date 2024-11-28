@@ -64,7 +64,7 @@ public class TodoDAOTest {
     //3, 하나 조회 테스트
     @Test
     public void getOneTest() throws SQLException {
-       Long tno = 3L;
+       Long tno = 5L;
        TodoVO todoVO = todoDAO.selectOne(tno);
        System.out.println(todoVO);
     }
