@@ -178,3 +178,12 @@ private Cookie findCookie(Cookie[] cookies, String cookieName) {
 다시 , 사람들에게 알려주는 역할.
 그러면,
 각 공간의 임시 저장소,
+
+==================================================
+page -> request -> session -> application
+
+ServletContext 에서 setAttribute() 이용해서, 저장하면,
+우리는 해당 애플리케이션 단계 마지막 구간을 검색을 해서, 조회.
+
+
+

@@ -29,7 +29,7 @@ public class TodoList2Controller extends HttpServlet {
         // 어느 파일에서도 접근 가능
         ServletContext context = request.getServletContext();
         String result = (String) context.getAttribute("appTestName");
-        log.info("TodoList2Controller ServletContext 값 조회 확인 중" + result);
+        log.info("TodoList2Controller ServletContext 값 조회 확인 중 : " + result);
 
         log.info("doGet TodoList2Controller 확인");
         try {
