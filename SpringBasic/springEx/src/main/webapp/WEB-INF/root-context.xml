@@ -3,4 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+<!--    여기에 설정을 하면, 시스템 전역에 설정을 하는 것이라서, 어느 파일에서든 호출 가능-->
+    <bean class="com.busanit501.springex.sample.SampleDAO"></bean>
+    <bean class="com.busanit501.springex.sample.SampleService"></bean>
 </beans>
