@@ -51,6 +51,7 @@ public class TodoLoginController extends HttpServlet {
                 // 업데이트 해주고, 세션에 저장할 예정.
                 memberDTO.setUuid(uuid);
 
+                // 쿠키를 생성해서, 웹브라우저에게 전달.
                 Cookie rememberCookie = new Cookie("rememberMe", uuid);
                 rememberCookie.setPath("/");
                 rememberCookie.setMaxAge(60*60*24*7);
