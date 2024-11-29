@@ -26,7 +26,6 @@ public class LoginFilter implements Filter {
 
         if(session.isNew()) {
             log.info("최초로 서버에 요청을함.");
-            // 로그인 컨트롤러가 아직 없음, 곧 만들 예정.
             response.sendRedirect("/flogin");
             return;
         }
@@ -68,7 +67,6 @@ public class LoginFilter implements Filter {
 
     private Cookie findCookie(Cookie[] cookies, String name) {
         Cookie findCookie = null;
-        // 쿠키가 있는 경우
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {

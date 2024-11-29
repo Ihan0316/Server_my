@@ -14,7 +14,6 @@ import java.io.IOException;
 @WebServlet(name = "FoodLogoutController" , urlPatterns = "/flogout")
 public class FoodLogoutController extends HttpServlet {
 
-    // 로그인시 임시로 세션에 loginInfo 키이름으로, 값 : 아이디+패스워드
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("FoodLogoutController doPost");

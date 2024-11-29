@@ -22,7 +22,7 @@ public class FoodLoginController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/flogin.jsp")
                 .forward(request,response);
     }
-    // 로직처리
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("FoodLoginController doPost");
@@ -45,7 +45,6 @@ public class FoodLoginController extends HttpServlet {
                 response.addCookie(rememberCookie);
             }
 
-            // 세션에, 위의 로그인 정보를 저장,
             HttpSession session = request.getSession();
             session.setAttribute("floginInfo", fmemberDTO);
             response.sendRedirect("/food/list");

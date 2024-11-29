@@ -17,9 +17,7 @@ import java.time.format.DateTimeFormatter;
 @Log4j2
 @WebServlet(name = "FoodUpdateController",urlPatterns = "/food/update")
 public class FoodUpdateController extends HttpServlet {
-    // 서비스를 포함 하기. 의존하기.
     private FoodService foodService = FoodService.INSTANCE;
-    // 날짜 포맷팅
     private final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
@@ -35,8 +33,6 @@ public class FoodUpdateController extends HttpServlet {
         }
     }
 
-    // 글 작성 로직 처리.
-    // 화면에서 데이터 전달받고, -> DTO 담아서, -> 서비스로 전달.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String finished = request.getParameter("finished");

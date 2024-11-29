@@ -50,10 +50,7 @@ public class FoodDAO {
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setLong(1, fno);
-        // 하나만 받아온 상태,
         @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
-        // 임시 TotoVO , 인스턴스 만들어서, 한행의 각 컬럼 4개를 담기.
-        // 0행에서 -> 1행으로 조회를 해야하는데, 요게 누락됨.
         resultSet.next();
         FoodVO foodVO = FoodVO.builder()
                 .fno(resultSet.getLong("fno"))
@@ -69,8 +66,6 @@ public class FoodDAO {
                 " where fno=?";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        // 화면에서 넘겨받은 변경할 데이터를 DTO -> VO 변환 후에(서비스에서 할 예정.)
-        // VO 에서 꺼내서, 디비로 데이터 전달하는 과정.
         preparedStatement.setString(1, foodVO.getTitle());
         preparedStatement.setDate(2, Date.valueOf(foodVO.getDueDate()));
         preparedStatement.setBoolean(3,foodVO.isFinished());

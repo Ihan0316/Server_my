@@ -44,7 +44,6 @@ public class FMemberDAO {
 
     public FMemberVO getMemberWithUuid(String uuid) throws SQLException {
         String query = "select * from tbl_fmember where uuid=?";
-        // 결과 데이터를 담아둘 임시 박스 MemberVO
         FMemberVO fmemberVO = null;
 
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
