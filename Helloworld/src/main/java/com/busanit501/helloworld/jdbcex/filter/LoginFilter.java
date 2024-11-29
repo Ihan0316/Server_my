@@ -56,14 +56,22 @@ public class LoginFilter implements Filter {
             response.sendRedirect("/login");
             return;
         }
+        // 쿠키에 등록된 uuid 가져오기
         String getUuid = findCookie.getValue();
 
         try {
+            // 쿠키에 등록된 uuid 이용해서 db에서 조회하기
             MemberDTO memberDTO = MemberService.INSTANCE.getMemberWithUuidService(getUuid);
             log.info("memberDTO : ", memberDTO);
+
             if(memberDTO == null){
                 throw new Exception("쿠키값이 유효하지 않습니다");
             }
+            // 회원정보를 세션에 추가하기
+            session.setAttribute("loginInfo", memberDTO);
+            // 계속 필터 동작을 진행하겠다
+            // 만약 필터가 더이상 없다면 원래대로 서버에서 나타내는 화면으로 이동
+            filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/login");
