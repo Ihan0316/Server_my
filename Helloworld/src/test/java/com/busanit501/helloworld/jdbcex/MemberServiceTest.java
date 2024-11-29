@@ -37,6 +37,6 @@ public class MemberServiceTest {
     public void getMemberWithUuidSearch() throws SQLException {
         // 각자 테이블의 유저의uuid를 직접 복사해서 붙여넣기.
         // 각각 전부 다 달라요.
-        memberService.getMemberWithUuidService("bbe10151-3121-4013-917e-edaf3b248ff4");
+        memberService.getMemberWithUuidService("7115a855-55bb-4dc2-8268-ab45b32bb383");
     }
 }

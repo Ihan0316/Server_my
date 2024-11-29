@@ -3,10 +3,7 @@ package com.busanit501.helloworld.food.service;
 import com.busanit501.helloworld.food.dao.FMemberDAO;
 import com.busanit501.helloworld.food.dto.FMemberDTO;
 import com.busanit501.helloworld.food.vo.FMemberVO;
-import com.busanit501.helloworld.jdbcex.dao.MemberDAO;
-import com.busanit501.helloworld.jdbcex.dto.MemberDTO;
 import com.busanit501.helloworld.jdbcex.util.MapperUtil;
-import com.busanit501.helloworld.jdbcex.vo.MemberVO;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 
@@ -27,6 +24,16 @@ public enum FMemberService {
     // 로그인 확인용
     public FMemberDTO login(String mid, String mpw) throws SQLException {
         FMemberVO fmemberVO = fmemberDAO.getMemberWithMpw(mid, mpw);
+        FMemberDTO fmemberDTO = modelMapper.map(fmemberVO, FMemberDTO.class);
+        return fmemberDTO;
+    }
+
+    public void updateUuid(String mid, String uuid) throws SQLException {
+        fmemberDAO.updateUuid(mid,uuid);
+    }
+
+    public FMemberDTO getMemberWithUuidService(String uuid) throws SQLException {
+        FMemberVO fmemberVO= fmemberDAO.getMemberWithUuid(uuid);
         FMemberDTO fmemberDTO = modelMapper.map(fmemberVO, FMemberDTO.class);
         return fmemberDTO;
     }

@@ -8,12 +8,10 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Log4j2
 @WebServlet(name = "FoodLoginController" , urlPatterns = "/flogin")
@@ -30,17 +28,29 @@ public class FoodLoginController extends HttpServlet {
         log.info("FoodLoginController doPost");
         String mid = request.getParameter("mid");
         String mpw = request.getParameter("mpw");
+        String auto = request.getParameter("auto");
 
-        // 디비에 가서 해당 유저가 있으면 임시로 세션에 저장
-        // 임의로 세션 동작 여부만 확인 중
+        boolean rememberfMe = auto != null && auto.equals("on");
+
         try {
-            FMemberDTO fMemberDTO = FMemberService.INSTANCE.login(mid, mpw);
-            // 세션에, 위의 로그인 정보를 저장
+            FMemberDTO fmemberDTO = FMemberService.INSTANCE.login(mid, mpw);
+            if (rememberfMe) {
+                String uuid = UUID.randomUUID().toString();
+                FMemberService.INSTANCE.updateUuid(mid, uuid);
+                fmemberDTO.setUuid(uuid);
+
+                Cookie rememberCookie = new Cookie("rememberfMe", uuid);
+                rememberCookie.setPath("/");
+                rememberCookie.setMaxAge(60*60*24*7);
+                response.addCookie(rememberCookie);
+            }
+
+            // 세션에, 위의 로그인 정보를 저장,
             HttpSession session = request.getSession();
-            session.setAttribute("floginInfo", fMemberDTO);
+            session.setAttribute("floginInfo", fmemberDTO);
             response.sendRedirect("/food/list");
         } catch (SQLException e) {
-            response.sendRedirect("flogin?result=error");
+            response.sendRedirect("/flogin?result=error");
         }
 
     }

@@ -26,6 +26,38 @@ public class FMemberDAO {
                 .mid(resultSet.getString("mid"))
                 .mpw(resultSet.getString("mpw"))
                 .mname(resultSet.getString("mname"))
+                .uuid(resultSet.getString("uuid"))
+                .build();
+
+        return fmemberVO;
+    }
+
+    public void updateUuid(String mid, String uuid) throws SQLException {
+        String query = "update tbl_fmember set uuid=? where mid=?";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, uuid);
+        preparedStatement.setString(2, mid);
+        preparedStatement.executeUpdate();
+    }
+
+    public FMemberVO getMemberWithUuid(String uuid) throws SQLException {
+        String query = "select * from tbl_fmember where uuid=?";
+        // 결과 데이터를 담아둘 임시 박스 MemberVO
+        FMemberVO fmemberVO = null;
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, uuid);
+
+        @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        fmemberVO = FMemberVO.builder()
+                .mid(resultSet.getString("mid"))
+                .mpw(resultSet.getString("mpw"))
+                .mname(resultSet.getString("mname"))
+                .uuid(resultSet.getString("uuid"))
                 .build();
 
         return fmemberVO;
