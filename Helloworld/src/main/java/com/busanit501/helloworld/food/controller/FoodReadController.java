@@ -39,7 +39,7 @@ public class FoodReadController extends HttpServlet {
             if(!exists) {
                 cookieValue += fno+"-";
                 findCookie.setValue(cookieValue);
-                findCookie.setMaxAge(60*60*24);
+                findCookie.setMaxAge(60);
                 findCookie.setPath("/");
 
                 response.addCookie(findCookie);

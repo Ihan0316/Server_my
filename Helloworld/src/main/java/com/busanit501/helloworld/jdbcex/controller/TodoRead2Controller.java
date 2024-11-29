@@ -56,7 +56,7 @@ public class TodoRead2Controller extends HttpServlet {
             if(!exists) {
                 cookieValue += tno+"-";
                 findCookie.setValue(cookieValue);
-                findCookie.setMaxAge(60*60*24);
+                findCookie.setMaxAge(60);
                 findCookie.setPath("/");
                 // 무조건 서버에서 응답 해주기.
                 response.addCookie(findCookie);
