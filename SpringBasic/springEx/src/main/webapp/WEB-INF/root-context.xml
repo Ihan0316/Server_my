@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
     <!--    여기에 설정하는 것은 , 시스템 전역에 설정을 하는 것이라서, -->
     <!--    어느 파일에서든 호출 가능함.-->
@@ -46,6 +47,13 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+<!--    모델맵퍼 이용하는 첫번째 방법, 해당 메서드에 에너테이션 안에 sql문장을 등록해서 이용-->
+<!--    시스템에서, 해당 패키지의 에너테이션 존재 유무를 모름-->
+<!--    그래서 시스템에 등록해서 이용해야함-->
+<!--    -->
+<!--    결론, 우리는 이 방식 x, 파일 분리 형식으로 작업-->
+    <mybatis:scan base-package="com.busanit501.springex.mapper"/>
 
 
 </beans>
