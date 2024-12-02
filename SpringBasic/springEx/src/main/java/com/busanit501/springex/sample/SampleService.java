@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 @ToString
 @RequiredArgsConstructor
 public class SampleService {
+    // 이용하는 클래스, SampleDAO에 의존하는 클래스,
+
     // 방법1, 필드 주입방식
 //     @Autowired
 //     private SampleDAO sampleDAO;
@@ -23,6 +25,8 @@ public class SampleService {
 //     this.sampleDAO = sampleDAO;
 
     // 2) 롬복 애너테이션 이용
+    // SampleDAO -> 타입 : 인터페이스 sampleDAO
+    // 구현한 클래스 2개가 시스템에 등록되었다.
      private final SampleDAO sampleDAO;
      }
 
