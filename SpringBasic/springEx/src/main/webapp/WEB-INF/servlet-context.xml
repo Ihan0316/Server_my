@@ -9,11 +9,17 @@
 
     <mvc:annotation-driven></mvc:annotation-driven>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-
+<!--    스프링 mvc에서 제공하는 뷰를 어떻게 처리해서 보여줄지 정하는 기능-->
+<!--    뷰파일의 경로 예시 : /WEB-INF/views/todo/list/jsp-->
+<!--    접두어 : /WEB-INF/views/,-->
+<!--    접미어 : .jsp -->
+<!--    반복.-->
+<!--    파일명, 또는 폴더에서 파일명만 교체해서 사용할 예정.-->
+<!--    todo/list-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
+<!--자비의 애너테이션 @Controller 이용하려면, 등록된 파일의 위치 패키지를 시스템에 설정해야됨-->
     <context:component-scan base-package="com.busanit501.springex.controller"/>
 </beans>
