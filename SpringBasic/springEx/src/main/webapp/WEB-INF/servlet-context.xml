@@ -7,7 +7,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 <!--    스프링 mvc에서 제공하는 뷰를 어떻게 처리해서 보여줄지 정하는 기능-->
 <!--    뷰파일의 경로 예시 : /WEB-INF/views/todo/list/jsp-->
