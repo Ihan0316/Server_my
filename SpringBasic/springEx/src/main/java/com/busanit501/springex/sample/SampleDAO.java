@@ -13,6 +13,5 @@ public interface SampleDAO {
     // SampleDAO-> 인터페이스 타입으로 변경하면,
     // 결론, 작업을 SampleDAO 인터페이스를 구현한 클래스만 수정하면됨.
     // 1번 수정 해야함.
-    //
     // 예시, 기능도 수정함.
 }
