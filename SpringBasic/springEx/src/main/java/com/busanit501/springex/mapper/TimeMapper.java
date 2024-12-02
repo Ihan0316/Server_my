@@ -8,5 +8,4 @@ public interface TimeMapper {
     String getNow(); // 추상메서드
 
     // 방법2, sql문을 xml파일로 분리해서 이용
-
 }
