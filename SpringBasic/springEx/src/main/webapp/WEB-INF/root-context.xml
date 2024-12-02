@@ -34,7 +34,7 @@
     </bean>
 
 <!--    위에서 설정한 hikariConfig 설정을 , dataSource 인스턴스에 포함하기.-->
-<!--&lt;!&ndash;    생성자 주입으로 포함하기&ndash;&gt;-->
+<!--    생성자 주입으로 포함하기-->
 <!--    public class DataSource {-->
 <!--        private HikariConfig hikariConfig-->
 <!--    }-->

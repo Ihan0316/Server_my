@@ -10,17 +10,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @Log4j2
 @ExtendWith(SpringExtension.class) //JUnit5 테스트 설정.
-//JUnit4 테스트 설정. @Runwith
-// 설정 파일의 경로를 지정.
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
 public class TimeMapperTest {
-    // 해당 인스턴스가 없다면, 널로 받을게
+
+    // 해당 인스턴스가 없다면, 널로 받을게.
     // 기본값은 required = true
     @Autowired(required = false)
     private TimeMapper timeMapper;
 
     @Test
     public void testGetTime() {
-        log.info("getNow() : " + timeMapper.getNow());
+        log.info("getNow : " + timeMapper.getNow());
     }
+
 }

@@ -92,7 +92,8 @@ dependencies {
 
     // 12 mybatis spring
     // https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
-    implementation group: 'org.mybatis', name: 'mybatis-spring', version: '3.0.4'
+    // 현재 작업하는 3.0.4 다운그레이드 2.0.7
+    implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.7'
 
 }
 
