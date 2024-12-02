@@ -44,6 +44,7 @@
     </bean>
 
 <!--    // Mybatis 기능을 전역 설정에 등록해서 이용할 준비-->
+<!--    필드로 주입-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
     </bean>
