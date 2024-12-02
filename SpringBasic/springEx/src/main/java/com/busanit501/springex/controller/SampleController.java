@@ -18,4 +18,12 @@ public class SampleController {
         // 아직 화면이 없음, 임의로 설정
         log.info("hello");
     }
+
+    @GetMapping("/hello2")
+    // 리턴타입이 문자열이면, 해당 문자열의 이름이 뷰의 파일명으로 뷰를 맵핑, 할당
+    public String hello2() {
+        // 아직 화면이 없음, 임의로 설정
+        log.info("hello2");
+        return "helloTest";
+    }
 }
