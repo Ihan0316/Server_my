@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
+
 @Log4j2
 @ControllerAdvice
 public class CommonExceptionAdvice {
@@ -24,6 +26,13 @@ public class CommonExceptionAdvice {
         // return 타입이 string 이기 때문에 문자열로 데이터만 전달
         StringBuffer buffer = new StringBuffer("<ul>");
         buffer.append("<li>"+exception.getMessage()+"</li>");
+
+        // 예외가 발생하는 과정을 추척하는 코드
+        // Stream 으로 , 여러 단계를 표현
+        // exception.getStackTrace() : 목록
+
+        Arrays.stream(exception.getStackTrace()).forEach(t -> buffer.append("<li>"+t+"</li>"));
+
         buffer.append("</ul>");
 
         return buffer.toString();
