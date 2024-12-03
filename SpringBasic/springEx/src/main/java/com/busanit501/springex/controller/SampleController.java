@@ -105,4 +105,12 @@ public class SampleController {
         log.info("msg : " + msg);
         model.addAttribute("msg", msg);
     }
+
+    // 예외발생 (타입불일치 예제)
+    // localhost:8080/ex8?name=ihan&age=26
+    @GetMapping("/ex8")
+    public void ex8(String name, int age) {
+        log.info("ex8 name : " + name);
+        log.info("ex8 age : " + age);
+    }
 }
