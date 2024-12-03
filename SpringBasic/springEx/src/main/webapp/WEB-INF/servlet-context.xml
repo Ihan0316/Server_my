@@ -7,6 +7,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
+<!--    애너테이션 기반으로 처리하겠다-->
     <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 <!--    스프링 mvc에서 제공하는 뷰를 어떻게 처리해서 보여줄지 정하는 기능-->
@@ -17,7 +18,9 @@
 <!--    파일명, 또는 폴더에서 파일명만 교체해서 사용할 예정.-->
 <!--    todo/list-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<!--        접두어-->
         <property name="prefix" value="/WEB-INF/views/"/>
+<!--        접미어-->
         <property name="suffix" value=".jsp"/>
     </bean>
 <!--자비의 애너테이션 @Controller 이용하려면, 등록된 파일의 위치 패키지를 시스템에 설정해야됨-->
