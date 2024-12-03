@@ -25,4 +25,15 @@
     </bean>
 <!--자비의 애너테이션 @Controller 이용하려면, 등록된 파일의 위치 패키지를 시스템에 설정해야됨-->
     <context:component-scan base-package="com.busanit501.springex.controller"/>
+
+<!--    LocalDate타입을 문자열 타입으로 형변환 해주는 기능을 시스템에 빈(객체)으로 등록-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+<!--        여기 속성에 우리가 만든 클래스 경로 지정하기-->
+        <property name="formatters">
+            <set>
+                <bean class="com.busanit501.springex.controller.formatter.LocalDateFormatter"/>
+            </set>
+        </property>
+    </bean>
+
 </beans>
