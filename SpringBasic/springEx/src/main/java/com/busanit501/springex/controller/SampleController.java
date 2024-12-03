@@ -2,6 +2,7 @@ package com.busanit501.springex.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -58,4 +59,11 @@ public class SampleController {
         log.info("ex3 dueDate : " + dueDate);
     }
 
+    // 앞의 예제는 웹 -> 서버로 전달, 서버로 확인
+    // 이번에는 방향이 반대, 서버 -> 웹으로, 화면에 데이터 탑재 전달
+    @GetMapping("/ex4")
+    public void ex4(Model model) {
+        log.info("ex4 model , 서버에서 데이터 전달: ");
+        model.addAttribute("msg", "안녕하세요");
+    }
 }
