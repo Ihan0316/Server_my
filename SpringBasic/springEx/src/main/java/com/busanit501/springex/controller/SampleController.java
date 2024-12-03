@@ -52,10 +52,10 @@ public class SampleController {
     // 받을때 타입 불일치 오류 확인
     // localhost:8080/ex3?dueDate=2024-12-03
     // 대책 -> 미리 형이 다른 문자열에 대해 localdate를 파싱,string타입으로
+    // formatter 이용, 파일 분리, 시스템에 빈 등록
+    // LocalDate가 문자열로 전송되어도, 시스템이 자동으로 LocalDate로 형변환 해줌
     public void ex3(LocalDate dueDate) {
         log.info("ex3 dueDate : " + dueDate);
     }
-
-    //formatter 이용
 
 }
