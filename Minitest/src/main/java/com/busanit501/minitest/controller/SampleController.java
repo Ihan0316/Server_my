@@ -27,12 +27,15 @@ public class SampleController {
         return "helloTest";
     }
 
+    // localhost:8080/ex1?name=ihan&age=26
     @GetMapping("/ex1")
     public void ex1(String name, int age) {
         log.info("ex1 name : " + name);
         log.info("ex1 age : " + age);
     }
 
+    // localhost:8080/ex2
+    // localhost:8080/ex2?name=ihan&age=26
     @GetMapping("/ex2")
     public void ex2(@RequestParam(name = "name", defaultValue = "JIH") String name,
                     @RequestParam(name = "age", defaultValue = "30") int age) {
@@ -40,9 +43,10 @@ public class SampleController {
         log.info("ex2 age : " + age);
     }
 
+    // localhost:8080/ex3?fdueDate=2024-12-03
     @GetMapping("/ex3")
-    public void ex3(LocalDate dueDate) {
-        log.info("ex3 dueDate : " + dueDate);
+    public void ex3(LocalDate fdueDate) {
+        log.info("ex3 fdueDate : " + fdueDate);
     }
 
     @GetMapping("/ex4")
@@ -53,6 +57,7 @@ public class SampleController {
                 "                </script>");
     }
 
+    // http://localhost:8080/ex5?foodName=국밥&chefName=ihan
     @GetMapping("/ex5")
     public void ex5(FoodDTO foodDTO) {
         log.info("ex5 : " + foodDTO);
@@ -61,8 +66,8 @@ public class SampleController {
     @GetMapping("/ex6")
     public String ex6(RedirectAttributes redirectAttributes) {
         log.info("ex6");
-        redirectAttributes.addAttribute("msg", "test data");
-        redirectAttributes.addFlashAttribute("msg2", "일회용으로 사용");
+        redirectAttributes.addAttribute("msg", "test-food data");
+        redirectAttributes.addFlashAttribute("msg2", "food-일회용으로 사용");
 
         return "redirect:/ex7";
     }
