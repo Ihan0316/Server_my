@@ -87,13 +87,22 @@ public class SampleController {
     // 2) 일화용으로 데이터 전달 예시
     @GetMapping("/ex6")
     public String ex6(RedirectAttributes redirectAttributes) {
-        log.info("ex6 : " + redirectAttributes);
+        log.info("ex6");
         // 키:값으로 데이터 전달
         // 서버 -> 웹으로 전달
         // 화면에서 데이터 탑재 후 전달
-        redirectAttributes.addAttribute("msg", "잘 보고이써여");
+        // 주의사항 : 퀴리스트링으로 보냄(http://localhost:8080/ex7?msg=test+data) -> ex7에서 받는 변수가 필요함
+        redirectAttributes.addAttribute("msg", "test data");
+        // 화면에서 일회용으로 바로 사용 가능
         redirectAttributes.addFlashAttribute("msg2", "일회용으로 사용");
 
         return "redirect:/ex7";
+    }
+
+    @GetMapping("/ex7")
+    public void ex7(String msg, Model model) {
+        log.info("ex7");
+        log.info("msg : " + msg);
+        model.addAttribute("msg", msg);
     }
 }
