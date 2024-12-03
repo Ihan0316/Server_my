@@ -1,7 +1,8 @@
-package com.busanit501.springex.sample.mapper;
+package com.busanit501.springex.sample.service;
 
-import com.busanit501.springex.domain.TodoVO;
-import com.busanit501.springex.mapper.TodoMapper;
+import com.busanit501.springex.dto.TodoDTO;
+import com.busanit501.springex.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,25 +15,23 @@ import java.time.LocalDate;
 @Log4j2
 @ExtendWith(SpringExtension.class) //JUnit5 테스트 설정.
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
-public class TodoMapperTest {
+//@RequiredArgsConstructor
+public class TodoServiceTest {
+    // 방법1
+    @Autowired
+    private TodoService todoService;
 
-    @Autowired(required = false)
-    private TodoMapper todoMapper;
+    // 방법2
+//    private final TodoService todoService;
 
     @Test
-    public void testGetTime() {
-        log.info("getTime : " + todoMapper.getTime());
-    }
-
-    @Test
-    public void testInsert() {
-        // 더미 데이터 만들어서 TodoVO에 담아서 진행
-        TodoVO todoVO = TodoVO.builder()
-                .title("샘플데이터")
+    public void testRegister() {
+        TodoDTO todoDTO = TodoDTO.builder()
+                .title("샘플 데이터 서비스 입력")
                 .dueDate(LocalDate.now())
                 .writer("조이한")
                 .build();
 
-        todoMapper.insert(todoVO);
+    todoService.register(todoDTO);
     }
 }
