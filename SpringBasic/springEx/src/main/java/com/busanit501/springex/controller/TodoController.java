@@ -1,5 +1,6 @@
 package com.busanit501.springex.controller;
 
+import com.busanit501.springex.dto.TodoDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,8 @@ public class TodoController {
 
     // 2) 글작성 로직 처리 -> post
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void registerPost() {
+    public void registerPost(TodoDTO todoDTO) {
         log.info("TodoController register post 로직처리");
+        log.info("TodoController register post todoDTO : " + todoDTO);
     }
 }
