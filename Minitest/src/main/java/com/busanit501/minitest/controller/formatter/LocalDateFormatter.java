@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-// LocalDate와 String 간의 미리 형변환 작업 기능
-// 기능 사용하기 위해 servlet-context 시스템 빈에 등록하기
 public class LocalDateFormatter implements Formatter<LocalDate> {
 
     @Override
