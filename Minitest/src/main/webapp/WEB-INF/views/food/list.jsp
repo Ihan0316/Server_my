@@ -57,7 +57,7 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <%--                        Todo list 여기에 작성--%>
+                        <%--                        Food list 여기에 작성--%>
                         <h5 class="card-title">리스트 목록</h5>
                         <table class="table">
                             <thead>
@@ -75,7 +75,11 @@
                             <c:forEach items="${list}" var="dto">
                                 <tr>
                                     <th scope="row"><c:out value="${dto.fno}"></c:out></th>
-                                    <td><c:out value="${dto.foodName}"></c:out></td>
+                                    <td>
+                                        <a href="/food/read?fno=${dto.fno}" class="text-decoration-none">
+                                            <c:out value="${dto.foodName}"></c:out>
+                                        </a>
+                                    </td>
                                     <td><c:out value="${dto.chefName}"></c:out></td>
                                     <td><c:out value="${dto.dueDate}"></c:out></td>
                                     <td><c:out value="${dto.finished}"></c:out></td>
@@ -83,7 +87,7 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                        <%--                        Todo list 여기에 작성--%>
+                        <%--                        Food list 여기에 작성--%>
                     </div>
                 </div>
                 <!--        카드 끝 부분-->

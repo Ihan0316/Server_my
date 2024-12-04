@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -47,6 +48,31 @@ public class FoodController {
         }
         //검사가 통과가 되고, 정상 입력
         foodService.register(foodDTO);
+        return "redirect:/food/list";
+    }
+
+
+    @RequestMapping("/read")
+    public void read(Long fno, Model model) {
+        log.info("FoodController read");
+        FoodDTO foodDTO = foodService.getOne(fno);
+        log.info("FoodController read 데이터 유무 확인 :" + foodDTO);
+        model.addAttribute("foodDTO", foodDTO);
+    }
+
+    // 수정, 수정폼, 로직
+    @RequestMapping("/update")
+    public void update(Long fno, Model model) {
+        log.info("FoodController update");
+        FoodDTO foodDTO = foodService.getOne(fno);
+        log.info("FoodController update 데이터 유무 확인 :" + foodDTO);
+        model.addAttribute("foodDTO", foodDTO);
+    }
+
+    // 삭제
+    @PostMapping("/delete")
+    public String delete(Long fno) {
+        foodService.delete(fno);
         return "redirect:/food/list";
     }
 }

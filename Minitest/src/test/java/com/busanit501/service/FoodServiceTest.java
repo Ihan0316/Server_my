@@ -37,4 +37,15 @@ public class FoodServiceTest {
             log.info("foodDTO : " + foodDTO);
         }
     }
+
+    @Test
+    public void testGetOne() {
+        FoodDTO foodDTO = foodService.getOne(4L);
+        log.info(foodDTO);
+    }
+
+    @Test
+    public void testDelete() {
+        foodService.delete(4L);
+    }
 }

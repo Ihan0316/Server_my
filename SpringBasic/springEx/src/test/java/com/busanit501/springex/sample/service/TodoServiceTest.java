@@ -48,4 +48,9 @@ public class TodoServiceTest {
        TodoDTO todoDTO = todoService.getOne(4L);
        log.info(todoDTO);
     }
+
+    @Test
+    public void testDelete() {
+        todoService.delete(4L);
+    }
 }

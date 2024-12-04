@@ -44,4 +44,15 @@ public class FoodMapperTest {
             log.info(foodVO);
         }
     }
+
+    @Test
+    public void testSelectOne() {
+        FoodVO foodVO = foodMapper.selectOne(4L);
+        log.info("foodVO : " + foodVO);
+    }
+
+    @Test
+    public void testDelete() {
+        foodMapper.delete(6L);
+    }
 }

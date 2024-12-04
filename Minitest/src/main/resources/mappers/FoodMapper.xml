@@ -17,4 +17,12 @@
     <select id="selectAll" resultType="com.busanit501.minitest.domain.FoodVO">
         select * from tbl_ftodo order by fno desc
     </select>
+
+    <select id="selectOne" resultType="com.busanit501.minitest.domain.FoodVO">
+        select * from tbl_ftodo where fno = #{fno}
+    </select>
+
+    <delete id="delete">
+        delete from tbl_ftodo where fno = #{fno}
+    </delete>
 </mapper>

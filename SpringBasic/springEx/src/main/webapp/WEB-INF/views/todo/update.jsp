@@ -58,7 +58,7 @@
                     </div>
                     <div class="card-body">
                         <%--                        Todo 입력 폼 여기에 작성--%>
-<%--                        <form action="/todo/register" method="post">--%>
+                        <form action="/todo/update" method="post">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Tno</span>
                                 <input type="text" name="tno" class="form-control" readonly
@@ -66,13 +66,13 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
-                                <input type="text" name="title" class="form-control" readonly
+                                <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요"
                                        value=<c:out value="${todoDTO.title}"/>>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
-                                <input type="date" name="dueDate" class="form-control" readonly
+                                <input type="date" name="dueDate" class="form-control"
                                        value=<c:out value="${todoDTO.dueDate}"/>>
                             </div>
 
@@ -83,16 +83,17 @@
                             </div>
                             <div class="input-group mb-3">
                                 <label class="form-check-label">Finished &nbsp</label>
-                                <input type="checkbox" name="finished" class="form-check-input" readonly
+                                <input type="checkbox" name="finished" class="form-check-input"
                                        ${todoDTO.finished ? "checked" : ""}>
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
-                                    <button type="button" class="btn btn-primary">수정하기</button>
+                                    <button type="button" class="btn btn-primary">적용하기</button>
+                                    <button type="button" class="btn btn-danger">삭제하기</button>
                                     <button type="button" class="btn btn-secondary">목록가기</button>
                                 </div>
                             </div>
-<%--                        </form>--%>
+                        </form>
                         <%--                        Todo 입력 폼 여기에 작성--%>
 
                     </div>
@@ -134,6 +135,25 @@
         // 수정폼으로 가야한다, tno번호가 필요함
         self.location = "/todo/update?tno="+${todoDTO.tno}, false
     })
+</script>
+
+<%--삭제하기--%>
+<script>
+    document.querySelector(".btn-danger").addEventListener("click", function (e) {
+        // 폼에서 필요한 tno 가져오기
+        const formObj = document.querySelector("form")
+
+        // 기본 폼 방식으로 전달하는 기본 기능 제거,
+        e.preventDefault()
+        e.stopPropagation() // 상위태그로 전파 방지
+        // 삭제시 post 로 필요한 tno 전달
+        // formObj, 원래 action = /todo/update
+        // 속성을 변경 가능, 임시로 삭제 url 변경
+        formObj.action = "/todo/delete"
+        formObj.method = "post"
+        // todoDTO 모든 멤버가 같이 전달
+        formObj.submit()
+      }, false)
 </script>
 
 <%--목록가기--%>

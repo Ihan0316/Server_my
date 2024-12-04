@@ -57,34 +57,34 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <%--                        Todo 입력 폼 여기에 작성--%>
-<%--                        <form action="/todo/register" method="post">--%>
+                        <%--                        Food 입력 폼 여기에 작성--%>
+<%--                        <form action="/food/register" method="post">--%>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Tno</span>
-                                <input type="text" name="tno" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.tno}"/> >
+                                <span class="input-group-text">Fno</span>
+                                <input type="text" name="fno" class="form-control" readonly
+                                       value=<c:out value="${foodDTO.fno}"/> >
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Title</span>
-                                <input type="text" name="title" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.title}"/>>
+                                <span class="input-group-text">FoodName</span>
+                                <input type="text" name="foodName" class="form-control" readonly
+                                       value=<c:out value="${foodDTO.foodName}"/>>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
                                 <input type="date" name="dueDate" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.dueDate}"/>>
+                                       value=<c:out value="${foodDTO.dueDate}"/>>
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Writer</span>
-                                <input type="text" name="writer" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.writer}"/>>
+                                <span class="input-group-text">ChefName</span>
+                                <input type="text" name="chefName" class="form-control" readonly
+                                       value=<c:out value="${foodDTO.chefName}"/>>
                             </div>
                             <div class="input-group mb-3">
                                 <label class="form-check-label">Finished &nbsp</label>
                                 <input type="checkbox" name="finished" class="form-check-input" readonly
-                                       ${todoDTO.finished ? "checked" : ""}>
+                                       ${foodDTO.finished ? "checked" : ""}>
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
 <%--                        </form>--%>
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Food 입력 폼 여기에 작성--%>
 
                     </div>
                 </div>
@@ -131,15 +131,14 @@
 <%--수정폼--%>
 <script>
     document.querySelector(".btn-primary").addEventListener("click", function (e) {
-        // 수정폼으로 가야한다, tno번호가 필요함
-        self.location = "/todo/update?tno="+${todoDTO.tno}, false
+        self.location = "/food/update?fno="+${foodDTO.fno}, false
     })
 </script>
 
 <%--목록가기--%>
 <script>
     document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/todo/list", false
+        self.location = "/food/list", false
     })
 </script>
 

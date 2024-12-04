@@ -11,4 +11,8 @@ public interface FoodMapper {
     void insert(FoodVO foodVO);
 
     List<FoodVO> selectAll();
+
+    FoodVO selectOne(Long fno);
+
+    void delete(Long fno);
 }
