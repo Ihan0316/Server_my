@@ -5,12 +5,14 @@ import com.busanit501.springex.service.TodoService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller // 화면, 데이터 제공
 @RequestMapping("/todo") // 경로지정, /todo 경로로 오는 모든 url은 이 컨트롤ㄹ가 받아서 작업함
@@ -21,8 +23,13 @@ public class TodoController {
 
     // localhost:8080/todo/list
     @RequestMapping("/list")
-    public void list() {
+    public void list(Model model) {
         log.info("TodoController list : 화면제공은 해당 메서드 명으로 제공함");
+        List<TodoDTO> list = todoService.getAll();
+        log.info("TodoController list 데이터 유무 확인 :" + list);
+        // 서버는 웹에 응답을 해야 됨
+        // 데이터 탑재 -> 서버 -> 웹
+        model.addAttribute("list", list);
     }
 
     // localhost:8080/todo/register
