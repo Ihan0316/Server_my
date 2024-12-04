@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.busanit501.minitest.mapper.FoodMapper">
+    <select id="getTime" resultType="string">
+        select now()
+    </select>
+
+<!--    #{title} -> TodoVO, getTitle 과 동일-->
+    <insert id="insert">
+        insert into tbl_ftodo (foodName, dueDate, chefName) values (#{foodName}, #{dueDate}, #{chefName})
+    </insert>
+
+<!--    여러개 행 조회, 각 행의 요소, TodoVO-->
+    <select id="selectAll" resultType="com.busanit501.minitest.domain.FoodVO">
+        select * from tbl_ftodo order by fno desc
+    </select>
+</mapper>
