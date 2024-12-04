@@ -73,8 +73,8 @@
                                 <input type="text" name="writer" class="form-control" placeholder="작성자 입력해주세요">
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Finished</span>
-                                <input type="checkbox" name="finished" class="form-control">
+                                <span class="form-check-label">Finished</span>
+                                <input type="checkbox" name="finished" class="form-check-label">
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
