@@ -12,4 +12,9 @@
     <insert id="insert">
         insert into tbl_todo (title, dueDate, writer) values (#{title}, #{dueDate}, #{writer})
     </insert>
+
+<!--    여러개 행 조회, 각 행의 요소, TodoVO-->
+    <select id="selectAll" resultType="com.busanit501.springex.domain.TodoVO">
+        select * from tbl_todo order by tno desc
+    </select>
 </mapper>

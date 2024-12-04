@@ -1,20 +1,24 @@
 package com.busanit501.springex.controller;
 
 import com.busanit501.springex.dto.TodoDTO;
+import com.busanit501.springex.service.TodoService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller // 화면, 데이터 제공
 @RequestMapping("/todo") // 경로지정, /todo 경로로 오는 모든 url은 이 컨트롤ㄹ가 받아서 작업함
 @Log4j2
 public class TodoController {
+    @Autowired
+    private TodoService todoService;
+
     // localhost:8080/todo/list
     @RequestMapping("/list")
     public void list() {
@@ -30,7 +34,7 @@ public class TodoController {
 
     // 2) 글작성 로직 처리 -> post
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    //@Valid TodoDTO todoDTO -> 검사 대상 클래스
+    // @Valid TodoDTO todoDTO -> 검사 대상 클래스
     // BindingResult bindingResult -> 검사 결과의 오류를 모아두는 임시 저장소
     // RedirectAttributes redirectAttributes -> 서버-> 웹, 데이터를 전달하는 도구
     public String registerPost(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -45,6 +49,7 @@ public class TodoController {
             return "redirect:/todo/register";
         }
         //검사가 통과가 되고, 정상 입력
+        todoService.register(todoDTO);
         return "redirect:/todo/list";
     }
 }

@@ -94,9 +94,9 @@
         </div>
         <!--        class="row content"-->
     </div>
-    <div class="row content">
-        <h1>Content</h1>
-    </div>
+<%--    <div class="row content">--%>
+<%--        <h1>Content</h1>--%>
+<%--    </div>--%>
     <div class="row footer">
         <!--        <h1>Footer</h1>-->
         <div class="row fixed-bottom" style="z-index: -100">
@@ -106,7 +106,8 @@
         </div>
     </div>
 </div>
-입력 폼 관련 유효성 체크, 서버로부터 errors 키로 값을 받아오면
+<%--입력 폼에 관련 유효성 체크, 서버로부터  errors 키로 값을 받아오면, --%>
+<%--자바스크립 콘솔에 임시 출력.--%>
 <script>
     const serverValidResult = {};
     // jstl 반복문 이용하여 서버로부터 넘어온 에러 종류를 하나씩 출력
