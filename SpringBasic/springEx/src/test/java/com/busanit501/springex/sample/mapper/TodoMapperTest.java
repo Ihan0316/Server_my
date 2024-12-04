@@ -44,4 +44,10 @@ public class TodoMapperTest {
             log.info(todoVO);
         }
     }
+
+    @Test
+    public void testSelectOne() {
+        TodoVO todoVO = todoMapper.selectOne(4L);
+        log.info("todoVO : " + todoVO);
+    }
 }
