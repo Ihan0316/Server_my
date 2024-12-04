@@ -59,6 +59,7 @@
                     <div class="card-body">
                         <%--                        Todo list 여기에 작성--%>
                         <h5 class="card-title">리스트 목록</h5>
+                            <button type="button" class="btn btn-secondary insertTodoBtn">글쓰기</button>
                             <table class="table">
                                 <thead>
 <%--                                소제목--%>
@@ -75,7 +76,11 @@
                                     <c:forEach items="${list}" var="dto">
                                         <tr>
                                             <th scope="row"><c:out value="${dto.tno}"></c:out></th>
-                                            <td><c:out value="${dto.title}"></c:out></td>
+                                            <td>
+                                                <a href="/todo/read?tno=${dto.tno}" class="text-decoration-none">
+                                                    <c:out value="${dto.title}"></c:out>
+                                                </a>
+                                            </td>
                                             <td><c:out value="${dto.writer}"></c:out></td>
                                             <td><c:out value="${dto.dueDate}"></c:out></td>
                                             <td><c:out value="${dto.finished}"></c:out></td>
@@ -115,6 +120,11 @@
     console.log(serverValidResult)
 </script>
 
+<script>
+    document.querySelector(".insertTodoBtn").addEventListener("click", function (e) {
+        self.location = "/todo/register"
+            , false})
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
