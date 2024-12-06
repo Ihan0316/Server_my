@@ -31,18 +31,19 @@ public class PageRequestDTO {
     @Positive
     private int size = 10;
 
-    // 목록에서 상세보기 이동시 페이지 정보를 쿼리로 전달하는 용도의 멤버
+    //목록 -> 상세보기 화면 이동시, 페이지 정보를 쿼리 스트링으로 전달하는 용도 멤버
     private String link;
 
-    // 검색&필터 관련 조건
-    // 1. 검색어
+    // 검색 또는 필터 관련 조건
+    // 1, 검색어
     private String keyword;
-    // 2. 검색유형 1) 제목,t 2)작성자,w 3)제목 + 작성자,tw
+    //2, 검색 유형 ,1) 제목,t 2) 작성자,w 3) 제목 + 작성자,tw
     private String[] types;
-    // 3. todo 완료여부
+    //3, todo 완료 여부
     private boolean finished;
-    // 4. 기한
+    //4, 기한 1
     private LocalDate from;
+    //4, 기한 2
     private LocalDate to;
 
     // 데이터를 얼마나 스킵 할지 정할 기능.
@@ -50,11 +51,11 @@ public class PageRequestDTO {
         return (page-1)*size;
     }
 
-    // 페이징 정보를 쿼리에 반환하는 메서드
-    // 예시) http://localhost:8080/todo/list&page=7&size=10
-    // page=7&size=10 이 문자열을 생성해주는 기능
+    // 페이징 정보를 쿼리 스트링 형식으로 반환 하는 메서드
+    // 예시 ) http://localhost:8080/todo/list&page=7&size=10
+    // page=7&size=10 , 문자열 생성해주는 기능.
     public String getLink() {
-        if (link == null) {
+        if(link==null){
             StringBuilder builder = new StringBuilder();
             builder.append("page=" + this.page);
             builder.append("&size=" + this.size);
@@ -63,7 +64,6 @@ public class PageRequestDTO {
         }
         return link;
     }
-
 }
 
 
