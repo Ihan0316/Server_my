@@ -78,12 +78,13 @@ public class TodoMapperTest {
         // 페이징 준비물을 담은 PageRequestDTO 필요함,
         // 더미로 PageRequestDTO 만들고,
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-                .page(2)
+                .page(1)
                 .size(10)
-                .types(null)
-                .from(LocalDate.of(2024,12,05))
-                .to(LocalDate.of(2024,12,06))
-                .finished(false)
+                .keyword("입력")
+                .types(new String[]{"t", "w"})
+                .from(LocalDate.of(2023,11,01))
+                .to(LocalDate.of(2025,12,31))
+                .finished(true)
                 .build();
         // 검색, 필터 조건 sql 작성중
         // where , and 조건이 어떻게 sql 문장이 구성 되는지 각각의 과정을 보기.
@@ -98,6 +99,11 @@ public class TodoMapperTest {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .size(10)
+                .keyword("입력")
+                .types(new String[]{"t", "w"})
+                .from(LocalDate.of(2024,12,05))
+                .to(LocalDate.of(2024,12,06))
+                .finished(true)
                 .build();
         int total = todoMapper.getCount(pageRequestDTO);
         log.info("total : " + total);

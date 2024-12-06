@@ -91,54 +91,68 @@
     <!--    select * from tbl_todo -->
     <!--    WHERE finished = 1 order by tno desc limit ?, ?-->
 
-<!--    6번째 필터2, 기한 from, to 조건으로 할때-->
-<!--    select * from tbl_todo -->
-<!--    WHERE finished = 1 and dueDate between ? and ? order by tno desc limit ?, ?-->
+    <!--    6번째 필터2, 기한 from, to 를 조건으로 할 때,-->
+    <!--    select * from tbl_todo -->
+    <!--    WHERE finished = 1 and dueDate between ? and ? order by tno desc limit ?, ?-->
 
-<!--    6번째 필터2, 필터 1개 없는 경우, and없는 부분 확인-->
-<!--    select * from tbl_todo -->
-<!--    WHERE dueDate between ? and ? order by tno desc limit ?, ?-->
+    <!--    6번째 필터2, 필터 조건 1개인 경우, and 없는 부분 확인-->
+    <!--    select * from tbl_todo -->
+    <!--    WHERE dueDate between ? and ? order by tno desc limit ?, ?-->
+
+    <!--    완성된 sql, 최종 문장 구조-->
+    <!--    select * from tbl_todo -->
+    <!--    WHERE -->
+    <!--    ( -->
+    <!--    title like concat('%',?,'%') -->
+    <!--    OR -->
+    <!--    writer like concat('%',?,'%') -->
+    <!--    ) -->
+    <!--    and finished = 1 -->
+    <!--    and dueDate between ? and ? -->
+    <!--    order by tno desc limit ?, ?-->
+
     <select id="selectList" resultType="com.busanit501.springex.domain.TodoVO">
         select * from tbl_todo
-        <include refid="search"/>
+        <include refid="search"></include>
         order by tno desc limit #{skip}, #{size}
     </select>
 
     <select id="getCount" resultType="int">
-        select count(tno)
-        <include refid="search"/>
-        from tbl_todo
+        select count(tno) from tbl_todo
+        <include refid="search"></include>
     </select>
 
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length >0">
+                <foreach collection="types" item="type"
+                         open="(" close=")" separator="OR">
 
-<sql id="search">
-    <where>
-        <if test="types != null and types.length >0">
-            <foreach collection="types" item="type"
-                     open="(" close=")" separator="OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        writer like concat('%',#{keyword},'%')
+                    </if>
+                </foreach>
+            </if>
 
-                <if test="type == 't'.toString()">
-                    title like concat('%',#{keyword},'%')
-                </if>
-                <if test="type == 'w'.toString()">
-                    writer like concat('%',#{keyword},'%')
-                </if>
-            </foreach>
-        </if>
+            <if test="finished">
+                <trim prefix="and">
+                    finished = 1
+                </trim>
+            </if>
 
-        <if test="finished">
-            <trim prefix="and">
-                finished = 1
-            </trim>
-        </if>
+            <if test="from != null and to != null">
+                <trim prefix="and">
+                    dueDate between #{from} and #{to}
+                </trim>
+            </if>
 
-        <if test="from != null and to != null">
-            <trim prefix="and">
-                dueDate between #{from} and #{to}
-            </trim>
-        </if>
-    </where>
-</sql>
+        </where>
+    </sql>
+
+
 </mapper>
 
 
