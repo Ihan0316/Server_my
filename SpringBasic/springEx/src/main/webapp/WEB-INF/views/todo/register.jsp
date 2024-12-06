@@ -1,11 +1,11 @@
 <!doctype html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Todo register</title>
+    <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="form-check-label">Finished</span>
-                                <input type="checkbox" name="finished" class="form-check-label">
+                                <input type="checkbox" name="finished" class="form-check-input">
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
@@ -85,6 +85,7 @@
                             </div>
                         </form>
                         <%--                        Todo 입력 폼 여기에 작성--%>
+
                     </div>
                 </div>
                 <!--        카드 끝 부분-->
@@ -105,17 +106,17 @@
         </div>
     </div>
 </div>
-<%--입력 폼에 관련 유효성 체크, 서버로부터  errors 키로 값을 받아오면, --%>
+<%--입력 폼에 관련 유효성 체크, 서버로부터  erros 키로 값을 받아오면, --%>
 <%--자바스크립 콘솔에 임시 출력.--%>
 <script>
-    const serverValidResult = {};
-    // jstl 반복문 이용하여 서버로부터 넘어온 에러 종류를 하나씩 출력
-    <c:forEach items = "${errors}" var = "error">
+    const serverValidResult = {    };
+    // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
+    //     하나씩 꺼내서, 출력하는 용도.,
+    <c:forEach items="${errors}" var="error">
     serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>
     console.log(serverValidResult)
 </script>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

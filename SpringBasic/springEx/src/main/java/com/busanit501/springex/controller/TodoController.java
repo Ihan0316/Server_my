@@ -35,9 +35,9 @@ public class TodoController {
     // 기존 전체 페이지 출력 -> 페이징 처리된 목록 요소만 출력.
 //    public void list(Model model) {
     public String list(@Valid PageRequestDTO pageRequestDTO,
-                       BindingResult bindingResult,
-                       RedirectAttributes redirectAttributes,
-                       Model model) {
+                     BindingResult bindingResult,
+                     RedirectAttributes redirectAttributes,
+                     Model model) {
         log.info("TodoController list : 화면제공은 해당 메서드 명으로 제공함.");
         if (bindingResult.hasErrors()) {
             log.info("has errors : 유효성 에러가 발생함.");

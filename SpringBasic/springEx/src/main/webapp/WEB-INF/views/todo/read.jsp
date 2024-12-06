@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Todo read</title>
+    <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -62,24 +62,24 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Tno</span>
                                 <input type="text" name="tno" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.tno}"/> >
+                                       value=<c:out value="${todoDTO.tno}"></c:out> >
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
                                 <input type="text" name="title" class="form-control" readonly
-                                       value='<c:out value="${todoDTO.title}"/>'>
+                                       value='<c:out value="${todoDTO.title}"></c:out>'>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
                                 <input type="date" name="dueDate" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.dueDate}"/>>
+                                       value=<c:out value="${todoDTO.dueDate}"></c:out>>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Writer</span>
                                 <input type="text" name="writer" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.writer}"/>>
+                                       value=<c:out value="${todoDTO.writer}"></c:out>>
                             </div>
                             <div class="input-group mb-3">
                                 <label class="form-check-label">Finished &nbsp</label>
@@ -127,20 +127,20 @@
     console.log(serverValidResult)
 </script>
 
-<%--목록가기, 수정폼 가기 이벤트 리스너--%>
-<%--수정폼--%>
+<%--목록가기 및 수정폼 가기 이벤트 리스너--%>
 <script>
-    document.querySelector(".btn-primary").addEventListener("click", function (e) {
-        // 수정폼으로 가야한다, tno번호가 필요함
-        self.location = `/todo/update?tno=${todoDTO.tno}&${pageRequestDTO.link}`, false
-    })
-</script>
-
-<%--목록가기--%>
-<script>
-    document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/todo/list?${pageRequestDTO.link}", false
-    })
+    // 수정폼
+    document.querySelector(".btn-primary").addEventListener("click",
+    function (e){
+        // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
+        self.location = `/todo/update?tno=${todoDTO.tno}&${pageRequestDTO.link}`
+    ,false})
+    // 목록
+    document.querySelector(".btn-secondary").addEventListener("click",
+        function (e){
+            // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
+            self.location = "/todo/list?${pageRequestDTO.link}"
+                ,false})
 </script>
 
 
