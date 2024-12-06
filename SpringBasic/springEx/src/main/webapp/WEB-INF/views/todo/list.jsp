@@ -97,10 +97,10 @@
                         <div class="float-end">
                             <ul class="pagination">
                                 <%--                                    이전 버튼--%>
-                                <%--                                페이징 이벤트 처리시, 직접 링크 부분에 추가 할수 있지만,--%>
-                                <%--                                    그러면, 동적으로 각 페이지 번호에 맞게 넣는 작업이 어려움, --%>
-                                <%--                                    data-num 변수처럼, 각각의 페이지 번호를 동적으로 표시하고, --%>
-                                <%--                                    자바스크립트로 진행하기--%>
+<%--                                페이징 이벤트 처리시, 직접 링크 부분에 추가 할수 있지만,--%>
+<%--                                    그러면, 동적으로 각 페이지 번호에 맞게 넣는 작업이 어려움, --%>
+<%--                                    data-num 변수처럼, 각각의 페이지 번호를 동적으로 표시하고, --%>
+<%--                                    자바스크립트로 진행하기--%>
                                 <c:if test="${pageResponseDTO.prev}">
                                     <li class="page-item">
                                         <a class="page-link" data-num = "${pageResponseDTO.page - 1}">Previous</a>
@@ -110,10 +110,10 @@
                                 <%--                                    반복문을 이용해서, 출력하기--%>
                                 <c:forEach begin="${pageResponseDTO.start}"
                                            end="${pageResponseDTO.end}" var="num">
-                                    <%--                                    현재 페이지 번호, 표시하는 페이지 번호가 일치한다면, 액티브 속성 추가 --%>
+<%--                                    현재 페이지 번호, 표시하는 페이지 번호가 일치한다면, 액티브 속성 추가 --%>
 
                                     <li class="page-item ${pageResponseDTO.page == num ? "active" : ""}"
-                                    ><a class="page-link" data-num = "${num}" href="#">${num}</a></li>
+                                        ><a class="page-link" data-num = "${num}" href="#">${num}</a></li>
                                 </c:forEach>
 
 
@@ -170,21 +170,21 @@
     // 해당 번호를 가지고, 링크 이동하는 이벤트 추가.
     // <ul class="pagination"> ,기준으로 하위 a 태그에 접근 하기.
     document.querySelector(".pagination").addEventListener("click",
-        function (e) {
-            e.preventDefault()
-            e.stopPropagation()
-            // a 태그에 접근 할려면, 해당 요소 선택자 필요.
-            const target = e.target
-            //  a 태그 인경우에 이벤트 리스너 동작을하고,
-            // a 태그 가 아니면, 이벤트 처리 안함.
-            if(target.tagName !== "A") {
-                return
-            }
-            const num = target.getAttribute("data-num")
+    function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        // a 태그에 접근 할려면, 해당 요소 선택자 필요.
+        const target = e.target
+        //  a 태그 인경우에 이벤트 리스너 동작을하고,
+        // a 태그 가 아니면, 이벤트 처리 안함.
+        if(target.tagName !== "A") {
+            return
+        }
+        const num = target.getAttribute("data-num")
 
-            // 백틱, 숫자 키보드 1번 왼쪽에 보면.
-            self.location = `/todo/list?page=\${num}`
-        },false)
+        // 백틱, 숫자 키보드 1번 왼쪽에 보면.
+        self.location = `/todo/list?page=\${num}`
+    },false)
 
 
 </script>

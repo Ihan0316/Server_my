@@ -59,40 +59,43 @@
                     <div class="card-body">
                         <%--                        Todo 입력 폼 여기에 작성--%>
                         <form action="/todo/update" method="post">
-<%--                            수정 또는 삭제 처리 후 페이징 정보를 전달하려면--%>
-<%--                            input에 hidden으로 숨겨서, 페이지정보, 사이즈 정보 전달--%>
+                            <%--                            수정/삭제 처리 후 페이징 정보를 전달하려면, --%>
+                            <%--                            input 히든으로 숨겨서, 페이지정보, 사이즈 정보를 전달. --%>
                             <input type="hidden" name="page" value="${pageRequestDTO.page}">
                             <input type="hidden" name="size" value="${pageRequestDTO.size}">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Tno</span>
                                 <input type="text" name="tno" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.tno}"/>>
+                                       value=
+                                <c:out value="${todoDTO.tno}"></c:out>>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
                                 <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요"
-                                       value='<c:out value="${todoDTO.title}"/>'>
+                                       value='<c:out value="${todoDTO.title}"></c:out>'>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
                                 <input type="date" name="dueDate" class="form-control"
-                                       value=<c:out value="${todoDTO.dueDate}"/>>
+                                       value=<c:out value="${todoDTO.dueDate}"></c:out>>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Writer</span>
                                 <input type="text" name="writer" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.writer}"/>>
+                                       value=<c:out value="${todoDTO.writer}"></c:out>>
                             </div>
                             <div class="input-group mb-3">
                                 <label class="form-check-label">Finished &nbsp</label>
                                 <input type="checkbox" name="finished" class="form-check-input"
-                                       ${todoDTO.finished ? "checked" : ""}>
+                                ${todoDTO.finished ? "checked" : ""}>
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
-                                    <button type="submit" class="btn btn-primary">적용하기</button>
+                                    <%--  방법1--%>
+                                    <%--<button type="submit" class="btn btn-primary">적용하기</button>--%>
+                                    <button type="button" class="btn btn-primary">적용하기</button>
                                     <button type="button" class="btn btn-danger">삭제하기</button>
                                     <button type="button" class="btn btn-secondary">목록가기</button>
                                 </div>
@@ -108,9 +111,9 @@
         </div>
         <!--        class="row content"-->
     </div>
-<%--    <div class="row content">--%>
-<%--        <h1>Content</h1>--%>
-<%--    </div>--%>
+    <%--    <div class="row content">--%>
+    <%--        <h1>Content</h1>--%>
+    <%--    </div>--%>
     <div class="row footer">
         <!--        <h1>Footer</h1>-->
         <div class="row fixed-bottom" style="z-index: -100">
@@ -123,48 +126,77 @@
 <%--입력 폼에 관련 유효성 체크, 서버로부터  erros 키로 값을 받아오면, --%>
 <%--자바스크립 콘솔에 임시 출력.--%>
 <script>
-    const serverValidResult = {    };
+    const serverValidResult = {};
     // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
     //     하나씩 꺼내서, 출력하는 용도.,
     <c:forEach items="${errors}" var="error">
     serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>
     console.log(serverValidResult)
+
+    const serverValidResult2 = {};
+    // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
+    //     하나씩 꺼내서, 출력하는 용도.,
+    <c:forEach items="${errors2}" var="error">
+    serverValidResult2['${error.getField()}'] = '${error.defaultMessage}'
+    </c:forEach>
+    console.log(serverValidResult2)
 </script>
 
-<%--목록가기, 수정폼 가기 이벤트 리스너--%>
-<%--수정폼--%>
+<%--목록가기 및 수정폼 가기 이벤트 리스너--%>
 <script>
-    document.querySelector(".btn-primary").addEventListener("click", function (e) {
-        // 수정폼으로 가야한다, tno번호가 필요함
-        self.location = "/todo/update?tno="+${todoDTO.tno}, false
-    })
-</script>
+    // 수정폼
+    document.querySelector(".btn-primary").addEventListener("click",
+        function (e) {
+            // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
+            self.location = "/todo/update?tno=" +${todoDTO.tno}
+                , false
+        })
+    // 목록
+    document.querySelector(".btn-secondary").addEventListener("click",
+        function (e) {
+            // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
+            self.location = "/todo/list?${pageRequestDTO.link}"
+                , false
+        })
 
-<%--삭제하기--%>
-<script>
-    document.querySelector(".btn-danger").addEventListener("click", function (e) {
-        // 폼에서 필요한 tno 가져오기
-        const formObj = document.querySelector("form")
+    // 삭제기능.
+    document.querySelector(".btn-danger").addEventListener("click",
+        function (e) {
+            // 폼에서, 필요한  tno가져오기.
+            const formObj = document.querySelector("form")
 
-        // 기본 폼 방식으로 전달하는 기본 기능 제거,
-        e.preventDefault()
-        e.stopPropagation() // 상위태그로 전파 방지
-        // 삭제시 post 로 필요한 tno 전달
-        // formObj, 원래 action = /todo/update
-        // 속성을 변경 가능, 임시로 삭제 url 변경
-        formObj.action = "/todo/delete"
-        formObj.method = "post"
-        // todoDTO 모든 멤버가 같이 전달
-        formObj.submit()
-      }, false)
-</script>
+            // 기본 폼 방식으로 전달하는 기본 기능 제거 하고,
+            e.preventDefault()
+            e.stopPropagation() // 상위 태그로 전파 방지
 
-<%--목록가기--%>
-<script>
-    document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/todo/list?${pageRequestDTO.link}", false
-    })
+            // 삭제시 포스트로, tno 번호를 전달하는 방식.
+            // formObj , 원래 action: /todo/update
+            // 속성을 변경 가능해서, 임시로, 삭제 url 변경.
+            formObj.action = "/todo/delete"
+            formObj.method = "post"
+            // todoDTO 모든 멤버가 같이 전달됨.
+            // tno, title, dueDate, finished, writer
+            formObj.submit()
+        }, false)
+
+    // 방법2
+    //수정 로직 처리
+    document.querySelector(".btn-primary").addEventListener("click",
+        function (e) {
+            // 폼에서, 필요한  tno가져오기.
+            const formObj = document.querySelector("form")
+
+            // 기본 폼 방식으로 전달하는 기본 기능 제거 하고,
+            e.preventDefault()
+            e.stopPropagation() // 상위 태그로 전파 방지
+
+            formObj.action = "/todo/update"
+            formObj.method = "post"
+            // todoDTO 모든 멤버가 같이 전달됨.
+            // tno, title, dueDate, finished, writer
+            formObj.submit()
+        }, false)
 </script>
 
 
