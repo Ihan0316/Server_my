@@ -80,7 +80,10 @@ public class TodoMapperTest {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(2)
                 .size(10)
-                .types(new String[]{"t","w"})
+                .types(null)
+                .from(LocalDate.of(2024,12,05))
+                .to(LocalDate.of(2024,12,06))
+                .finished(false)
                 .build();
         // 검색, 필터 조건 sql 작성중
         // where , and 조건이 어떻게 sql 문장이 구성 되는지 각각의 과정을 보기.

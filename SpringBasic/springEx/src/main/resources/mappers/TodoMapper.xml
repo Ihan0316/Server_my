@@ -52,35 +52,93 @@
     <!--     1번째 과정-->
     <!--     첫번째 조건에서 생성된 sql-->
     <!--     select * from tbl_todo ? ? order by tno desc limit ?, ?-->
+
     <!--     2번째 과정,-->
     <!--    select * from tbl_todo ? ? -->
     <!--     title like concat('%',?,'%')-->
     <!--     writer like concat('%',?,'%')-->
     <!--     order by tno desc limit ?, ?-->
+
+    <!--    3번째 과정-->
+    <!--    select * from tbl_todo -->
+    <!--    ( title like concat('%',?,'%') -->
+    <!--    OR -->
+    <!--    writer like concat('%',?,'%') ) -->
+    <!--    order by tno desc limit ?, ?-->
+
+    <!--    4번째 과정-->
+    <!--    select * from tbl_todo-->
+    <!--    WHERE-->
+    <!--    (-->
+    <!--    title like concat('%',?,'%')-->
+    <!--    OR-->
+    <!--    writer like concat('%',?,'%')-->
+    <!--    )-->
+    <!--    order by tno desc limit ?, ?-->
+
+    <!--    4번째 과정 2, types null 일경우, where 조건이 없는 sql 문장 확인.-->
+    <!--    select * from tbl_todo order by tno desc limit ?, ?-->
+
+    <!--    5번째 과정, 필터 과정. -->
+    <!--    trim 이용해서, -->
+    <!--    앞에 where  조건이 있다면, trim 이용해서 and 붙이고,-->
+    <!--    예시-->
+    <!--    elect * from tbl_todo WHERE ( title like concat('%',?,'%') -->
+    <!--    OR writer like concat('%',?,'%') ) -->
+    <!--    and finished = 1 order by tno desc limit ?, ?-->
+    <!--    -->
+    <!--    앞에 where  조건이 없다면, trim 이용해서 and 안 붙이고,-->
+    <!--    select * from tbl_todo -->
+    <!--    WHERE finished = 1 order by tno desc limit ?, ?-->
+
+<!--    6번째 필터2, 기한 from, to 조건으로 할때-->
+<!--    select * from tbl_todo -->
+<!--    WHERE finished = 1 and dueDate between ? and ? order by tno desc limit ?, ?-->
+
+<!--    6번째 필터2, 필터 1개 없는 경우, and없는 부분 확인-->
+<!--    select * from tbl_todo -->
+<!--    WHERE dueDate between ? and ? order by tno desc limit ?, ?-->
     <select id="selectList" resultType="com.busanit501.springex.domain.TodoVO">
         select * from tbl_todo
-        <foreach collection="types" item="type"
-                 open="(" close=")" separator="OR">
-
-            <if test="type == 't'.toString()">
-                title like concat('%',#{keyword},'%')
-            </if>
-            <if test="type == 'w'.toString()">
-                writer like concat('%',#{keyword},'%')
-            </if>
-
-        </foreach>
-
-
+        <include refid="search"/>
         order by tno desc limit #{skip}, #{size}
     </select>
 
     <select id="getCount" resultType="int">
         select count(tno)
+        <include refid="search"/>
         from tbl_todo
     </select>
 
 
+<sql id="search">
+    <where>
+        <if test="types != null and types.length >0">
+            <foreach collection="types" item="type"
+                     open="(" close=")" separator="OR">
+
+                <if test="type == 't'.toString()">
+                    title like concat('%',#{keyword},'%')
+                </if>
+                <if test="type == 'w'.toString()">
+                    writer like concat('%',#{keyword},'%')
+                </if>
+            </foreach>
+        </if>
+
+        <if test="finished">
+            <trim prefix="and">
+                finished = 1
+            </trim>
+        </if>
+
+        <if test="from != null and to != null">
+            <trim prefix="and">
+                dueDate between #{from} and #{to}
+            </trim>
+        </if>
+    </where>
+</sql>
 </mapper>
 
 
