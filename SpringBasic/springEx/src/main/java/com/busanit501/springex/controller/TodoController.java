@@ -45,7 +45,7 @@ public class TodoController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/list";
         }
-        PageResponseDTO<TodoDTO> pageResponseDTO = todoService.getListWithPage(pageRequestDTO);
+        PageResponseDTO<TodoDTO> pageResponseDTO = todoService.selectList(pageRequestDTO);
         log.info("TodoController list 데이터 유무 확인 :" + pageResponseDTO);
         //데이터 탑재. 서버 -> 웹
         model.addAttribute("pageResponseDTO", pageResponseDTO);

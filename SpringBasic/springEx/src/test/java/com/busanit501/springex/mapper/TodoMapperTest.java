@@ -101,8 +101,8 @@ public class TodoMapperTest {
                 .size(10)
                 .keyword("입력")
                 .types(new String[]{"t", "w"})
-                .from(LocalDate.of(2024,12,05))
-                .to(LocalDate.of(2024,12,06))
+                .from(LocalDate.of(2023,11,01))
+                .to(LocalDate.of(2025,12,31))
                 .finished(true)
                 .build();
         int total = todoMapper.getCount(pageRequestDTO);

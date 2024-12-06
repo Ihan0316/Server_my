@@ -77,10 +77,14 @@ public class TodoServiceTest {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(180)
                 .size(10)
+                .types(new String[]{"t", "w"})
+                .from(LocalDate.of(2023,11,01))
+                .to(LocalDate.of(2025,12,31))
+                .finished(true)
                 .build();
         // PageResponseDTO, 안에는 , page, size, skip, start,end,
         // prev, next,  페이징된 목록 요소들
-        PageResponseDTO<TodoDTO> list = todoService.getListWithPage(pageRequestDTO);
+        PageResponseDTO<TodoDTO> list = todoService.selectList(pageRequestDTO);
         list.getDtoList().stream().forEach(dto -> log.info("dto : " + dto));
         log.info("list total : " + list.getTotal());
         log.info("list prev : " + list.isPrev());
