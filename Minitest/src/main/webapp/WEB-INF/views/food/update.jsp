@@ -57,34 +57,36 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <%--                        Todo 입력 폼 여기에 작성--%>
-                        <form action="/todo/update" method="post">
+                        <%--                        Food 입력 폼 여기에 작성--%>
+                        <form action="/food/update" method="post">
+                            <input type="hidden" name="page" value="${pageRequestDTO.page}">
+                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Tno</span>
-                                <input type="text" name="tno" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.tno}"/> >
+                                <span class="input-group-text">Fno</span>
+                                <input type="text" name="fno" class="form-control" readonly
+                                       value=<c:out value="${foodDTO.fno}"/> >
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Title</span>
-                                <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요"
-                                       value=<c:out value="${todoDTO.title}"/>>
+                                <span class="input-group-text">FoodName</span>
+                                <input type="text" name="foodName" class="form-control" placeholder="음식을 입력하세요"
+                                       value='<c:out value="${foodDTO.foodName}"/>'>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
                                 <input type="date" name="dueDate" class="form-control"
-                                       value=<c:out value="${todoDTO.dueDate}"/>>
+                                       value=<c:out value="${foodDTO.dueDate}"/>>
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Writer</span>
-                                <input type="text" name="writer" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.writer}"/>>
+                                <span class="input-group-text">ChefName</span>
+                                <input type="text" name="chefName" class="form-control" readonly
+                                       value=<c:out value="${foodDTO.chefName}"/>>
                             </div>
                             <div class="input-group mb-3">
                                 <label class="form-check-label">Finished &nbsp</label>
                                 <input type="checkbox" name="finished" class="form-check-input"
-                                       ${todoDTO.finished ? "checked" : ""}>
+                                       ${foodDTO.finished ? "checked" : ""}>
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
@@ -94,7 +96,7 @@
                                 </div>
                             </div>
                         </form>
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Food 입력 폼 여기에 작성--%>
 
                     </div>
                 </div>
@@ -132,26 +134,20 @@
 <%--수정폼--%>
 <script>
     document.querySelector(".btn-primary").addEventListener("click", function (e) {
-        // 수정폼으로 가야한다, tno번호가 필요함
-        self.location = "/todo/update?tno="+${todoDTO.tno}, false
+
+        self.location = "/food/update?fno="+${foodDTO.fno}, false
     })
 </script>
 
 <%--삭제하기--%>
 <script>
     document.querySelector(".btn-danger").addEventListener("click", function (e) {
-        // 폼에서 필요한 tno 가져오기
         const formObj = document.querySelector("form")
 
-        // 기본 폼 방식으로 전달하는 기본 기능 제거,
         e.preventDefault()
-        e.stopPropagation() // 상위태그로 전파 방지
-        // 삭제시 post 로 필요한 tno 전달
-        // formObj, 원래 action = /todo/update
-        // 속성을 변경 가능, 임시로 삭제 url 변경
-        formObj.action = "/todo/delete"
+        e.stopPropagation()
+        formObj.action = "/food/delete"
         formObj.method = "post"
-        // todoDTO 모든 멤버가 같이 전달
         formObj.submit()
       }, false)
 </script>
@@ -159,7 +155,7 @@
 <%--목록가기--%>
 <script>
     document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/todo/list", false
+        self.location = "/food/list?${pageRequestDTO.link}", false
     })
 </script>
 

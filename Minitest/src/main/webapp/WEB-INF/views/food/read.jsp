@@ -103,9 +103,6 @@
         </div>
         <!--        class="row content"-->
     </div>
-<%--    <div class="row content">--%>
-<%--        <h1>Content</h1>--%>
-<%--    </div>--%>
     <div class="row footer">
         <!--        <h1>Footer</h1>-->
         <div class="row fixed-bottom" style="z-index: -100">
@@ -115,31 +112,25 @@
         </div>
     </div>
 </div>
-<%--입력 폼에 관련 유효성 체크, 서버로부터  erros 키로 값을 받아오면, --%>
-<%--자바스크립 콘솔에 임시 출력.--%>
+
 <script>
     const serverValidResult = {    };
-    // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
-    //     하나씩 꺼내서, 출력하는 용도.,
+
     <c:forEach items="${errors}" var="error">
     serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>
     console.log(serverValidResult)
 </script>
 
-<%--목록가기, 수정폼 가기 이벤트 리스너--%>
-<%--수정폼--%>
 <script>
     document.querySelector(".btn-primary").addEventListener("click", function (e) {
-        // 수정폼으로 가야한다, fno 필요함
-        self.location = "/food/update?fno="+${foodDTO.fno}, false
+        self.location = `/food/update?fno=${foodDTO.fno}&${pageRequestDTO.link}`, false
     })
 </script>
 
-<%--목록가기--%>
 <script>
     document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/food/list", false
+        self.location = "/food/list?${pageRequestDTO.link}", false
     })
 </script>
 

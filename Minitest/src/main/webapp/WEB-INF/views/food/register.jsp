@@ -105,8 +105,6 @@
         </div>
     </div>
 </div>
-<%--입력 폼에 관련 유효성 체크, 서버로부터  errors 키로 값을 받아오면, --%>
-<%--자바스크립 콘솔에 임시 출력.--%>
 <script>
     const serverValidResult = {};
     <c:forEach items = "${errors}" var = "error">

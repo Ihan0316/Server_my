@@ -29,8 +29,6 @@
         where fno = #{fno}
     </update>
 
-    <!--    페이징 처리해서, 전체 조회-->
-    <!--    #{skip} -> 동작을 getSkip() -->
     <select id="selectList" resultType="com.busanit501.minitest.domain.FoodVO">
         select * from tbl_ftodo order by fno desc limit #{skip}, #{size}
     </select>

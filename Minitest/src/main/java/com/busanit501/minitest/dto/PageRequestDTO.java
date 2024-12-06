@@ -14,25 +14,32 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageRequestDTO {
-    // 웹 -> 서버
-    //예시: http://localhost:8080/todo/list?page=1&size=10
-    // 화면에서 전달할 페이지 번호, 크기를 받을 상자필요.
-    // 현재 페이지 번호
+
     @Builder.Default
     @Min(value = 1)
     @Positive
     private int page = 1;
 
-    // 페이징당 출력할 데이터 갯수
     @Builder.Default
     @Min(value = 10)
     @Max(value = 100)
     @Positive
     private int size = 10;
 
-    // 데이터를 얼마나 스킵 할지 정할 기능.
+    private String link;
+
     public int getSkip() {
         return (page-1)*size;
+    }
+
+    public String getLink() {
+        if (link == null) {
+            StringBuilder builder = new StringBuilder();
+            builder.append("page=" + this.page);
+            builder.append("&size=" + this.size);
+            link = builder.toString();
+        }
+        return link;
     }
 
 }

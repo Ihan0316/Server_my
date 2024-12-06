@@ -15,9 +15,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class FoodDTO {
     private Long fno;
-    @NotEmpty // 빈 문자열, 공백 없이 값이 존재해야함
+    @NotEmpty
     private String foodName;
-    @Future // 미래날짜만
+    @Future
     private LocalDate dueDate;
     private boolean finished;
     @NotEmpty

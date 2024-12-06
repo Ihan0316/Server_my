@@ -59,15 +59,19 @@
                     <div class="card-body">
                         <%--                        Todo 입력 폼 여기에 작성--%>
                         <form action="/todo/update" method="post">
+<%--                            수정 또는 삭제 처리 후 페이징 정보를 전달하려면--%>
+<%--                            input에 hidden으로 숨겨서, 페이지정보, 사이즈 정보 전달--%>
+                            <input type="hidden" name="page" value="${pageRequestDTO.page}">
+                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Tno</span>
                                 <input type="text" name="tno" class="form-control" readonly
-                                       value=<c:out value="${todoDTO.tno}"/> >
+                                       value=<c:out value="${todoDTO.tno}"/>>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
-                                <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요"
-                                       value=<c:out value="${todoDTO.title}"/>>
+                                <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요"
+                                       value='<c:out value="${todoDTO.title}"/>'>
                             </div>
 
                             <div class="input-group mb-3">
@@ -159,7 +163,7 @@
 <%--목록가기--%>
 <script>
     document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/todo/list", false
+        self.location = "/todo/list?${pageRequestDTO.link}", false
     })
 </script>
 

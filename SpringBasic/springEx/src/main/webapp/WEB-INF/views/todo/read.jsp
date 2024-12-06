@@ -132,14 +132,14 @@
 <script>
     document.querySelector(".btn-primary").addEventListener("click", function (e) {
         // 수정폼으로 가야한다, tno번호가 필요함
-        self.location = "/todo/update?tno="+${todoDTO.tno}, false
+        self.location = `/todo/update?tno=${todoDTO.tno}&${pageRequestDTO.link}`, false
     })
 </script>
 
 <%--목록가기--%>
 <script>
     document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/todo/list", false
+        self.location = "/todo/list?${pageRequestDTO.link}", false
     })
 </script>
 
