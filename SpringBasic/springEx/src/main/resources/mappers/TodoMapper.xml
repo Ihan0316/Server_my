@@ -25,4 +25,20 @@
     <delete id="delete">
         delete from tbl_todo where tno = #{tno}
     </delete>
+
+    <update id="update">
+        update tbl_todo set title = #{title}, dueDate = #{dueDate}, finished = #{finished}
+        where tno = #{tno}
+    </update>
+
+    <!--    페이징 처리해서, 전체 조회-->
+    <!--    #{skip} -> 동작을 getSkip() -->
+    <select id="selectList" resultType="com.busanit501.springex.domain.TodoVO">
+        select * from tbl_todo order by tno desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(tno) from tbl_todo
+    </select>
+
 </mapper>

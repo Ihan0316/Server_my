@@ -67,7 +67,7 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">FoodName</span>
                                 <input type="text" name="foodName" class="form-control" readonly
-                                       value=<c:out value="${foodDTO.foodName}"/>>
+                                       value='<c:out value="${foodDTO.foodName}"/>'>
                             </div>
 
                             <div class="input-group mb-3">
@@ -131,6 +131,7 @@
 <%--수정폼--%>
 <script>
     document.querySelector(".btn-primary").addEventListener("click", function (e) {
+        // 수정폼으로 가야한다, fno 필요함
         self.location = "/food/update?fno="+${foodDTO.fno}, false
     })
 </script>

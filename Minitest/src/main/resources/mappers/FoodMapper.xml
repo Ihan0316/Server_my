@@ -8,12 +8,10 @@
         select now()
     </select>
 
-<!--    #{title} -> TodoVO, getTitle 과 동일-->
     <insert id="insert">
         insert into tbl_ftodo (foodName, dueDate, chefName) values (#{foodName}, #{dueDate}, #{chefName})
     </insert>
 
-<!--    여러개 행 조회, 각 행의 요소, TodoVO-->
     <select id="selectAll" resultType="com.busanit501.minitest.domain.FoodVO">
         select * from tbl_ftodo order by fno desc
     </select>
@@ -25,4 +23,19 @@
     <delete id="delete">
         delete from tbl_ftodo where fno = #{fno}
     </delete>
+
+    <update id="update">
+        update tbl_ftodo set foodName = #{foodName}, dueDate = #{dueDate}, finished = #{finished}
+        where fno = #{fno}
+    </update>
+
+    <!--    페이징 처리해서, 전체 조회-->
+    <!--    #{skip} -> 동작을 getSkip() -->
+    <select id="selectList" resultType="com.busanit501.minitest.domain.FoodVO">
+        select * from tbl_ftodo order by fno desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(fno) from tbl_ftodo
+    </select>
 </mapper>

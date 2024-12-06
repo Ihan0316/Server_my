@@ -1,8 +1,7 @@
-package com.busanit501.springex.sample.mapper;
+package com.busanit501.springex.mapper;
 
 import com.busanit501.springex.domain.TodoVO;
 import com.busanit501.springex.dto.PageRequestDTO;
-import com.busanit501.springex.mapper.TodoMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +14,13 @@ import java.util.List;
 
 @Log4j2
 @ExtendWith(SpringExtension.class) //JUnit5 테스트 설정.
+//JUnit4 테스트 설정. @Runwith
+// 설정 파일의 경로를 지정.
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
 public class TodoMapperTest {
 
+    // 해당 인스턴스가 없다면, 널로 받을게.
+    // 기본값은 required = true
     @Autowired(required = false)
     private TodoMapper todoMapper;
 
@@ -28,33 +31,32 @@ public class TodoMapperTest {
 
     @Test
     public void testInsert() {
-        // 더미 데이터 만들어서 TodoVO에 담아서 진행
+        // 더미 데이터 , TodoVO 담아서, 진행.
         TodoVO todoVO = TodoVO.builder()
-                .title("샘플데이터")
+                .title("샘플 테스트")
                 .dueDate(LocalDate.now())
-                .writer("조이한")
+                .writer("이상용")
                 .build();
-
         todoMapper.insert(todoVO);
     }
 
     @Test
     public void testSelectAll() {
         List<TodoVO> lists = todoMapper.selectAll();
-        for(TodoVO todoVO:lists) {
-            log.info(todoVO);
+        for (TodoVO todoVo:lists) {
+            log.info("todoVo : " + todoVo);
         }
     }
 
     @Test
     public void testSelectOne() {
-        TodoVO todoVO = todoMapper.selectOne(4L);
-        log.info("todoVO : " + todoVO);
+        TodoVO  todoVo = todoMapper.selectOne(9L);
+            log.info("todoVo : " + todoVo);
     }
 
     @Test
     public void testDelete() {
-        todoMapper.delete(6L);
+        todoMapper.delete(9L);
     }
 
     @Test
@@ -76,7 +78,7 @@ public class TodoMapperTest {
         // 페이징 준비물을 담은 PageRequestDTO 필요함,
         // 더미로 PageRequestDTO 만들고,
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-                .page(1)
+                .page(2)
                 .size(10)
                 .build();
 
@@ -84,6 +86,7 @@ public class TodoMapperTest {
         list.forEach(vo -> log.info("vo : " + vo));
     }
 
+    // 페이징 처리해서 전체 갯수 조회
     @Test
     public void testGetCount() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
@@ -93,4 +96,5 @@ public class TodoMapperTest {
         int total = todoMapper.getCount(pageRequestDTO);
         log.info("total : " + total);
     }
+
 }

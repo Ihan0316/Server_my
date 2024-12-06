@@ -1,9 +1,8 @@
-package com.busanit501.service;
+package com.busanit501.springex.service;
 
-import com.busanit501.minitest.dto.FoodDTO;
-import com.busanit501.minitest.dto.PageRequestDTO;
-import com.busanit501.minitest.dto.PageResponseDTO;
-import com.busanit501.minitest.service.FoodService;
+import com.busanit501.springex.dto.PageRequestDTO;
+import com.busanit501.springex.dto.PageResponseDTO;
+import com.busanit501.springex.dto.TodoDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,51 +15,61 @@ import java.util.List;
 
 @Log4j2
 @ExtendWith(SpringExtension.class) //JUnit5 테스트 설정.
+//JUnit4 테스트 설정. @Runwith
+// 설정 파일의 경로를 지정.
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
-public class FoodServiceTest {
+//방법2
+//@RequiredArgsConstructor
+public class TodoServiceTest {
+
+    // 방법1
     @Autowired
-    private FoodService foodService;
+    private TodoService todoService;
+
+    //방법2
+//    private final TodoService todoService;
 
     @Test
     public void testRegister() {
-        FoodDTO foodDTO = FoodDTO.builder()
-                .foodName("샘플 데이터 서비스 입력")
+        TodoDTO todoDTO = TodoDTO.builder()
+                .title("샘플데이터 서비스에서 입력")
                 .dueDate(LocalDate.now())
-                .chefName("조이한")
+                .writer("이상용")
                 .build();
-
-        foodService.register(foodDTO);
-    }
+        todoService.register(todoDTO);
+    } //
 
     @Test
     public void testGetAll() {
-        List<FoodDTO> list = foodService.getAll();
-        for (FoodDTO foodDTO : list) {
-            log.info("foodDTO : " + foodDTO);
+        List<TodoDTO> list = todoService.getAll();
+        for (TodoDTO todoDTO : list) {
+            log.info("todoDTO : " + todoDTO);
         }
-    }
+    } //
 
     @Test
     public void testGetOne() {
-        FoodDTO foodDTO = foodService.getOne(4L);
-        log.info(foodDTO);
-    }
+        TodoDTO todoDTO = todoService.getOne(9L);
+        log.info("todoDTO : " + todoDTO);
+
+    } //
 
     @Test
     public void testDelete() {
-        foodService.delete(4L);
-    }
+        todoService.delete(8L);
+    } //
 
     @Test
     public void testUpdate() {
-        FoodDTO foodDTO = FoodDTO.builder()
-                .fno(5L)
-                .foodName("수정 제목")
+        // 업데이트 할 더미 데이터 필요, TodoVO
+        TodoDTO todoDTO = TodoDTO.builder()
+                .tno(5L)
+                .title("수정 제목")
                 .dueDate(LocalDate.now())
                 .finished(true)
                 .build();
 
-        foodService.update(foodDTO);
+        todoService.update(todoDTO);
     }
 
     @Test
@@ -69,7 +78,9 @@ public class FoodServiceTest {
                 .page(180)
                 .size(10)
                 .build();
-        PageResponseDTO<FoodDTO> list = foodService.getListWithPage(pageRequestDTO);
+        // PageResponseDTO, 안에는 , page, size, skip, start,end,
+        // prev, next,  페이징된 목록 요소들
+        PageResponseDTO<TodoDTO> list = todoService.getListWithPage(pageRequestDTO);
         list.getDtoList().stream().forEach(dto -> log.info("dto : " + dto));
         log.info("list total : " + list.getTotal());
         log.info("list prev : " + list.isPrev());
@@ -78,4 +89,5 @@ public class FoodServiceTest {
         log.info("list end : " + list.getEnd());
 
     }
-}
+
+}//

@@ -1,5 +1,7 @@
 package com.busanit501.springex.sample.service;
 
+import com.busanit501.springex.dto.PageRequestDTO;
+import com.busanit501.springex.dto.PageResponseDTO;
 import com.busanit501.springex.dto.TodoDTO;
 import com.busanit501.springex.service.TodoService;
 import lombok.extern.log4j.Log4j2;
@@ -53,4 +55,36 @@ public class TodoServiceTest {
     public void testDelete() {
         todoService.delete(4L);
     }
+
+    @Test
+    public void testUpdate() {
+        // 업데이트 할 더미 데이터 필요, TodoVO
+        TodoDTO todoDTO = TodoDTO.builder()
+                .tno(5L)
+                .title("수정 제목")
+                .dueDate(LocalDate.now())
+                .finished(true)
+                .build();
+
+        todoService.update(todoDTO);
+    }
+
+    @Test
+    public void testPageList() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(180)
+                .size(10)
+                .build();
+        // PageResponseDTO, 안에는 , page, size, skip, start,end,
+        // prev, next,  페이징된 목록 요소들
+        PageResponseDTO<TodoDTO> list = todoService.getListWithPage(pageRequestDTO);
+        list.getDtoList().stream().forEach(dto -> log.info("dto : " + dto));
+        log.info("list total : " + list.getTotal());
+        log.info("list prev : " + list.isPrev());
+        log.info("list next : " + list.isNext());
+        log.info("list start : " + list.getStart());
+        log.info("list end : " + list.getEnd());
+
+    }
+
 }

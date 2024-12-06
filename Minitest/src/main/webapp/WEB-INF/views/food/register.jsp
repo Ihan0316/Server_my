@@ -57,7 +57,7 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Food 입력 폼 여기에 작성--%>
                         <form action="/food/register" method="post">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">FoodName</span>
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                         </form>
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Food 입력 폼 여기에 작성--%>
                     </div>
                 </div>
                 <!--        카드 끝 부분-->
@@ -109,7 +109,6 @@
 <%--자바스크립 콘솔에 임시 출력.--%>
 <script>
     const serverValidResult = {};
-    // jstl 반복문 이용하여 서버로부터 넘어온 에러 종류를 하나씩 출력
     <c:forEach items = "${errors}" var = "error">
     serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>
