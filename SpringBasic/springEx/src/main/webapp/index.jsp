@@ -9,5 +9,6 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a href="/todo/list">Todo-list</a>
 </body>
 </html>
