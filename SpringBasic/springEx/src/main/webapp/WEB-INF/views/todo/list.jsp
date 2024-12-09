@@ -63,7 +63,7 @@
                         <form action="/todo/list" method="get">
                             <input type="hidden" name="size" value="${pageRequestDTO.size}">
                             <div class="mb-3">
-                                <input type="checkbox" name="finished"> 완료여부
+                                <input type="checkbox" name="finished" ${pageRequestDTO.finished?"checked":""}> 완료여부
                             </div>
                             <div class="mb-3">
                                 <input type="checkbox" name="types" value="t" ${pageRequestDTO.checkType("t")?"checked":""}>제목
