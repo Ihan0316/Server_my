@@ -226,8 +226,12 @@
             }
             const num = target.getAttribute("data-num")
 
-            // 백틱, 숫자 키보드 1번 왼쪽에 보면.
-            self.location = `/todo/list?page=\${num}`
+            // 기존 페이지 이동
+            // self.location = `/todo/list?page=\${num}`
+            // 폼의 정보를 이용해서 이동
+            const formObj = document.querySelector("form")
+            formObj.innerHTML += `<input type='hidden' name='page' valeu='/${num}'`
+            formObj.submit()
         }, false)
 
     // 검색 초기화 이벤트 리스너

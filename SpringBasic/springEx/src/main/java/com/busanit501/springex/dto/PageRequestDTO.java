@@ -49,30 +49,54 @@ public class PageRequestDTO {
 
     // 데이터를 얼마나 스킵 할지 정할 기능.
     public int getSkip() {
-        return (page-1)*size;
+        return (page - 1) * size;
     }
 
     // 페이징 정보를 쿼리 스트링 형식으로 반환 하는 메서드
     // 예시 ) http://localhost:8080/todo/list&page=7&size=10
     // page=7&size=10 , 문자열 생성해주는 기능.
+
+    // 추가기능, 다른 페이지 이동시, 검색어, 타입, 기한 이런 정보도
+    // 같이 담아서, 전달하기, -> 검색어를 유지를 하는 기능.
     public String getLink() {
-        if(link==null){
-            StringBuilder builder = new StringBuilder();
-            builder.append("page=" + this.page);
-            builder.append("&size=" + this.size);
-            // link = "page=7&size=10"
-            link = builder.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append("page=" + this.page);
+        builder.append("&size=" + this.size);
+
+        // 검색 및 필터 조건 추가 하기.
+        //   list&page=7&size=10&finished=on
+        if (!finished) {
+            // finished ,  체크박스 이어서, 전달 받을 때 문자열 "on"
+            builder.append("&finished=on");
         }
-        return link;
+
+        if (types != null && types.length > 0) {
+            for (int i = 0; i < types.length; i++) {
+                //   list&page=7&size=10&finished=on&types=t
+                builder.append("&types=").append(types[i]);
+            }
+        }
+
+        if(from != null){
+            //   list&page=7&size=10&finished=on&types=t&from=2024-12-05
+            builder.append("&from="+ from.toString());
+        }
+        if(to != null){
+            //   list&page=7&size=10&finished=on&types=t&from=2024-1205&to=2024-12-06
+            builder.append("&to="+ to.toString());
+        }
+
+        return builder.toString();
     }
 
-    // 검색 & 필터 시 작성자, 제목 체크박스 체크 여부 검증 기능
+    //검색에서, 작성자, 제목으로 체크박스 체크여부를 확인하는 기능.
     public boolean checkType(String type) {
-        if(types==null || type.length()==0){
+        if (types == null || types.length == 0) {
             return false;
         }
-        //  Arrays.stream(types) 배열 의미 (t,w)
-        // .anyMatch(type::equals); 배열 중에서 요소 하나씩 꺼내서 type과 비교,
+        // Arrays.stream(types) : 배열을 의미, {"t","w"}
+        // 배열중에서, 요소 하나씩 꺼내서 계속 비교해요. type과비교
+        // type ,예를 들어 t로 왔다.
         return Arrays.stream(types).anyMatch(type::equals);
     }
 }
