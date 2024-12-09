@@ -78,6 +78,10 @@ public class FoodMapperTest {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(2)
                 .size(10)
+                .keyword("수정")
+                .types(new String[]{"t","w"})
+                .from(LocalDate.of(2024,12,01))
+                .to(LocalDate.of(2024,12,31))
                 .build();
 
         List<FoodVO> list = foodMapper.selectList(pageRequestDTO);
@@ -90,6 +94,10 @@ public class FoodMapperTest {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .size(10)
+                .keyword("수정")
+                .types(new String[]{"t","w"})
+                .from(LocalDate.of(2024,12,05))
+                .to(LocalDate.of(2024,12,06))
                 .build();
         int total = foodMapper.getCount(pageRequestDTO);
         log.info("total : " + total);

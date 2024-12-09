@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 @Data
 @Builder
@@ -27,19 +31,55 @@ public class PageRequestDTO {
     private int size = 10;
 
     private String link;
+    private String keyword;
+    private String[] types;
+    private boolean finished;
+    private LocalDate from;
+    private LocalDate to;
 
     public int getSkip() {
         return (page-1)*size;
     }
 
     public String getLink() {
-        if (link == null) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("page=" + this.page);
-            builder.append("&size=" + this.size);
-            link = builder.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append("page=" + this.page);
+        builder.append("&size=" + this.size);
+
+        // 검색 및 필터 조건 추가 하기.
+        if(keyword != null) {
+            try {
+                builder.append("&keyword="+ URLEncoder.encode(keyword, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
-        return link;
+
+        if (finished) {
+            builder.append("&finished=on");
+        }
+
+        if (types != null && types.length > 0) {
+            for (int i = 0; i < types.length; i++) {
+                builder.append("&types=").append(types[i]);
+            }
+        }
+
+        if(from != null){
+            builder.append("&from="+ from.toString());
+        }
+        if(to != null){
+            builder.append("&to="+ to.toString());
+        }
+
+        return builder.toString();
+    }
+
+    public boolean checkType(String type) {
+        if(types==null || types.length==0){
+            return false;
+        }
+        return Arrays.stream(types).anyMatch(type::equals);
     }
 
 }

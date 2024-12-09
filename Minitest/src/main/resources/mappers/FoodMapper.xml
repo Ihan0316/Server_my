@@ -9,31 +9,85 @@
     </select>
 
     <insert id="insert">
-        insert into tbl_ftodo (foodName, dueDate, chefName) values (#{foodName}, #{dueDate}, #{chefName})
+        insert into tbl_ftodo (foodName, dueDate, chefName)
+        values (#{foodName}, #{dueDate}, #{chefName})
     </insert>
 
     <select id="selectAll" resultType="com.busanit501.minitest.domain.FoodVO">
-        select * from tbl_ftodo order by fno desc
+        select *
+        from tbl_ftodo
+        order by fno desc
     </select>
 
     <select id="selectOne" resultType="com.busanit501.minitest.domain.FoodVO">
-        select * from tbl_ftodo where fno = #{fno}
+        select *
+        from tbl_ftodo
+        where fno = #{fno}
     </select>
 
     <delete id="delete">
-        delete from tbl_ftodo where fno = #{fno}
+        delete
+        from tbl_ftodo
+        where fno = #{fno}
     </delete>
 
     <update id="update">
-        update tbl_ftodo set foodName = #{foodName}, dueDate = #{dueDate}, finished = #{finished}
+        update tbl_ftodo
+        set foodName    = #{foodName},
+            dueDate  = #{dueDate},
+            finished = #{finished}
         where fno = #{fno}
     </update>
 
     <select id="selectList" resultType="com.busanit501.minitest.domain.FoodVO">
-        select * from tbl_ftodo order by fno desc limit #{skip}, #{size}
+        select * from tbl_ftodo
+        <include refid="search"></include>
+        order by fno desc limit #{skip}, #{size}
     </select>
 
     <select id="getCount" resultType="int">
-        select count(fno) from tbl_ftodo
+        select count(fno)
+        from tbl_ftodo
+        <include refid="search"></include>
     </select>
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length >0">
+                <foreach collection="types" item="type"
+                         open="(" close=")" separator="OR">
+
+                    <if test="type == 't'.toString()">
+                        foodName like concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        chefName like concat('%',#{keyword},'%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="finished">
+                <trim prefix="and">
+                    finished = 1
+                </trim>
+            </if>
+
+            <if test="from != null and to != null">
+                <trim prefix="and">
+                    dueDate between #{from} and #{to}
+                </trim>
+            </if>
+
+        </where>
+    </sql>
+
+
 </mapper>
+
+
+
+
+
+
+
+
