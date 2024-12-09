@@ -68,11 +68,11 @@
                             <div class="mb-3">
                                 <input type="checkbox" name="types" value="t" ${pageRequestDTO.checkType("t")?"checked":""}>제목
                                 <input type="checkbox" name="types" value="w" ${pageRequestDTO.checkType("w")?"checked":""}>작성자
-                                <input type="text" name="keyword" class="form-control">
+                                <input type="text" name="keyword" class="form-control" value="${pageRequestDTO.keyword}">
                             </div>
                             <div class="input-group mb-3 dueDateDiv">
-                                <input type="date" name="from" class="form-control">
-                                <input type="date" name="to" class="form-control">
+                                <input type="date" name="from" class="form-control" value="${pageRequestDTO.from}">
+                                <input type="date" name="to" class="form-control" value="${pageRequestDTO.to}">
                             </div>
                             <div class="input-group mb-3">
                                 <div class="float-end">
@@ -226,22 +226,28 @@
             }
             const num = target.getAttribute("data-num")
 
-            // 기존 페이지 이동
+            // 백틱, 숫자 키보드 1번 왼쪽에 보면.
+            //  기존 페이지 이동해서,
             // self.location = `/todo/list?page=\${num}`
-            // 폼의 정보를 이용해서 이동
+            // 폼의 정보를 이용해서 이동.
             const formObj = document.querySelector("form")
-            formObj.innerHTML += `<input type='hidden' name='page' valeu='/${num}'`
+            // 자바스크립트에서, 백틱 안에서, 문자열 구현하기가 쉽다.
+            formObj.innerHTML += `<input type='hidden' name='page' value='\${num}'>`
             formObj.submit()
+
+
         }, false)
 
-    // 검색 초기화 이벤트 리스너
+    // 검색 초기화, 이벤트 리스너
     document.querySelector(".clearBtn").addEventListener("click",
         function (e){
         e.preventDefault();
         e.stopPropagation();
 
         self.location="/todo/list"
-        }, false)
+    }, false)
+
+
 </script>
 
 
