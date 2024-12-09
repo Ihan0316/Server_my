@@ -43,7 +43,7 @@ public class PageRequestDTO {
     //2, 검색 유형 ,1) 제목,t 2) 작성자,w 3) 제목 + 작성자,tw
     private String[] types;
     //3, todo 완료 여부
-    private boolean finished;
+    private boolean finished2;
     //4, 기한 1
     private LocalDate from;
     //4, 기한 2
@@ -78,9 +78,9 @@ public class PageRequestDTO {
         }
 
         //   list&page=7&size=10&finished=on
-        if (finished) {
+        if (finished2) {
             // finished ,  체크박스 이어서, 전달 받을 때 문자열 "on"
-            builder.append("&finished=on");
+            builder.append("&finished2=on");
         }
 
         if (types != null && types.length > 0) {
