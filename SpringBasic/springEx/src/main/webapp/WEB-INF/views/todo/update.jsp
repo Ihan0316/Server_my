@@ -192,7 +192,7 @@
             e.preventDefault()
             e.stopPropagation() // 상위 태그로 전파 방지
 
-            formObj.action = "/todo/update"
+            formObj.action = "/todo/update?${pageRequestDTO.link}"
             formObj.method = "post"
             // todoDTO 모든 멤버가 같이 전달됨.
             // tno, title, dueDate, finished, writer

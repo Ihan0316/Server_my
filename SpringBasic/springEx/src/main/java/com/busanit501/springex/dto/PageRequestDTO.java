@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -65,8 +67,14 @@ public class PageRequestDTO {
 
         // 검색 및 필터 조건 추가 하기.
 
-        if (keyword != null) {
-            builder.append("&keyword=" + keyword);
+        // 이부분,  URLEncoding 부분 누락 . -> 수정
+        if(keyword != null) {
+            try {
+                builder.append("&keyword="+ URLEncoder.encode(keyword, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+//          throw new RuntimeException(e);
+                e.printStackTrace();
+            }
         }
 
         //   list&page=7&size=10&finished=on

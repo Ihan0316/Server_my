@@ -164,7 +164,7 @@ public class TodoController {
             redirectAttributes.addAttribute("tno", todoDTO.getTno());
             redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
             redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-            return "redirect:/todo/update";
+            return "redirect:/todo/update"+pageRequestDTO.getLink();
         }
 
         if (pageBindingResult.hasErrors()) {
@@ -175,18 +175,19 @@ public class TodoController {
             redirectAttributes.addAttribute("tno", todoDTO.getTno());
             redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
             redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-            return "redirect:/todo/update";
+            return "redirect:/todo/update"+pageRequestDTO.getLink();
         }
 
         // 수정하는 로직 필요함.
         // 주의사항, 체크박스의 값의 문자열 on 전달 받습니다.
         log.info("todoDTO확인 finished의 변환 여부 확인. : " + todoDTO);
+        log.info("TodoController update pageRequestDTO : "+ pageRequestDTO);
 
         todoService.update(todoDTO);
         // 쿼리 스트링으로 , 목록에 전달함.
         redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
         redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-        return "redirect:/todo/list";
+        return "redirect:/todo/list?"+pageRequestDTO.getLink();
     }
 
 
@@ -196,11 +197,12 @@ public class TodoController {
                          RedirectAttributes redirectAttributes
     ) {
         todoService.delete(tno);
-        log.info("TodoController delete : pageRequestDTO : " + pageRequestDTO);
+        log.info("TodoController delete : pageRequestDTO " + pageRequestDTO);
         // 쿼리 스트링으로 , 목록에 전달함.
-        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
-        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
+//        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+//        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
         return "redirect:/todo/list?"+pageRequestDTO.getLink();
+//        return "redirect:/todo/list";
     }
 
     // 페이징,
