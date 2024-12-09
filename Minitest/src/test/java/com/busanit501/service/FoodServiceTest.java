@@ -72,7 +72,7 @@ public class FoodServiceTest {
                 .types(new String[]{"t","w"})
                 .from(LocalDate.of(2024,12,01))
                 .to(LocalDate.of(2024,12,31))
-                .finished(true)
+                .finished2(true)
                 .build();
         PageResponseDTO<FoodDTO> list = foodService.selectList(pageRequestDTO);
         list.getDtoList().stream().forEach(dto -> log.info("dto : " + dto));

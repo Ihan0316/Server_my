@@ -141,7 +141,7 @@ public class FoodController {
             return "redirect:/food/update?"+pageRequestDTO.getLink();
         }
 
-        log.info("foodDTO확인 finished의 변환 여부 확인. : " + foodDTO);
+        log.info("foodDTO확인 finished2의 변환 여부 확인. : " + foodDTO);
         log.info("FoodController update pageRequestDTO : "+ pageRequestDTO);
 
         foodService.update(foodDTO);

@@ -33,7 +33,7 @@ public class PageRequestDTO {
     private String link;
     private String keyword;
     private String[] types;
-    private boolean finished;
+    private boolean finished2;
     private LocalDate from;
     private LocalDate to;
 
@@ -55,8 +55,8 @@ public class PageRequestDTO {
             }
         }
 
-        if (finished) {
-            builder.append("&finished=on");
+        if (finished2) {
+            builder.append("&finished2=on");
         }
 
         if (types != null && types.length > 0) {
