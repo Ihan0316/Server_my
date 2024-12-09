@@ -1,0 +1,17 @@
+package com.busanit501.boot501.controller;
+
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController// 데이터만 제공
+@Log4j2
+public class SampleRestController {
+
+    @GetMapping("/hiRest")
+    // 서버에서 문자열 배열(클래스) -> 직렬화 -> 문자열 -> 중간 데이터 타입(json) 형식으로 자동 변환 전달.
+    // 자동 변환해주는 도구 jackson 라이브러리
+    public String[] hiRest() {
+        return new String[]{"aaa", "bbb", "ccc"};
+    }
+}

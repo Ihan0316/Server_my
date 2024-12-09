@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+@Controller // 화면, 데이터 제공
 @Log4j2
 public class SampleController {
     @GetMapping("/hello")
