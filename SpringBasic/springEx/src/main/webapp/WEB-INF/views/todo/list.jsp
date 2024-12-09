@@ -20,7 +20,7 @@
             <div class="col">
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="/todo/list">Navbar</a>
+                        <a class="navbar-brand" href="/todo/list">목록가기</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                                 aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
                             <div class="input-group mb-3">
                                 <div class="float-end">
                                     <button class="btn btn-primary" type="submit">검색</button>
-                                    <button class="btn btn-secondary" type="reset">초기화</button>
+                                    <button class="btn btn-secondary clearBtn" type="reset">초기화</button>
                                 </div>
                             </div>
                         </form>
@@ -230,7 +230,14 @@
             self.location = `/todo/list?page=\${num}`
         }, false)
 
+    // 검색 초기화 이벤트 리스너
+    document.querySelector(".clearBtn").addEventListener("click",
+        function (e){
+        e.preventDefault();
+        e.stopPropagation();
 
+        self.location="/todo/list"
+        }, false)
 </script>
 
 
