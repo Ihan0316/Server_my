@@ -66,10 +66,15 @@ public class FoodServiceTest {
     @Test
     public void testPageList() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-                .page(180)
+                .page(1)
                 .size(10)
+                .keyword("샘플")
+                .types(new String[]{"t","w"})
+                .from(LocalDate.of(2024,12,01))
+                .to(LocalDate.of(2024,12,31))
+                .finished(true)
                 .build();
-        PageResponseDTO<FoodDTO> list = foodService.getListWithPage(pageRequestDTO);
+        PageResponseDTO<FoodDTO> list = foodService.selectList(pageRequestDTO);
         list.getDtoList().stream().forEach(dto -> log.info("dto : " + dto));
         log.info("list total : " + list.getTotal());
         log.info("list prev : " + list.isPrev());

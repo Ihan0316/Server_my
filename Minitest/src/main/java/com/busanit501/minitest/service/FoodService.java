@@ -12,5 +12,6 @@ public interface FoodService {
     FoodDTO getOne(Long fno);
     void delete(Long fno);
     void update(FoodDTO foodDTO);
-    PageResponseDTO<FoodDTO> getListWithPage(PageRequestDTO pageRequestDTO);
+    //PageResponseDTO<FoodDTO> getListWithPage(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<FoodDTO> selectList(PageRequestDTO pageRequestDTO);
 }

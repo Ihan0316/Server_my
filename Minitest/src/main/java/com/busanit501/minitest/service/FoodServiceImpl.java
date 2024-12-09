@@ -55,7 +55,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public PageResponseDTO<FoodDTO> getListWithPage(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<FoodDTO> selectList(PageRequestDTO pageRequestDTO) {
         int total = foodMapper.getCount(pageRequestDTO);
         List<FoodDTO> dtoList = foodMapper.selectList(pageRequestDTO).stream()
                 .map(vo -> modelMapper.map(vo,FoodDTO.class))

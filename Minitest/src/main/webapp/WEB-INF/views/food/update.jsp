@@ -130,33 +130,48 @@
     console.log(serverValidResult)
 </script>
 
-<%--목록가기, 수정폼 가기 이벤트 리스너--%>
-<%--수정폼--%>
+<%--목록가기 및 수정폼 가기 이벤트 리스너--%>
 <script>
-    document.querySelector(".btn-primary").addEventListener("click", function (e) {
+    // 수정폼
+    document.querySelector(".btn-primary").addEventListener("click",
+        function (e) {
+            self.location = "/food/update?fno=" +${foodDTO.fno}
+                , false
+        })
+    // 목록
+    document.querySelector(".btn-secondary").addEventListener("click",
+        function (e) {
+            self.location = "/food/list?${pageRequestDTO.link}"
+                , false
+        })
 
-        self.location = "/food/update?fno="+${foodDTO.fno}, false
-    })
-</script>
+    // 삭제기능.
+    document.querySelector(".btn-danger").addEventListener("click",
+        function (e) {
+            const formObj = document.querySelector("form")
 
-<%--삭제하기--%>
-<script>
-    document.querySelector(".btn-danger").addEventListener("click", function (e) {
-        const formObj = document.querySelector("form")
+            e.preventDefault()
+            e.stopPropagation() // 상위 태그로 전파 방지
 
-        e.preventDefault()
-        e.stopPropagation()
-        formObj.action = "/food/delete"
-        formObj.method = "post"
-        formObj.submit()
-      }, false)
-</script>
 
-<%--목록가기--%>
-<script>
-    document.querySelector(".btn-secondary").addEventListener("click", function (e) {
-        self.location = "/food/list?${pageRequestDTO.link}", false
-    })
+            formObj.action = "/food/delete?${pageRequestDTO.link}"
+            formObj.method = "post"
+            formObj.submit()
+        }, false)
+
+    // 방법2
+    //수정 로직 처리
+    document.querySelector(".btn-primary").addEventListener("click",
+        function (e) {
+            const formObj = document.querySelector("form")
+
+            e.preventDefault()
+            e.stopPropagation() // 상위 태그로 전파 방지
+
+            formObj.action = "/food/update?${pageRequestDTO.link}"
+            formObj.method = "post"
+            formObj.submit()
+        }, false)
 </script>
 
 
