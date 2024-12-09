@@ -173,7 +173,8 @@
             // 삭제시 포스트로, tno 번호를 전달하는 방식.
             // formObj , 원래 action: /todo/update
             // 속성을 변경 가능해서, 임시로, 삭제 url 변경.
-            formObj.action = "/todo/delete"
+            // 삭제 후에도 검색 내용 유지
+            formObj.action = "/todo/delete?${pageRequestDTO.link}"
             formObj.method = "post"
             // todoDTO 모든 멤버가 같이 전달됨.
             // tno, title, dueDate, finished, writer

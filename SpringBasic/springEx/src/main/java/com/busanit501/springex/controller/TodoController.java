@@ -113,6 +113,7 @@ public class TodoController {
         }
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info("TodoController read 데이터 유무 확인 :" + todoDTO);
+        log.info("TodoController read 데이터 유무 확인 pageRequestDTO :" + pageRequestDTO);
         //데이터 탑재. 서버 -> 웹
         model.addAttribute("todoDTO", todoDTO);
         redirectAttributes.addAttribute("page",pageRequestDTO.getPage());
@@ -195,10 +196,11 @@ public class TodoController {
                          RedirectAttributes redirectAttributes
     ) {
         todoService.delete(tno);
+        log.info("TodoController delete : pageRequestDTO : " + pageRequestDTO);
         // 쿼리 스트링으로 , 목록에 전달함.
         redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
         redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-        return "redirect:/todo/list";
+        return "redirect:/todo/list?"+pageRequestDTO.getLink();
     }
 
     // 페이징,

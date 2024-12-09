@@ -64,8 +64,13 @@ public class PageRequestDTO {
         builder.append("&size=" + this.size);
 
         // 검색 및 필터 조건 추가 하기.
+
+        if (keyword != null) {
+            builder.append("&keyword=" + keyword);
+        }
+
         //   list&page=7&size=10&finished=on
-        if (!finished) {
+        if (finished) {
             // finished ,  체크박스 이어서, 전달 받을 때 문자열 "on"
             builder.append("&finished=on");
         }
