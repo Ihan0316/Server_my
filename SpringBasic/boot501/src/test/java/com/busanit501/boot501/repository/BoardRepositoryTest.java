@@ -26,6 +26,13 @@ public class BoardRepositoryTest {
                     .writer("샘플 작성자 : "+i)
                     .build();
             // crud의 insert 랑 같다, 1차 임시 테이블에 저장을 하고 실제 테이블에 저장을 한다
+            // save -> 예시
+            // insert
+            //    into
+            //        board
+            //        (content, mod_date, reg_date, title, writer)
+            //    values
+            //        (?, ?, ?, ?, ?)
             Board result = boardRepository.save(board);
             log.info("추가된 bno 번호 : " + result);
         });
