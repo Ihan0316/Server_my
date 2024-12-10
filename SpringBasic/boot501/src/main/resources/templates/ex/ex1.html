@@ -13,12 +13,56 @@
 <h2>[[${list}]]</h2>
 <hr/>
 
+<!--<th:with = "변수명 ">-->
 <h1>변수 사용해서, 이용하기</h1>
 <div th:with="num1 = ${10}, num2 = ${20}">
     우리가 만든 변수 사용해보기 :
     <h2 th:text="${num1+num2}"></h2>
     다른 방법으로 출력 해 보기 : (JS 영역 안에서도 이용 가능)
     <h2>[[${num1+num2}]]</h2>
+</div>
+<hr/>
+
+<!--<th:each="변수명 : 목록">-->
+<h1>반복문 사용해서, 이용하기</h1>
+<div>
+    기본 사용 :
+    <ul>
+        <li th:each="str : ${list}" th:text="${str}"></li>
+    </ul>
+    다른 방법 :
+    <ul>
+        <li th:each="str : ${list}">[[${str}]]</li>
+    </ul>
+    block 사용
+    <ul>
+        <th:block th:each="str : ${list}">
+            <li> [[${str}]] </li>
+        </th:block>
+    </ul>
+    반복문 status 속성 사용(index, odd(홀수), even(짝수))
+    <ul>
+        <li th:each="str , status: ${list}" >
+            [[${status.index}]] --[[${status.odd}]] --[[${status.even}]] --[[${str}]]
+        </li>
+    </ul>
+    반복문 if 확인(if=참, unless=거짓)
+    <ul>
+        <li th:each="str , status: ${list}" >
+            <span th:if="${status.odd}"> 홀수  [[${str}]]</span>
+            <span th:unless="${status.odd}"> 짝수  [[${str}]]</span>
+        </li>
+    </ul>
+    switch 조건 확인
+    <ul>
+        <li th:each="str , status: ${list}" >
+            <th:block th:switch="${status.index % 3}">
+                <span th:case="0"> index:0 - [[${str}]]</span>
+                <span th:case="1"> index:1 - [[${str}]]</span>
+                <span th:case="2"> index:2 - [[${str}]]</span>
+            </th:block>
+        </li>
+    </ul>
 </div>
 
 
