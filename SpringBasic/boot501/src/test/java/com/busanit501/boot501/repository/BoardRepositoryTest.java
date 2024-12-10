@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -59,6 +60,14 @@ public class BoardRepositoryTest {
         // result 있으면, Board 타입으로 받고, 없으면 예외발생
         Board board = result.orElseThrow();
         log.info("하나조회 : "+board);
+    }
+
+    @Test
+    public void testSelectAll() {
+        List<Board> result = boardRepository.findAll();
+        for (Board board : result) {
+            log.info(board);
+        }
     }
 
     @Test
