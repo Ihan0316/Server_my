@@ -122,7 +122,7 @@ th:if, th:unless, th:switch
  8
  링크의 쿼리 스트링 처리
  기본문법
- <th:href = "@{/hello(키='값',키2='값2',...}">연습용 /hello 가기 쿼리스트링
+ <th:href = "@{/hello(키='값',키2='값2',...)}">연습용 /hello 가기 쿼리스트링
  예시)
  <a th:href="@{/hello(name='이상용',age=30)}">연습용 /hello 가기쿼리스트링 </a>
 

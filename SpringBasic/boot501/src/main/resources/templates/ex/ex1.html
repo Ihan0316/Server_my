@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -69,6 +69,19 @@
             </th:block>
         </li>
     </ul>
+</div>
+<hr/>
+
+<!--<th:href ="@{이동할 경로}">-->
+<h1>타임리프로 링크 처리</h1>
+<div>
+    기본문법
+    <a th:href="@{/hello}">연습용 /hello 가기</a><br>
+    쿼리 스트링을 달고 전달하기.(타임리프는 자동으로 인코딩 해준다.)
+    <a th:href="@{/hello(name='조이한',age=26)}">연습용 /hello 가기 쿼리스트링</a><br>
+    같은 키에 대한 여러 값을 배열로 전달
+    <a th:href="@{/hello(types=${ {'조이한1','조이한2'} })}">연습용 /hello 가기 쿼리스트링</a><br>
+    <a th:href="@{/hello(types=${ {'AA','BB','CC'} }, age= 16)}">배열 전달시, 컴파일러 문법 오류 버그, 정상 동작 함. 테스트</a><br>
 </div>
 
 
