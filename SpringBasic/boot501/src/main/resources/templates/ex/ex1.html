@@ -6,10 +6,25 @@
 </head>
 <body>
 <h1>ex1 기본 타임리프 문법 활용</h1>
-<!-- 인라인 사용 -->
+<h1>출력</h1>
+ 인라인 사용
 <h2 th:text="${list}"></h2>
-<hr/>
-<!-- 태그 밖 사용 -->
+ 태그 밖 사용
 <h2>[[${list}]]</h2>
+<hr/>
+
+<h1>변수 사용해서, 이용하기</h1>
+<div th:with="num1 = ${10}, num2 = ${20}">
+    우리가 만든 변수 사용해보기 :
+    <h2 th:text="${num1+num2}"></h2>
+    다른 방법으로 출력 해 보기 : (JS 영역 안에서도 이용 가능)
+    <h2>[[${num1+num2}]]</h2>
+</div>
+
+
+<script>
+    const list = `[[${list}]]`
+    console.log(list);
+</script>
 </body>
 </html>
