@@ -48,4 +48,10 @@ public class SampleController {
                 .build();
         model.addAttribute("sampleDTO", sampleDTO);
     }
+
+    @GetMapping("/ex/ex3")
+    public void ex3(Model model) {
+        List<String> list = Arrays.asList("a", "b", "c");
+        model.addAttribute("list", list);
+    }
 }
