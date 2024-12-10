@@ -99,7 +99,7 @@ public class BoardRepositoryTest {
     // 페이지는 0부터 시작
     @Test
     public void testPaging() {
-        Pageable pageable = PageRequest.of(1, 10, Sort.by("bno").descending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
         Page<Board> result = boardRepository.findAll(pageable);
         log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
         log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());

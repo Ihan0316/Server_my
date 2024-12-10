@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 @Log4j2
 @Controller
-public class TodoController {
+public class FoodController {
 
     @GetMapping("/hello")
     public void hello(Model model) {
@@ -23,13 +23,13 @@ public class TodoController {
         model.addAttribute("msg2", "부트 작업 시작");
     }
 
-    @GetMapping("/todo/list")
+    @GetMapping("/food/list")
     public void list(Model model) {
-        List<String> list = Arrays.asList("todo1", "todo2", "todo3");
+        List<String> list = Arrays.asList("food", "food2", "food3");
         model.addAttribute("list", list);
     }
 
-    @GetMapping("/todo/register")
+    @GetMapping("/food/register")
     public void register(Model model) {
         List<String> strList = IntStream.range(1,10).mapToObj(i -> "임시 데이터" + i).collect(Collectors.toList());
         model.addAttribute("strList", strList);

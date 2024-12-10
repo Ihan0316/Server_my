@@ -6,7 +6,7 @@
 
 <body>
 <div layout:fragment="content">
-    <h2>todo-list 화면입니다</h2>
+    <h2>food-list 화면입니다</h2>
 </div>
 <div layout:fragment="sample">
     <h1>ex1 기본 타임리프 문법 체크, 출력 </h1>
@@ -75,11 +75,11 @@
     <h1>링크 이동 </h1>
     <a th:href="@{/hello}">/hello 가기 </a>
     <h2>쿼리 스트링을 달고 전달하기. 타임리프, 자동으로 한글  URLEncoding 해줌</h2>
-    <a th:href="@{/todo/register(name='조이한',age=26)}">/todo/register 가기 쿼리스트링</a>
+    <a th:href="@{/food/register(name='조이한',age=26)}">/food/register 가기 쿼리스트링</a>
     <h2>같은 키에 대해서, 여러개의 값을 배열로 전달하는 예</h2>
     <br>
-    <a th:href="@{/todo/register(types=${ {'조이한1','조이한2'} }, age= 16)}">
-        Go to /todo/register</a>
+    <a th:href="@{/food/register(types=${ {'조이한1','조이한2'} }, age= 16)}">
+        Go to /food/register</a>
 
     <script>
         const list = `[[${list}]]`
