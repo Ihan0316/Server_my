@@ -17,13 +17,19 @@ import java.util.stream.IntStream;
 @Controller
 public class TodoController {
 
+    @GetMapping("/hello")
+    public void hello(Model model) {
+        model.addAttribute("msg", "hello world!");
+        model.addAttribute("msg2", "어제부터 부트 작업 시작");
+    }
+
     @GetMapping("/todo/ex1")
     public void ex1(Model model) {
         List<String> list = Arrays.asList("a", "b", "c");
         model.addAttribute("list", list);
     }
 
-    @GetMapping("/ex/ex2")
+    @GetMapping("/todo/ex2")
     public void ex2(Model model) {
         List<String> strList = IntStream.range(1,10).mapToObj(i -> "임시 데이터" + i).collect(Collectors.toList());
         model.addAttribute("strList", strList);
@@ -49,6 +55,8 @@ public class TodoController {
     }
 
     @GetMapping("/todo/register")
-    public void register() {
+    public void register(Model model) {
+        List<String> list = Arrays.asList("a", "b", "c");
+        model.addAttribute("list", list);
     }
 }
