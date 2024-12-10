@@ -49,8 +49,14 @@
     반복문 if 확인(if=참, unless=거짓)
     <ul>
         <li th:each="str , status: ${list}" >
-            <span th:if="${status.odd}"> 홀수  [[${str}]]</span>
-            <span th:unless="${status.odd}"> 짝수  [[${str}]]</span>
+            <span th:if="${status.odd}"> 홀수---[[${str}]]</span>
+            <span th:unless="${status.odd}"> 짝수---[[${str}]]</span>
+        </li>
+    </ul>
+    삼항 연산자 처리
+    <ul>
+        <li th:each="str , status: ${list}" >
+            <span th:text="${status.odd} ? '홀수---'+${str} : '짝수---'+${str}"></span>
         </li>
     </ul>
     switch 조건 확인
