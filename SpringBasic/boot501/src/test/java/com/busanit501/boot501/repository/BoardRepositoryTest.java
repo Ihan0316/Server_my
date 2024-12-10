@@ -5,6 +5,10 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -90,5 +94,17 @@ public class BoardRepositoryTest {
     public void testDelete() {
         Long bno = 99L;
         boardRepository.deleteById(bno);
+    }
+
+    // 페이지는 0부터 시작
+    @Test
+    public void testPaging() {
+        Pageable pageable = PageRequest.of(1, 10, Sort.by("bno").descending());
+        Page<Board> result = boardRepository.findAll(pageable);
+        log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
+        log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());
+        log.info("result.getContent() 페이징된 결과 10개 : "+result.getContent());
+        log.info("result.getNumber() 현재 페이지 번호 : "+result.getNumber());
+        log.info("result.getSize() 크기 : "+result.getSize());
     }
 }
