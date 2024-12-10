@@ -25,7 +25,7 @@ public class TodoController {
 
     @GetMapping("/todo/list")
     public void list(Model model) {
-        List<String> list = Arrays.asList("a", "b", "c");
+        List<String> list = Arrays.asList("todo1", "todo2", "todo3");
         model.addAttribute("list", list);
     }
 
