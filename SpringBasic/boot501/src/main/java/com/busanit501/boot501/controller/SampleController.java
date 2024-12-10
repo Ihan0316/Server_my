@@ -16,6 +16,7 @@ public class SampleController {
     // 부트에서는 화면을 타임리프 사용, 확장자 - .html 동일함
     public void hello(Model model) {
         model.addAttribute("msg", "hello world!");
+        model.addAttribute("msg2", "어제부터 부트 작업 시작");
     }
 
     @GetMapping("/ex/ex1")
