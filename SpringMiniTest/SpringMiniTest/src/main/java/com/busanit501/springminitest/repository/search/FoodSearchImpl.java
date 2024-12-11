@@ -54,10 +54,13 @@ public class FoodSearchImpl extends QuerydslRepositorySupport implements FoodSea
                 switch (type) {
                     case "f":
                         booleanBuilder.or(qFood.foodName.contains(keyword));
+                        break;
                     case "ct":
                         booleanBuilder.or(qFood.content.contains(keyword));
+                        break;
                     case "ch":
                         booleanBuilder.or(qFood.chefName.contains(keyword));
+                        break;
                 } // switch
             }// end for
             query.where(booleanBuilder);
