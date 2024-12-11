@@ -2,8 +2,10 @@ package com.busanit501.springminitest.repository.search;
 
 import com.busanit501.springminitest.domain.Food;
 import com.busanit501.springminitest.domain.QFood;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -16,18 +18,61 @@ public class FoodSearchImpl extends QuerydslRepositorySupport implements FoodSea
     }
 
     @Override
+    // 자바문법으로 sql 명령어 대체
     public Page<Food> search(Pageable pageable) {
-        // 예시,
+
         QFood qFood = QFood.food;
         JPQLQuery<Food> query = from(qFood);
 
         query.where(qFood.foodName.contains("3"));
-        //----------------------------------- 조건
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        booleanBuilder.or(qFood.foodName.contains("3"));
+        booleanBuilder.or(qFood.content.contains("7"));
+
+        query.where(booleanBuilder);
+
+        query.where(qFood.fno.gt(0L));
+
+        this.getQuerydsl().applyPagination(pageable, query);
+
         List<Food> list = query.fetch();
-        // 해당 조건의 데이터 갯수 조회
+
         Long total = query.fetchCount();
-        // 해당 조건의 데이터 가져오기
 
         return null;
+    }
+
+    @Override
+    public Page<Food> searchAll(String[] types, String keyword, Pageable pageable) {
+        QFood qFood = QFood.food;
+        JPQLQuery<Food> query = from(qFood);
+        if (types != null && types.length > 0 && keyword != null) {
+
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            for (String type : types) {
+                switch (type) {
+                    case "f":
+                        booleanBuilder.or(qFood.foodName.contains(keyword));
+                    case "c":
+                        booleanBuilder.or(qFood.content.contains(keyword));
+                    case "ch":
+                        booleanBuilder.or(qFood.chefName.contains(keyword));
+                } // switch
+            }// end for
+            query.where(booleanBuilder);
+        } //end if
+
+        query.where(qFood.fno.gt(0L));
+
+        this.getQuerydsl().applyPagination(pageable, query);
+
+        List<Food> list = query.fetch();
+
+        long total = query.fetchCount();
+
+        Page<Food> result = new PageImpl<Food>(list, pageable, total);
+
+        return result;
     }
 }
