@@ -15,6 +15,8 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
     @Override
     public Page<Board> search(Pageable pageable) {
+        // 예시,
+
         return null;
     }
 }
