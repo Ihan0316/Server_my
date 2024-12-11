@@ -18,7 +18,7 @@ public class FoodSearchImpl extends QuerydslRepositorySupport implements FoodSea
     }
 
     @Override
-    // 자바문법으로 sql 명령어 대체
+
     public Page<Food> search(Pageable pageable) {
 
         QFood qFood = QFood.food;
@@ -54,7 +54,7 @@ public class FoodSearchImpl extends QuerydslRepositorySupport implements FoodSea
                 switch (type) {
                     case "f":
                         booleanBuilder.or(qFood.foodName.contains(keyword));
-                    case "c":
+                    case "ct":
                         booleanBuilder.or(qFood.content.contains(keyword));
                     case "ch":
                         booleanBuilder.or(qFood.chefName.contains(keyword));
