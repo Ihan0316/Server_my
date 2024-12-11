@@ -25,7 +25,7 @@ public class BoardRepositoryTest {
     public void testInsert() {
         // 더미 데이터 넣기, 병렬 처리
         // stream 클래스 이용
-        IntStream.range(1,100).forEach(i -> {
+        IntStream.range(1,2).forEach(i -> {
             Board board = Board.builder()
                     .title("샘플 제목 : "+i)
                     .content("샘플 내용 : "+i)
@@ -76,7 +76,7 @@ public class BoardRepositoryTest {
 
     @Test
     public void testUpdate() {
-        Long bno = 99L;
+        Long bno = 90L;
         // 수정할 데이터가 해당 테이블에 있는지 조회 먼저 함
         Optional<Board> result = boardRepository.findById(bno);
         // result 있으면, Board 타입으로 받고, 없으면 예외발생
