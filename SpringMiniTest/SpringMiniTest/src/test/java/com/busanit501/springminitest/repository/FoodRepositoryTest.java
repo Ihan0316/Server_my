@@ -79,6 +79,7 @@ public class FoodRepositoryTest {
         log.info("result.getSize() 크기 : "+result.getSize());
     }
 
+    // 테스트 쿼리스트링
     @Test
     public void testQueryString () {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("fno").descending());
