@@ -7,8 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-//public interface FoodRepository extends JpaRepository<Food, Long>, FoodSearch {
-    public interface FoodRepository extends JpaRepository<Food, Long>{
+public interface FoodRepository extends JpaRepository<Food, Long>, FoodSearch {
+//    public interface FoodRepository extends JpaRepository<Food, Long>{
+
     Page<Food> findByFoodNameContainingOrderByFnoDesc(String foodName, Pageable pageable);
 
     @Query("select f from Food f where f.foodName like concat('%',:keyword,'%')")
