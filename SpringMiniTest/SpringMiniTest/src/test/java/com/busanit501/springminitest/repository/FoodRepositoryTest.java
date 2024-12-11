@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -72,11 +73,12 @@ public class FoodRepositoryTest {
     public void testPaging() {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("fno").descending());
         Page<Food> result = foodRepository.findAll(pageable);
-        log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
-        log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());
-        log.info("result.getContent() 페이징된 결과 10개 : "+result.getContent());
-        log.info("result.getNumber() 현재 페이지 번호 : "+result.getNumber());
-        log.info("result.getSize() 크기 : "+result.getSize());
+
+        for (String s : Arrays.asList("result.getTotalElements()전체개수 : " + result.getTotalElements(),
+                "result.getTotalPages()총페이지수 : " + result.getTotalPages(), "result.getContent() 페이징된 결과 10개 : " + result.getContent(),
+                "result.getNumber() 현재 페이지 번호 : " + result.getNumber(), "result.getSize() 크기 : " + result.getSize())) {
+            log.info(s);
+        }
     }
 
     // 테스트 쿼리스트링
@@ -85,11 +87,11 @@ public class FoodRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("fno").descending());
         Page<Food> result = foodRepository.findByFoodNameContainingOrderByFnoDesc("3", pageable);
 
-        log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
-        log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());
-        log.info("result.getContent() 페이징된 결과 10개 : "+result.getContent());
-        log.info("result.getNumber() 현재 페이지 번호 : "+result.getNumber());
-        log.info("result.getSize() 크기 : "+result.getSize());
+        for (String s : Arrays.asList("result.getTotalElements()전체개수 : " + result.getTotalElements(),
+                "result.getTotalPages()총페이지수 : " + result.getTotalPages(), "result.getContent() 페이징된 결과 10개 : " + result.getContent(),
+                "result.getNumber() 현재 페이지 번호 : " + result.getNumber(), "result.getSize() 크기 : " + result.getSize())) {
+            log.info(s);
+        }
     }
 
     @Test
@@ -97,11 +99,11 @@ public class FoodRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("fno").descending());
         Page<Food> result = foodRepository.findByKeyword("3", pageable);
 
-        log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
-        log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());
-        log.info("result.getContent() 페이징된 결과 10개 : "+result.getContent());
-        log.info("result.getNumber() 현재 페이지 번호 : "+result.getNumber());
-        log.info("result.getSize() 크기 : "+result.getSize());
+        for (String s : Arrays.asList("result.getTotalElements()전체개수 : " + result.getTotalElements(),
+                "result.getTotalPages()총페이지수 : " + result.getTotalPages(), "result.getContent() 페이징된 결과 10개 : " + result.getContent(),
+                "result.getNumber() 현재 페이지 번호 : " + result.getNumber(), "result.getSize() 크기 : " + result.getSize())) {
+            log.info(s);
+        }
     }
 
     @Test
@@ -119,12 +121,11 @@ public class FoodRepositoryTest {
         String[] types = {"f", "ch", "c"};
         Page<Food> result = foodRepository.searchAll(types, keyword, pageable);
 
-        log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
-        log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());
-        log.info("result.getContent() 페이징된 결과 10개 : " +result.getContent());
-        log.info("result.getNumber() 현재 페이지 번호 : " +result.getNumber());
-        log.info("result.getSize() 크기 : " +result.getSize());
-        log.info("result.hasNext 다음 : " +result.hasNext());
-        log.info("result.hasPrevious() 이전 : " +result.hasPrevious());
+        for (String s : Arrays.asList("result.getTotalElements()전체개수 : " + result.getTotalElements(),
+                "result.getTotalPages()총페이지수 : " + result.getTotalPages(), "result.getContent() 페이징된 결과 10개 : " + result.getContent(),
+                "result.getNumber() 현재 페이지 번호 : " + result.getNumber(), "result.getSize() 크기 : " + result.getSize(),
+                "result.hasNext 다음 : " + result.hasNext(), "result.hasPrevious() 이전 : " + result.hasPrevious())) {
+            log.info(s);
+        }
     }
 }
