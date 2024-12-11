@@ -23,6 +23,12 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch
     @Query("select b from Board b where b.title like concat('%',:keyword,'%')")
     Page<Board> findByKeyword(String keyword, Pageable pageable);
 
+    // 방법2 에서 JPQL, 디비에 상관없이 작성가능
+    // 특정 디비의 문법으로 만 작성 가능
+    // nativeQuery = true
+    @Query(value = "select now()", nativeQuery = true)
+    String now();
+
     // Querydsl 도구 이용해서, 방법3)
     // BoardSearch 인터페이스에 구현, 이 인터페이스에서 구현한 클래스에서 문법 사용
     // BoardSearchImpl 구현한 클래스의 이름, 구현체
