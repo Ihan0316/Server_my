@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 @Log4j2
 public class FoodRepositoryTest {
     @Autowired
-    private BoardRepository boardRepository;
+    private FoodRepository foodRepository;
 
     @Test
     public void testInsert() {
@@ -29,7 +29,7 @@ public class FoodRepositoryTest {
                     .content("샘플 내용 : "+i)
                     .chefName("샘플 요리사 : "+i)
                     .build();
-            Food result = boardRepository.save(board);
+            Food result = foodRepository.save(board);
             log.info("추가된 fno 번호 : " + result);
         });
     }
@@ -37,14 +37,14 @@ public class FoodRepositoryTest {
     @Test
     public void testSelectOne() {
         Long fno = 90L;
-        Optional<Food> result = boardRepository.findById(fno);
+        Optional<Food> result = foodRepository.findById(fno);
         Food food = result.orElseThrow();
         log.info("하나조회 : "+food);
     }
 
     @Test
     public void testSelectAll() {
-        List<Food> result = boardRepository.findAll();
+        List<Food> result = foodRepository.findAll();
         for (Food food : result) {
             log.info(food);
         }
@@ -53,25 +53,25 @@ public class FoodRepositoryTest {
     @Test
     public void testUpdate() {
         Long fno = 90L;
-        Optional<Food> result = boardRepository.findById(fno);
+        Optional<Food> result = foodRepository.findById(fno);
 
         Food food = result.orElseThrow();
         food.changeTitleContent("변경 제목", "변경 내용");
-        boardRepository.save(food);
+        foodRepository.save(food);
 
     }
 
     @Test
     public void testDelete() {
         Long fno = 99L;
-        boardRepository.deleteById(fno);
+        foodRepository.deleteById(fno);
     }
 
     // 페이지는 0부터 시작
     @Test
     public void testPaging() {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("fno").descending());
-        Page<Food> result = boardRepository.findAll(pageable);
+        Page<Food> result = foodRepository.findAll(pageable);
         log.info("result.getTotalElements()전체개수 : " +result.getTotalElements());
         log.info("result.getTotalPages()총페이지수 : " +result.getTotalPages());
         log.info("result.getContent() 페이징된 결과 10개 : "+result.getContent());
