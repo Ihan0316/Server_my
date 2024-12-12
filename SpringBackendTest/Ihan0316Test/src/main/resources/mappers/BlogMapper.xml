@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.busanit501.ihan0316test.mapper.BlogMapper">
+    <select id="getTime" resultType="string">
+        select now()
+    </select>
+
+    <!--    #{title} -> BlogVO, getTitle 로 접근하는 것과 동일한 효과-->
+    <insert id="insert">
+        insert into tbl_blog (title, dueDate, writer)
+        values (#{title}, #{dueDate}, #{writer})
+    </insert>
+
+    <!--    여러개 행 조회, 각행의 요소, BlogVO , -->
+    <select id="selectAll" resultType="com.busanit501.ihan0316test.domain.BlogVO">
+        select *
+        from tbl_blog
+        order by rno desc
+    </select>
+
+    <select id="selectOne" resultType="com.busanit501.ihan0316test.domain.BlogVO">
+        select *
+        from tbl_blog
+        where rno = #{rno}
+    </select>
+
+    <delete id="delete">
+        delete
+        from tbl_blog
+        where rno = #{rno}
+    </delete>
+
+    <update id="update">
+        update tbl_blog
+        set title    = #{title},
+            dueDate  = #{dueDate},
+            finished = #{finished}
+        where rno = #{rno}
+    </update>
+
+    <select id="selectList" resultType="com.busanit501.ihan0316test.domain.BlogVO">
+        select * from tbl_blog
+        <include refid="search"></include>
+        order by rno desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(rno) from tbl_blog
+        <include refid="search"></include>
+    </select>
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length >0">
+                <foreach collection="types" item="type"
+                         open="(" close=")" separator="OR">
+
+                    <if test="type == 't'.toString()">
+                        title like concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        writer like concat('%',#{keyword},'%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="finished2">
+                <trim prefix="and">
+                    finished = 1
+                </trim>
+            </if>
+
+            <if test="from != null and to != null">
+                <trim prefix="and">
+                    dueDate between #{from} and #{to}
+                </trim>
+            </if>
+
+        </where>
+    </sql>
+
+
+</mapper>
+
+
+
+
+
+
+
+
