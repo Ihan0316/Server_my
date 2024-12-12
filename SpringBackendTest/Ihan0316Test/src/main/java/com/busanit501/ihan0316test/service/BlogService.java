@@ -9,7 +9,7 @@ import java.util.List;
 public interface BlogService {
     void register(BlogDTO blogDTO);
 
-//    List<BlogDTO> getAll();
+    List<BlogDTO> getAll();
 
     PageResponseDTO<BlogDTO> selectList(PageRequestDTO pageRequestDTO);
 

@@ -15,9 +15,9 @@ import java.time.LocalDate;
 @Builder
 public class BlogDTO {
     private Long rno;
-    @NotEmpty
+    @NotEmpty// 빈 문자열, 공백 없이, 값이 존재해야함
     private String title;
-    @Future
+    @Future // 미래 날짜만
     private LocalDate dueDate;
     private boolean finished;
     @NotEmpty

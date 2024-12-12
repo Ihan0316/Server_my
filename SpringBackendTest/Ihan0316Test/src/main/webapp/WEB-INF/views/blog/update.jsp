@@ -12,12 +12,41 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <!--        <h1>Header</h1>-->
         <!--        네비게이션바 추가 시작-->
-        <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Navbar</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Features</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Pricing</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
         <!--        네비게이션바 추가 끝-->
 
-        <!--        class="row content"-->
+
         <div class="row content">
             <!--        col-->
             <div class="col">
@@ -27,10 +56,8 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Blog 입력 폼 여기에 작성--%>
                         <form action="/blog/update" method="post">
-                            <%--                            수정/삭제 처리 후 페이징 정보를 전달하려면, --%>
-                            <%--                            input 히든으로 숨겨서, 페이지정보, 사이즈 정보를 전달. --%>
                             <input type="hidden" name="page" value="${pageRequestDTO.page}">
                             <input type="hidden" name="size" value="${pageRequestDTO.size}">
                             <div class="input-group mb-3">
@@ -63,15 +90,13 @@
                             </div>
                             <div class="my-4">
                                 <div class="float-end">
-                                    <%--  방법1--%>
-                                    <%--<button type="submit" class="btn btn-primary">적용하기</button>--%>
                                     <button type="button" class="btn btn-primary">적용하기</button>
                                     <button type="button" class="btn btn-danger">삭제하기</button>
                                     <button type="button" class="btn btn-secondary">목록가기</button>
                                 </div>
                             </div>
                         </form>
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Blog 입력 폼 여기에 작성--%>
 
                     </div>
                 </div>
@@ -81,11 +106,8 @@
         </div>
         <!--        class="row content"-->
     </div>
-    <%--    <div class="row content">--%>
-    <%--        <h1>Content</h1>--%>
-    <%--    </div>--%>
+
     <div class="row footer">
-        <!--        <h1>Footer</h1>-->
         <div class="row fixed-bottom" style="z-index: -100">
             <footer class="py-1 my-1">
                 <p class="text-center text-muted">Footer</p>
@@ -93,79 +115,58 @@
         </div>
     </div>
 </div>
-<%--입력 폼에 관련 유효성 체크, 서버로부터  erros 키로 값을 받아오면, --%>
-<%--자바스크립 콘솔에 임시 출력.--%>
+
 <script>
     const serverValidResult = {};
-    // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
-    //     하나씩 꺼내서, 출력하는 용도.,
+
     <c:forEach items="${errors}" var="error">
     serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>
     console.log(serverValidResult)
 
     const serverValidResult2 = {};
-    // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
-    //     하나씩 꺼내서, 출력하는 용도.,
+
     <c:forEach items="${errors2}" var="error">
     serverValidResult2['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>
     console.log(serverValidResult2)
 </script>
 
-<%--목록가기 및 수정폼 가기 이벤트 리스너--%>
 <script>
-    // 수정폼
     document.querySelector(".btn-primary").addEventListener("click",
         function (e) {
-            // 수정폼으로 가야함. 그러면, 필요한 준비물 rno 번호가 필요함
             self.location = "/blog/update?rno=" +${blogDTO.rno}
                 , false
         })
-    // 목록
+
     document.querySelector(".btn-secondary").addEventListener("click",
         function (e) {
-            // 수정폼으로 가야함. 그러면, 필요한 준비물 rno 번호가 필요함
             self.location = "/blog/list?${pageRequestDTO.link}"
                 , false
         })
 
-    // 삭제기능.
     document.querySelector(".btn-danger").addEventListener("click",
         function (e) {
-            // 폼에서, 필요한  rno가져오기.
             const formObj = document.querySelector("form")
 
-            // 기본 폼 방식으로 전달하는 기본 기능 제거 하고,
             e.preventDefault()
-            e.stopPropagation() // 상위 태그로 전파 방지
+            e.stopPropagation()
 
-            // 삭제시 포스트로, rno 번호를 전달하는 방식.
-            // formObj , 원래 action: /blog/update
-            // 속성을 변경 가능해서, 임시로, 삭제 url 변경.
-            // 삭제 후에도 검색 내용 유지
             formObj.action = "/blog/delete?${pageRequestDTO.link}"
             formObj.method = "post"
-            // blogDTO 모든 멤버가 같이 전달됨.
-            // rno, title, dueDate, finished, writer
             formObj.submit()
         }, false)
 
-    // 방법2
-    //수정 로직 처리
+
     document.querySelector(".btn-primary").addEventListener("click",
         function (e) {
-            // 폼에서, 필요한  rno가져오기.
             const formObj = document.querySelector("form")
 
-            // 기본 폼 방식으로 전달하는 기본 기능 제거 하고,
             e.preventDefault()
-            e.stopPropagation() // 상위 태그로 전파 방지
+            e.stopPropagation()
 
             formObj.action = "/blog/update?${pageRequestDTO.link}"
             formObj.method = "post"
-            // blogDTO 모든 멤버가 같이 전달됨.
-            // rno, title, dueDate, finished, writer
             formObj.submit()
         }, false)
 </script>

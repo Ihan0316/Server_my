@@ -12,14 +12,40 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <!--        <h1>Header</h1>-->
         <!--        네비게이션바 추가 시작-->
-        <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Navbar</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Features</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Pricing</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
         <!--        네비게이션바 추가 끝-->
 
-        <!--        class="row content"-->
         <div class="row content">
-            <!--        col-->
             <div class="col">
                 <!--        카드 시작 부분-->
                 <div class="card">
@@ -27,7 +53,7 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Blog 입력 폼 여기에 작성--%>
                         <form action="/blog/register" method="post">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
@@ -54,7 +80,7 @@
                                 </div>
                             </div>
                         </form>
-                        <%--                        Todo 입력 폼 여기에 작성--%>
+                        <%--                        Blog 입력 폼 여기에 작성--%>
 
                     </div>
                 </div>
@@ -64,11 +90,8 @@
         </div>
         <!--        class="row content"-->
     </div>
-<%--    <div class="row content">--%>
-<%--        <h1>Content</h1>--%>
-<%--    </div>--%>
+
     <div class="row footer">
-        <!--        <h1>Footer</h1>-->
         <div class="row fixed-bottom" style="z-index: -100">
             <footer class="py-1 my-1">
                 <p class="text-center text-muted">Footer</p>
@@ -76,12 +99,9 @@
         </div>
     </div>
 </div>
-<%--입력 폼에 관련 유효성 체크, 서버로부터  erros 키로 값을 받아오면, --%>
-<%--자바스크립 콘솔에 임시 출력.--%>
+
 <script>
     const serverValidResult = {    };
-    // jstl , 반복문으로, 서버로부터 넘어온 여러 에러 종류가 많습니다.
-    //     하나씩 꺼내서, 출력하는 용도.,
     <c:forEach items="${errors}" var="error">
     serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
     </c:forEach>

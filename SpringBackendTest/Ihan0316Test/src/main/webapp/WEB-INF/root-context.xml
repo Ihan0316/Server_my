@@ -5,9 +5,7 @@
        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
-
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <!--        속성 옵션 설정해서, 작업.-->
         <property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
         <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/webdb"></property>
         <property name="username" value="webuser"></property>
@@ -27,7 +25,6 @@
         <constructor-arg ref="hikariConfig"/>
     </bean>
 
-
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml"></property>
@@ -35,7 +32,6 @@
 
     <mybatis:scan base-package="com.busanit501.ihan0316test.mapper"></mybatis:scan>
 
-<!--    모델 맵퍼 설정 클래스 경로 추가 -> @Configuration 애너테이션이용 가능.-->
     <context:component-scan base-package="com.busanit501.ihan0316test.config"/>
     <context:component-scan base-package="com.busanit501.ihan0316test.service"/>
 

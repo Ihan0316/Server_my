@@ -28,13 +28,13 @@ public class BlogServiceImpl implements BlogService{
 
     }
 
-//    @Override
-//    public List<BlogDTO> getAll() {
-//        List<BlogDTO> list = blogMapper.selectAll().stream()
-//                .map(vo -> modelMapper.map(vo,BlogDTO.class))
-//                .collect(Collectors.toList());
-//        return list;
-//    }
+    @Override
+    public List<BlogDTO> getAll() {
+        List<BlogDTO> list = blogMapper.selectAll().stream()
+                .map(vo -> modelMapper.map(vo,BlogDTO.class))
+                .collect(Collectors.toList());
+        return list;
+    }
 
     @Override
     public BlogDTO getOne(Long rno) {
