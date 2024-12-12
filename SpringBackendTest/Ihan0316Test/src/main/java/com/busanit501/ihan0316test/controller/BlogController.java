@@ -27,9 +27,9 @@ public class BlogController {
 
     @RequestMapping("/list")
     public String list(@Valid PageRequestDTO pageRequestDTO,
-                     BindingResult bindingResult,
-                     RedirectAttributes redirectAttributes,
-                     Model model) {
+                       BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
         log.info("BlogController list : 화면제공은 해당 메서드 명으로 제공함.");
         if (bindingResult.hasErrors()) {
             log.info("has errors : 유효성 에러가 발생함.");
@@ -41,8 +41,8 @@ public class BlogController {
         log.info("BlogController list 데이터 유무 확인 :" + pageResponseDTO);
         //데이터 탑재. 서버 -> 웹
         model.addAttribute("pageResponseDTO", pageResponseDTO);
-        redirectAttributes.addAttribute("page",pageRequestDTO.getPage());
-        redirectAttributes.addAttribute("size",pageRequestDTO.getSize());
+        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
         return "/blog/list";
     }
 
@@ -57,19 +57,19 @@ public class BlogController {
         log.info("BlogController register post 로직처리: ");
         log.info("BlogController register post  blogDTO : " + blogDTO);
 
-        
+
         if (bindingResult.hasErrors()) {
             log.info("has errors : 유효성 에러가 발생함.");
 
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/blog/register";
         }
-       
+
         blogService.register(blogDTO);
 
         return "redirect:/blog/list";
     }
-   
+
     @RequestMapping("/read")
     public String read(Long rno, @Valid PageRequestDTO pageRequestDTO,
                        BindingResult bindingResult,
@@ -78,7 +78,7 @@ public class BlogController {
         log.info("BlogController read :");
         if (bindingResult.hasErrors()) {
             log.info("has errors : 유효성 에러가 발생함.");
-          
+
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addAttribute("rno", rno);
             return "redirect:/blog/read";
@@ -88,8 +88,8 @@ public class BlogController {
         log.info("BlogController read 데이터 유무 확인 pageRequestDTO :" + pageRequestDTO);
         //데이터 탑재. 서버 -> 웹
         model.addAttribute("blogDTO", blogDTO);
-        redirectAttributes.addAttribute("page",pageRequestDTO.getPage());
-        redirectAttributes.addAttribute("size",pageRequestDTO.getSize());
+        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
         return "/blog/read";
 
     }
@@ -130,7 +130,7 @@ public class BlogController {
             redirectAttributes.addAttribute("rno", blogDTO.getRno());
             redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
             redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-            return "redirect:/blog/update"+pageRequestDTO.getLink();
+            return "redirect:/blog/update" + pageRequestDTO.getLink();
         }
 
         if (pageBindingResult.hasErrors()) {
@@ -141,17 +141,17 @@ public class BlogController {
             redirectAttributes.addAttribute("rno", blogDTO.getRno());
             redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
             redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-            return "redirect:/blog/update"+pageRequestDTO.getLink();
+            return "redirect:/blog/update" + pageRequestDTO.getLink();
         }
 
         log.info("blogDTO확인 finished의 변환 여부 확인2. : " + blogDTO);
-        log.info("BlogController update pageRequestDTO : "+ pageRequestDTO);
+        log.info("BlogController update pageRequestDTO : " + pageRequestDTO);
 
         blogService.update(blogDTO);
 
         redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
         redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-        return "redirect:/blog/list?"+pageRequestDTO.getLink();
+        return "redirect:/blog/list?" + pageRequestDTO.getLink();
     }
 
     @PostMapping("/delete")
@@ -160,9 +160,8 @@ public class BlogController {
     ) {
         blogService.delete(rno);
         log.info("BlogController delete : pageRequestDTO " + pageRequestDTO);
-       
-        return "redirect:/blog/list?"+pageRequestDTO.getLink();
 
+        return "redirect:/blog/list?" + pageRequestDTO.getLink();
     }
 }
 

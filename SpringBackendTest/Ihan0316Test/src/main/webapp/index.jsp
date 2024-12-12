@@ -2,12 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <meta charset="UTF-8">
+    <title>메인화면</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="blog/list">블로그 리스트 가기</a>
 </body>
 </html>
