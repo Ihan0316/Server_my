@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+<body>
+
+<!--    검색 및 필터 화면 추가-->
+<div layout:fragment="content">
+    <!--    검색 및 필터 화면 추가-->
+    <div class="row mt-3">
+        <div class="col">
+            <!--        카드 시작 부분-->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">검색 및 필터 </h5>
+                    <form action="/board/list" method="get">
+<!--                        <input type="hidden" name="size" value="${responseDTO.size}">-->
+
+<!--                        수정 부분, 검색시, 제목t, 작성자w, 내용c 선택 화면 필요-->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="form-select" name="type">
+                                    <option value="">
+                                        -----
+                                    </option>
+                                    <option value="t" th:selected="${pageRequestDTO.type == 't'}">
+                                        제목
+                                    </option>
+                                    <option value="w" th:selected="${pageRequestDTO.type == 'w'}">
+                                        작성자
+                                    </option>
+                                    <option value="c" th:selected="${pageRequestDTO.type == 'c'}">
+                                        내용
+                                    </option>
+                                    <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">
+                                        제목, 내용
+                                    </option>
+                                    <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">
+                                        제목, 내용, 작성자
+                                    </option>
+                                </select>
+                            </div>
+                            <input type="text" class="form-controll" name="keyword"
+                            th:value="${pageRequestDTO.keyword}">
+                        </div>
+<!--                        검색 창에서, 검색 키워드 입력 받는 화면 필요-->
+                        <div class="input-group mb-3">
+                            <div class="float-end">
+                                <button class="btn btn-primary" type="submit">검색</button>
+                                <button class="btn btn-secondary clearBtn" type="reset">초기화</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--        카드 끝 부분-->
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+           <div class="card">
+               <div class="card-header">
+                   Board List
+               </div>
+               <div class="card-body">
+                   <h5 class="card-title">
+                       Board List
+                   </h5>
+
+                   <table class="table">
+                       <thead>
+                       <tr>
+                           <th scope="col">Bno</th>
+                           <th scope="col">Title</th>
+                           <th scope="col">Writer</th>
+                           <th scope="col">RegDate</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       <tr th:each="dto:${responseDTO.dtoList}">
+                           <th scope="row">
+                               [[${dto.bno}]]
+                           </th>
+                           <td>[[${dto.title}]]</td>
+                           <td>[[${dto.writer}]]</td>
+                           <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+                       </tr>
+                       </tbody>
+                   </table>
+                <!--페이징-->
+                   <div class="float-end">
+                       <ul class="pagination">
+                           <li class="page-item" th:if="${responseDTO.prev}">
+                               <a class="page-link" th:data-num="${responseDTO.start - 1}">Previous</a>
+                           </li>
+
+                           <th:block th:each="i:${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+                               <li th:class="${responseDTO.page == i } ?'page-item active':'page-item'">
+                                   <a class="page-link" data-num="${i}" href="#">[[${i}]]</a>
+                               </li>
+                           </th:block>
+
+                           <li class="page-item" th:if="${responseDTO.next}">
+                               <a class="page-link" th:data-num="${responseDTO.end - 1}">Next</a>
+                           </li>
+                       </ul>
+                   </div>
+                   <!--페이징-->
+               </div>
+
+           </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+<!--끝 나는 부분 layout:fragment="content"-->
+
+
+
+
+<!--자바스크립트 추가하는 영역-->
+<script layout:fragment="javascript" th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const pagination = document.querySelector(".pagination");
+        if (!pagination) return; // pagination가 없는 경우 처리
+
+        pagination.addEventListener("click", function (e) {
+            e.preventDefault(); // 기본 동작 방지
+            e.stopPropagation(); // 이벤트 전파 방지
+
+            const target = e.target;
+            if (target.tagName !== "A") {
+                return; // 클릭한 대상이 <A> 태그가 아니면 반환
+            }
+
+            const pageNumber = target.getAttribute("data-num"); // 페이지 번호 추출
+            if (!pageNumber) return; // 페이지 번호가 없으면 반환
+
+            const formObj = document.querySelector("form");
+            if (!formObj) return; // form이 없으면 반환
+
+            const type = formObj.querySelector("select[name='type']")?.value || ""; // 검색 타입
+            const keyword = formObj.querySelector("input[name='keyword']")?.value || ""; // 검색 키워드
+
+            // 새 URL 생성
+            const newUrl = `/board/list?page=${pageNumber}&type=${type}&keyword=${keyword.trim()}`;
+
+            // 페이지 이동
+            window.location.href = newUrl;
+        });
+    });
+</script>
+
+</body>
+</html>
