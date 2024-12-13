@@ -54,7 +54,6 @@ public class BlogController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerPost(@Valid BlogDTO blogDTO, BindingResult bindingResult,
                                RedirectAttributes redirectAttributes) {
-        log.info("BlogController register post 로직처리: ");
         log.info("BlogController register post  blogDTO : " + blogDTO);
 
 

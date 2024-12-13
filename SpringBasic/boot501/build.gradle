@@ -59,7 +59,13 @@ dependencies {
             "jakarta.annotation:jakarta.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
 
+    // 5 모델맵퍼, DTO <-> VO 변환 하는 도구
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
+
 }
+
+
 
 tasks.named('test') {
     useJUnitPlatform()
