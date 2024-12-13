@@ -1,6 +1,8 @@
 package com.busanit501.boot501.service;
 
 import com.busanit501.boot501.dto.BoardDTO;
+import com.busanit501.boot501.dto.PageRequestDTO;
+import com.busanit501.boot501.dto.PageResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +55,19 @@ public class BoardServiceTest {
         Long bno = 103L;
 
         boardService.delete(bno);
+    }
+
+    @Test
+    public void testSelectAllBoard() {
+        PageRequestDTO pageRequestDTO =
+                PageRequestDTO.builder()
+                        .page(1)
+                        .type("tcw")
+                        .keyword("샘플")
+                        .size(10)
+                        .build();
+
+        PageResponseDTO<BoardDTO> list = boardService.list(pageRequestDTO);
+        log.info("list: " + list.toString());
     }
 }

@@ -29,10 +29,11 @@ public class PageResponseDTO<E> {
     @Builder(builderMethodName = "withAll")
     public PageResponseDTO(List<E> dtoList, int total,
                            PageRequestDTO pageRequestDTO) {
-        // 기본 유효성
-        if(total<=0){
+        // 기본 유효성,
+        if(total <= 0){
             return;
         }
+
         this.page = pageRequestDTO.getPage();
         this.size = pageRequestDTO.getSize();
         this.total = total;
@@ -40,12 +41,11 @@ public class PageResponseDTO<E> {
 
         this.end = ((int) Math.ceil(page / 10.0)) * 10;
         this.start = this.end - 9;
-
         int last = (int)(Math.ceil(total/10.0));
         this.end = end > last ? last :end;
 
         this.prev = this.start > 1;
-
         this.next = total > this.end * this.size;
+
     }
 }
