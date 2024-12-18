@@ -24,10 +24,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class FoodServiceImpl implements FoodService {
 
-    //맵퍼에게 의존 해야함.
-    // 디비 작업 도구,
     private final FoodRepository foodRepository;
-    // DTO <-> Entity class
     private final ModelMapper modelMapper;
 
     @Override
