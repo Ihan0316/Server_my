@@ -43,7 +43,7 @@ public class ReplyServiceTest {
         // 각자 디비에 따라 다름
 
         ReplyDTO replyDTO = ReplyDTO.builder()
-                .replyText("수정 테스트 내용 변경 중")
+                .replyText("수정 테스트 내용 변경 중 입니다")
                 .replyer("조이한")
                 .rno(8L)
                 .fno(200L)

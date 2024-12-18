@@ -1,7 +1,9 @@
 package com.busanit501.springminitest.service;
 
+import com.busanit501.springminitest.domain.Food;
 import com.busanit501.springminitest.domain.Reply;
 import com.busanit501.springminitest.dto.ReplyDTO;
+import com.busanit501.springminitest.repository.FoodRepository;
 import com.busanit501.springminitest.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,13 +20,18 @@ public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository replyRepository;
 
     private final ModelMapper modelMapper;
+    private final FoodRepository foodRepository;
 
     @Override
     public Long register(ReplyDTO replyDTO) {
-        // 화면에서 받은 데이터 dto -> 엔티티 변경
+        // 화면에서 받은 데이터 DTO 타입 -> 엔티티 타입으로 변경,
+        // replyDTO, bno 값이 존재.
         log.info("Registering new replyDTO: " + replyDTO);
         Reply reply = modelMapper.map(replyDTO, Reply.class);
-        log.info("Registering new reply: " + replyDTO);
+        Optional<Food> result = foodRepository.findById(replyDTO.getFno());
+        Food food = result.orElseThrow();
+        reply.changeFood(food);
+        log.info("Registering new reply: " + reply);
         Long rno = replyRepository.save(reply).getRno();
         return rno;
     }
