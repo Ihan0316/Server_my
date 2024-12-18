@@ -60,7 +60,7 @@ public class ReplyRepositoryTests {
 
         // 전달할 준비물
         // 1) 검색어, 2) 검색 유형
-        String keyword = "오늘";
+        String keyword = "테스트";
         String[] types = {"t","w","c"};
 
         Page<FoodListReplyCountDTO> result = foodRepository.searchWithReplyCount(types,keyword,pageable);
