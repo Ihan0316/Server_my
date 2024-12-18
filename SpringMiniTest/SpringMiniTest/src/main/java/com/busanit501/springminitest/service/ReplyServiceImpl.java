@@ -18,7 +18,6 @@ import java.util.Optional;
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
-
     private final ModelMapper modelMapper;
     private final FoodRepository foodRepository;
 
