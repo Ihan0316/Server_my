@@ -20,9 +20,9 @@ public class ReplyServiceTest {
     public void testRegisterFood() {
         // 더미 데이터 필요, 임시 DTO 생성.
         ReplyDTO replyDTO = ReplyDTO.builder()
-                .replyText("오늘 점심 뭐 먹지?")
+                .replyText("댓글 달기 테스트중")
                 .replyer("조이한")
-                .fno(200L)
+                .fno(203L)
                 .regDate(LocalDateTime.now())
                 .build();
 
@@ -33,7 +33,7 @@ public class ReplyServiceTest {
 
     @Test
     public void testReadReply() {
-        ReplyDTO replyDTO = replyService.readOne(27L);
+        ReplyDTO replyDTO = replyService.readOne(28L);
         log.info("조회한 댓글 내용 "+replyDTO);
 
     }
@@ -45,8 +45,8 @@ public class ReplyServiceTest {
         ReplyDTO replyDTO = ReplyDTO.builder()
                 .replyText("수정 테스트 내용 변경 중 입니다")
                 .replyer("조이한")
-                .rno(27L)
-                .fno(200L)
+                .rno(28L)
+                .fno(203L)
                 .regDate(LocalDateTime.now())
                 .build();
 
