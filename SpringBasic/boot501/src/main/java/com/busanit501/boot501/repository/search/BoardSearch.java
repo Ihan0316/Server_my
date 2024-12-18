@@ -16,6 +16,10 @@ public interface BoardSearch {
     Page<Board> searchAll(String[] types, String keyword, Pageable pageable);
 
     // 댓글 갯수를 포함한 목록,
+    // 목록, board 조회를 함,
+    // 단점, board , reply 쪽으로 연관관계 설정 안되어 있음.
+    // 즉 조회를 못해요, 자바로 인스턴스로 ,
+    // 그래서, 2개의 테이블을 연결 조인(외부조인? 댓글 null 일수도 있기때문에)
     Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
 
 }

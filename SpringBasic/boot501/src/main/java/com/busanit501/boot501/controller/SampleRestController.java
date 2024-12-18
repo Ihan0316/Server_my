@@ -14,6 +14,7 @@ public class SampleRestController {
     // 형식으로 자동으로 변환해서 전달이 되었다.
     // 자동으로 변환해주는 도구 jackson 라이브러리,
     public String[] hiRest() {
+
         return new String[]{"aaa","bbb","ccc"};
     }
 }

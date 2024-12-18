@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,15 +83,18 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO) {
+
         String[] types = pageRequestDTO.getTypes();
         String keyword = pageRequestDTO.getKeyword();
         Pageable pageable = pageRequestDTO.getPageable("bno");
 
+        // 수정1
         Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types,keyword,pageable);
         // list -> PageResponseDTO 타입으로 변경 필요.
 
         // result.getContent() -> 페이징된 엔티티 클래스 목록
-        // 조회시 변환이 알아서 이루어지므로 필요 없음
+        // Projection.bean 이용해서, 데이터 조회시 , 바로 dto 변환을 다했음.
+        // 변환 작업이 필요가 없음.
 //        List<BoardDTO> dtoList = result.getContent().stream()
 //                .map(board ->modelMapper.map(board, BoardDTO.class))
 //                .collect(Collectors.toList());
