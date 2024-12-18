@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
     // 기본적인 crud , 쿼리 스트링으로 가능함.
 
-    // 검색 기능 추가해보기.
+    // 댓글목록 조회 추가해보기.
     @Query("select r from Reply r where r.board.bno = :bno")
     Page<Reply> listOfBoard(Long bno, Pageable pageable);
 }
