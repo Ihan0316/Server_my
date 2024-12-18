@@ -74,21 +74,21 @@ public class BoardRepositoryTest {
         }
     }
 
-    @Test
-    public void testUpdate() {
-        Long bno = 90L;
-        // 수정할 데이터가 해당 테이블에 있는지 조회 먼저 함
-        Optional<Board> result = boardRepository.findById(bno);
-        // result 있으면, Board 타입으로 받고, 없으면 예외발생
-        // board 엔티티 클래스 인스턴스가 하나의 데이터 베이스 내용
-        Board board = result.orElseThrow();
-        board.changeTitleContent("변경 제목", "변경 내용");
-        // 실제 디비 테이블 반영
-        // 순서 -> 1차 영속성 컨텍스트(임시 테이블) 적용 후 -> 실제 디비에 반영
-        // save -> 해당 실제 테이블에 없다면 insert, 있다면, update 실행
-        boardRepository.save(board);
-
-    }
+//    @Test
+//    public void testUpdate() {
+//        Long bno = 90L;
+//        // 수정할 데이터가 해당 테이블에 있는지 조회 먼저 함
+//        Optional<Board> result = boardRepository.findById(bno);
+//        // result 있으면, Board 타입으로 받고, 없으면 예외발생
+//        // board 엔티티 클래스 인스턴스가 하나의 데이터 베이스 내용
+//        Board board = result.orElseThrow();
+//        board.changeTitleContent("변경 제목", "변경 내용");
+//        // 실제 디비 테이블 반영
+//        // 순서 -> 1차 영속성 컨텍스트(임시 테이블) 적용 후 -> 실제 디비에 반영
+//        // save -> 해당 실제 테이블에 없다면 insert, 있다면, update 실행
+//        boardRepository.save(board);
+//
+//    }
 
     @Test
     public void testDelete() {

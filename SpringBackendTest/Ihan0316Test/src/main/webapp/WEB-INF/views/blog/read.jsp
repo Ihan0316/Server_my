@@ -57,7 +57,7 @@
                     <div class="card-body">
                         <%--                        Blog 입력 폼 여기에 작성--%>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Tno</span>
+                                <span class="input-group-text">Rno</span>
                                 <input type="text" name="rno" class="form-control" readonly
                                        value=<c:out value="${blogDTO.rno}"></c:out> >
                             </div>

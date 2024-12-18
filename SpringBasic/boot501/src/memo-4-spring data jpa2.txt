@@ -70,7 +70,7 @@ PageRequest.of(0, 10, 오름,내림)
 
 쿼리 메소드 단점,
 예시) 제목, 키워드, 검색시, 게시글 번호 bno 역순 정렬해서 조회하는 방법
-Page<Board> findByTitleContainingOrderByBnoDesc(String keyword, Pageable pageable);
+Page<Board> TitlfindByeContainingOrderByBnoDesc(String keyword, Pageable pageable);
 결론, 복잡한 쿼리 작성에는 부적합, 간단한 쿼리 사용시 이용함.
 
 쿼리 메소드 보완 -> 연장, @Query ,
@@ -79,7 +79,7 @@ JPQL, 언어를 이용해서, 디비에 명령을 한다.
 
 예시)
 @Query("select b from Board db where b.title like concat
-('%':keyword,'%')")
+('%':keyowrd,'%')")
 단점, 문자열 내부에, 문법 검사가 안됨.
 Page<Board> findKeyword(String keyword, Pageable pageable)
 
@@ -99,6 +99,11 @@ JPA, ORM 기술을 사용하는 이유 -> 특정 데이터베이스 종속되지
 -> 동적으로 변경하면 어떨까?
 @Query -> 문자열이라서, 변경이 안됨.
 select * from board b where b.name = #{id}
+
+@Query 단점,
+예시) 다양한 검색 조건으로 sql 문장을 만든다고하면,
+검색, 필터 여러가지 조건을 이용해서, 작업한다면,
+해당 조건들마다, 각각의 정적인(고정) sql 다 만들어야함,
 
 QueryDSL
 -> 동적으로 개발이 가능하고,

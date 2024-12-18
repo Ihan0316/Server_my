@@ -23,13 +23,13 @@ public class SampleFoodController {
         model.addAttribute("msg2", "부트 작업 시작");
     }
 
-    @GetMapping("/food/list")
+    @GetMapping("/food2/list")
     public void list(Model model) {
         List<String> list = Arrays.asList("food", "food2", "food3");
         model.addAttribute("list", list);
     }
 
-    @GetMapping("/food/register")
+    @GetMapping("/food2/register")
     public void register(Model model) {
         List<String> strList = IntStream.range(1,10).mapToObj(i -> "임시 데이터" + i).collect(Collectors.toList());
         model.addAttribute("strList", strList);

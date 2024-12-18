@@ -2,7 +2,10 @@ package com.busanit501.springminitest.repository.search;
 
 import com.busanit501.springminitest.domain.Food;
 import com.busanit501.springminitest.domain.QFood;
+import com.busanit501.springminitest.domain.QReply;
+import com.busanit501.springminitest.dto.FoodListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -75,6 +78,55 @@ public class FoodSearchImpl extends QuerydslRepositorySupport implements FoodSea
         long total = query.fetchCount();
 
         Page<Food> result = new PageImpl<Food>(list, pageable, total);
+
+        return result;
+    }
+
+    @Override
+    public Page<FoodListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable) {
+        QFood food = QFood.food;
+        QReply reply = QReply.reply;
+        JPQLQuery<Food> query = from(food);// select * from food
+        query.leftJoin(reply).on(reply.food.fno.eq(food.fno));
+        query.groupBy(food);
+
+        if (types != null && types.length > 0 && keyword != null) {
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            for (String type : types) {
+                switch (type) {
+                    case "t":
+                        booleanBuilder.or(food.foodName.contains(keyword));
+                        break;
+                    case "c":
+                        booleanBuilder.or(food.content.contains(keyword));
+                        break;
+                    case "w":
+                        booleanBuilder.or(food.chefName.contains(keyword));
+                        break;
+                } // switch
+            }// end for
+            // where 조건을 적용해보기.
+            query.where(booleanBuilder);
+        } //end if
+        // fno >0
+        query.where(food.fno.gt(0L));
+
+        JPQLQuery<FoodListReplyCountDTO> dtoQuery =
+                query.select(Projections.bean(FoodListReplyCountDTO.class,
+                        food.fno,
+                        food.foodName,
+                        food.content,
+                        food.chefName,
+                        food.regDate,
+                        reply.count().as("replyCount")));
+
+        this.getQuerydsl().applyPagination(pageable, dtoQuery);
+
+        List<FoodListReplyCountDTO> list = dtoQuery.fetch();
+
+        long total = dtoQuery.fetchCount();
+
+        Page<FoodListReplyCountDTO> result = new PageImpl<FoodListReplyCountDTO>(list, pageable, total);
 
         return result;
     }

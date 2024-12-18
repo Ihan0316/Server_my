@@ -2,6 +2,7 @@ package com.busanit501.boot501.service;
 
 import com.busanit501.boot501.domain.Board;
 import com.busanit501.boot501.dto.BoardDTO;
+import com.busanit501.boot501.dto.BoardListReplyCountDTO;
 import com.busanit501.boot501.dto.PageRequestDTO;
 import com.busanit501.boot501.dto.PageResponseDTO;
 import com.busanit501.boot501.repository.BoardRepository;
@@ -49,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
     public void update(BoardDTO boardDTO) {
         Optional<Board> result = boardRepository.findById(boardDTO.getBno());
         Board board = result.orElseThrow();
-        board.changeTitleContent(boardDTO.getTitle(),boardDTO.getContent());
+        board.changeTitleConent(boardDTO.getTitle(),boardDTO.getContent());
         boardRepository.save(board);
     }
 
@@ -80,4 +81,27 @@ public class BoardServiceImpl implements BoardService {
                 .build();
 
     } // list
+
+    @Override
+    public PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO) {
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types,keyword,pageable);
+        // list -> PageResponseDTO 타입으로 변경 필요.
+
+        // result.getContent() -> 페이징된 엔티티 클래스 목록
+        // 조회시 변환이 알아서 이루어지므로 필요 없음
+//        List<BoardDTO> dtoList = result.getContent().stream()
+//                .map(board ->modelMapper.map(board, BoardDTO.class))
+//                .collect(Collectors.toList());
+
+
+        return PageResponseDTO.<BoardListReplyCountDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(result.getContent())
+                .total((int) result.getTotalElements())
+                .build();
+    }
 }

@@ -60,6 +60,20 @@ dependencies {
     // 5 모델맵퍼, DTO <-> VO 변환 하는 도구
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
+
+    // 6
+    // 서버 입장에서 입력된 데이터 유효성 검증 도구
+    // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+    // 레거시 버전의 유효성 도구인데, 동작 안해서, 버전 변경
+//    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.2.1.Final'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.4.0'
+
+    // 7
+    // Rest 테스트 도구, 스웨거 설치,
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    // implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.7.0'
 }
 
 tasks.named('test') {
