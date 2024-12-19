@@ -19,8 +19,8 @@
                     </h5>
 <!--                    <form method="post" action="/food/update">-->
                         <div class="mb-3">
-                            <label for="foodName" class="form-control">제목</label>
-                            <input type="text" class="form-control" id="foodName" name="foodName" placeholder="제목을 입력해주세요"
+                            <label for="foodName" class="form-control">음식</label>
+                            <input type="text" class="form-control" id="foodName" name="foodName" placeholder="음식을 입력해주세요"
                              th:value="${dto.foodName}" readonly>
                         </div>
                         <div class="mb-3">
@@ -30,8 +30,8 @@
                                        readonly>[[${dto.content}]]</textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="chefName" class="form-control">작성자</label>
-                            <input type="text" class="form-control" id="chefName" name="chefName" placeholder="지금은 직접 작성자를 입력해주세요, 로그인 후 로그인 유저가 자동으로 탑재됨."
+                            <label for="chefName" class="form-control">요리사</label>
+                            <input type="text" class="form-control" id="chefName" name="chefName" placeholder="지금은 직접 요리사를 입력해주세요, 로그인 후 로그인 유저가 자동으로 탑재됨."
                                    th:value="${dto.chefName}" readonly>
                         </div>
                         <div class="mb-3">
@@ -106,7 +106,7 @@
                         <input type="text" class="form-control replyText">
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">작성자</span>
+                        <span class="input-group-text">요리사</span>
                         <input type="text" class="form-control replyer">
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                         <input type="text" class="form-control updateReplyText">
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">작성자</span>
+                        <span class="input-group-text">요리사</span>
                         <input type="text" class="form-control updateReplyer">
                     </div>
                 </div>

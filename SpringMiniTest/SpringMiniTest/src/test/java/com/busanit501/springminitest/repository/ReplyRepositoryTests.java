@@ -33,7 +33,7 @@ public class ReplyRepositoryTests {
         Reply reply = Reply.builder()
                 .food(food)
                 .replyText("샘플 댓글")
-                .replyer("샘플 작성자")
+                .replyer("샘플 요리사")
                 .build();
 
         replyRepository.save(reply);
@@ -48,7 +48,7 @@ public class ReplyRepositoryTests {
             Reply reply = Reply.builder()
                     .food(food)
                     .replyText("샘플 댓글"+i)
-                    .replyer("샘플 작성자"+i)
+                    .replyer("샘플 요리사"+i)
                     .build();
 
             replyRepository.save(reply);

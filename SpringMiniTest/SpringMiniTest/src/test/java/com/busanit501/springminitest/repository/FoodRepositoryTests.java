@@ -29,9 +29,9 @@ public class FoodRepositoryTests {
         // 1 ~ 99번까지 생성해요.
         IntStream.range(1, 101).forEach(i -> {
             Food food = Food.builder()
-                    .foodName("샘플 제목 : " + i)
+                    .foodName("샘플 음식 : " + i)
                     .content("샘플 내용 : " + i)
-                    .chefName("샘플 작성자 : jih " + i)
+                    .chefName("샘플 요리사 : jih " + i)
                     .build();
 
             Food result = foodRepository.save(food);
@@ -70,7 +70,7 @@ public class FoodRepositoryTests {
         // result 있으면, Food 타입으로 받고, 없으면, 예외 발생시킴.
         // food, 엔티티 클래스 인스턴스가, 하나의 데이터베이스의 내용임.
         Food food = result.orElseThrow();
-        food.changeTitleContent("변경 제목 ", "변경 내용");
+        food.changeTitleContent("변경 음식 ", "변경 내용");
         // 실제 디비 테이블 반영.
         // 순서 -> 1차 영속성 컨텍스트(임시 테이블) 적용 -> 실제 테이블 반영.
         // save -> 해당 실제 테이블 없다면, -> insert
