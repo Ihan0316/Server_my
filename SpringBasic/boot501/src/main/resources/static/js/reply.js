@@ -49,3 +49,9 @@ async function getList({bno, page, size, goLast}){// 비대칭 통신(비동기)
     }
     return result.data;
 }
+
+// 댓글 등록
+async function addReply(replyObj){
+    const response = await axios.post(`/replies/`, replyObj)
+    return response.data
+}

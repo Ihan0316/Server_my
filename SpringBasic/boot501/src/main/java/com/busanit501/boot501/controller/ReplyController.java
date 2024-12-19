@@ -54,8 +54,9 @@ public class ReplyController {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
+        Long rno = replyService.register(replyDTO);
 
-        Map<String,Long> map = Map.of("rno",100L);
+        Map<String,Long> map = Map.of("rno",rno);
         return ResponseEntity.ok(map);
     }
 

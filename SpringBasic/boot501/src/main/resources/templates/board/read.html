@@ -89,6 +89,39 @@
     <!--async , await 키워드를 이용해서, 비동기 처리를 조금 더 쉽게 동기화 코드처럼 이용가능-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/reply.js"></script>
+
+    <!--    댓글 등록 모달창1-->
+    <div class="modal fade registerModal"  tabindex="-1"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">댓글 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--                    댓글 등록 입력폼 추가하기-->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">내용</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary registerCloseBtn" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary registerBtn">댓글 등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    댓글 등록 모달창1-->
+
+    <!--    댓글 수정 모달창 2-->
+
+    <!--    댓글 수정 모달창 2-->
 </div>
 <!--끝 나는 부분 layout:fragment="content"-->
 
@@ -137,9 +170,9 @@
 
     // 함수 실행해보기.
     console.log("printReplies 함수 실행2: ")
-    // printReplies(1,10)
+    printReplies(1,10)
     // 마지막 댓글 페이지로 이동 테스트
-    printReplies(1,10, true)
+    // printReplies(1,10, true)
 
 
     // 비동기 함수 이용해서, 댓글 목록 출력 작업해보기.
@@ -198,6 +231,69 @@
         }
         replyPaging.innerHTML = pageStr
     }
+
+    // 페이징 번호 이벤트 핸들르
+    // 1) data-page=1 활용
+    // 페이징 번호 화면 구성 <ul> -> <li> : 동적변경
+    // ul 태그 기준으로 자식 태그 접근
+    let page = 1
+    let size = 10
+
+    replyPaging.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = e.target
+        if (!target || target.tagName!= 'A'){
+            return;
+        }
+        // a태그이고 작업 계속 진행함
+        const pageNum = target.getAttribute("data-page")
+        page = pageNum
+        printReplies(page,size)
+    }, false)
+
+    // 댓글 등록 버튼 이벤트 처리 작업, 모달창 띄우기
+
+    const registermodal = new bootstrap.Modal(document.querySelector(".registerModal"))
+    // 나머지 화면 요소를 미리 재사용하기 위해, 변수에 재할당 하기
+    const registerBtn = document.querySelector(".registerBtn")
+    const registerCloseBtn = document.querySelector(".registerCloseBtn")
+    const replyText = document.querySelector(".replyText")
+    const replyer = document.querySelector(".replyer")
+
+    // addReplyBtn 클릭시 모달창 띄우기
+    document.querySelector(".addReplyBtn").addEventListener("click",
+    function (e) {
+        registermodal.show()
+    })
+
+    // 취소할 경우 숨기기
+    registerCloseBtn.addEventListener("click",
+        function (e) {
+            registermodal.hide()
+    })
+
+    // 댓글 등록 로직 처리
+    registerBtn.addEventListener("click",
+        function (e) {
+            const replyObj = {
+                bno: bno,
+                replyText: replyText.value,
+                replyer: replyer.value,
+            }
+            addReply(replyObj)
+                .then(result => {
+                alert("댓글 작성 번호"+result.rno)
+                    registermodal.hide()
+                    replyText.value = ""
+                    replyer.value = ""
+                    printReplies(1,10,true)
+                })
+                .catch(e => {
+                    alert("예외가 발생함")
+                })
+    },false)
 
 </script>
 
