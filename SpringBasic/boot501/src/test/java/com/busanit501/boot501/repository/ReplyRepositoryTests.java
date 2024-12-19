@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.IntStream;
+
 @SpringBootTest
 @Log4j2
 public class ReplyRepositoryTests {
@@ -25,7 +27,7 @@ public class ReplyRepositoryTests {
     public void testInsert() {
         // 댓글을 작성 하려면, 부모 게시글 번호가 필요,
         // 각자 데이터베이스에 따라서, 다르므로 꼭 확인하고, 작업.
-        Long bno = 120L;
+        Long bno = 99L;
 
         Board board = Board.builder().bno(bno).build();
 
@@ -36,6 +38,22 @@ public class ReplyRepositoryTests {
                 .build();
 
         replyRepository.save(reply);
+    }
+
+    @Test
+    public void testInsert2() {
+        Long bno = 99L;
+
+        IntStream.range(1, 100).forEach(i -> {
+            Board board = Board.builder().bno(bno).build();
+            Reply reply = Reply.builder()
+                    .board(board)
+                    .replyText("샘플 댓글"+i)
+                    .replyer("샘플 작성자"+i)
+                    .build();
+
+            replyRepository.save(reply);
+        });
     }
 
 //    @Transactional

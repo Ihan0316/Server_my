@@ -36,3 +36,16 @@ async function getList({bno, page, size, goLast}){// 비대칭 통신(비동기)
     // console.log(result)
     return result.data;
 }
+
+// 마지막 댓글 위치로 이동하기
+async function getList({bno, page, size, goLast}){// 비대칭 통신(비동기)
+    const result = await axios.get(`/replies/list/${bno}`,
+        {params : {page,size}})
+    // console.log(result)
+    if(goLast){
+        const total = result.data.total;
+        const lastpage = parseInt(Math.ceil(total/size))
+        return getList({bno:bno, page:lastpage, size:size})
+    }
+    return result.data;
+}
