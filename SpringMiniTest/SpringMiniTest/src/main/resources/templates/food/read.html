@@ -237,13 +237,14 @@
             `
        }
        // 페이지 번호 출력, 10개 출력
-       for(let i = data.start; i < data.end+1; i++) {
+       for (let i = data.start; i <= data.end; i++) {
            pageStr += `
-            <li class="${data.page == i}?'page-item active':'page-item'">
-            <a class="page-link" data-page="${i}">${i}</a>
+            <li class="page-item ${data.page === i ? "active" : ""}">
+                <a class="page-link" data-page="${i}">${i}</a>
             </li>
             `
        }
+
 
        // 다음 페이지 여부
        if(data.next){
