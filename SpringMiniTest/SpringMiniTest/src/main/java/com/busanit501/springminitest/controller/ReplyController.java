@@ -53,6 +53,42 @@ public class ReplyController {
         return responseDTO;
     }
 
+    // 댓글 목록 하나 조회
+    @Tag(name = "댓글 하나 조회",description = "댓글 하나 조회 RESTful get방식")
+    @GetMapping(value ="/{rno}")
+    public ReplyDTO getOne(@PathVariable("rno") Long rno)
+    {
+        log.info(" ReplyController getOne: rno={}", rno);
+        ReplyDTO replyDTO = replyService.readOne(rno);
+        return replyDTO;
+    }
+
+    // 수정 로직 처리
+    @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful get방식")
+    @PutMapping(value ="/{rno}")
+    public Map<String, Long> updateOne(@Valid @RequestBody ReplyDTO replyDTO,
+                                       BindingResult bindingResult,
+                                       @PathVariable("rno") Long rno) throws BindException {
+        if (bindingResult.hasErrors()) {
+            throw new BindException(bindingResult);
+        }
+        log.info(" ReplyController getOne: replyDTO={}", replyDTO);
+        log.info(" ReplyController getOne: rno={}", rno);
+        replyService.update(replyDTO);
+        Map<String, Long> map = Map.of("rno",rno);
+        return map;
+    }
+
+    // 삭제 로직 처리
+    @Tag(name = "댓글 하나 삭제 로직처리",description = "댓글 하나 삭제 로직처리 RESTful get방식")
+    @DeleteMapping(value ="/{rno}")
+    public Map<String, Long> deleteOne(
+                                       @PathVariable("rno") Long rno) {
+        log.info(" ReplyController getOne: rno={}", rno);
+        replyService.delete(rno);
+        Map<String, Long> map = Map.of("rno",rno);
+        return map;
+    }
 }
 
 

@@ -47,8 +47,8 @@ public class ReplyRepositoryTests {
         IntStream.range(1, 101).forEach(i -> {
             Reply reply = Reply.builder()
                     .food(food)
-                    .replyText("샘플 댓글")
-                    .replyer("샘플 작성자")
+                    .replyText("샘플 댓글"+i)
+                    .replyer("샘플 작성자"+i)
                     .build();
 
             replyRepository.save(reply);
