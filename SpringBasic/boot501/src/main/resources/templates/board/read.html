@@ -120,7 +120,33 @@
     <!--    댓글 등록 모달창1-->
 
     <!--    댓글 수정 모달창 2-->
-
+    <div class="modal fade updateModal"  tabindex="-1"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title replyHeader"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--                    댓글 등록 입력폼 추가하기-->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">내용</span>
+                        <input type="text" class="form-control updateReplyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control updateReplyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary updateCloseBtn" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary updateBtn">댓글 수정</button>
+                    <button type="button" class="btn btn-danger deleteBtn">댓글 삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--    댓글 수정 모달창 2-->
 </div>
 <!--끝 나는 부분 layout:fragment="content"-->
@@ -192,7 +218,7 @@
                 str += `
                <li class="list-group-item d-flex replyItem">
                <span class="col-2">${dto.rno}</span>
-               <span class="col-6 data-rno="${dto.rno}">${dto.replyText}</span>
+               <span class="col-6" data-rno="${dto.rno}">${dto.replyText}</span>
                <span class="col-2">${dto.replyer}</span>
                <span class="col-2">${dto.regDate}</span>
                `
@@ -302,6 +328,93 @@
                     alert("예외가 발생함")
                 })
     },false)
+
+    // 댓글 수정 모달창 띄우기, 이벤트 처리, 댓글 내용을 클릭시 띄우기.
+    const updateModal = new bootstrap.Modal(document.querySelector(".updateModal"))
+    // 나머지 , 화면 요소를 미리 , 재사용하기 위해서, 변수에 할당 해놓기.
+    const updateBtn = document.querySelector(".updateBtn")
+    const replyHeader = document.querySelector(".replyHeader")
+    const updateReplyText = document.querySelector(".updateReplyText")
+    const updateReplyer = document.querySelector(".updateReplyer")
+    const deleteBtn = document.querySelector(".deleteBtn")
+
+    // 이벤트 처리, 댓글 클릭시, 수정 모달창 띄우기.
+    replyList.addEventListener("click",function (e){
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        // span 태그가 아니면, 이벤트 처리를 안합니다.
+        if (!target || target.tagName != 'SPAN') {
+            return
+        }
+
+        // span 태그이고, 작업 계속 진행함.
+        const rno = target.getAttribute("data-rno")
+        console.log("rno 확인 :"+ rno)
+
+        // rno 가 없다면, 이벤트 처리 안합니다.
+        if(!rno){
+            return;
+        }
+        // rno 있으니, 추가 작업 계속함.
+        getReply(rno)
+            .then(reply =>{
+            console.log("하나 조회 : replyDTO : " + reply)
+            // 모달 창 화면에 , 조회한 댓글 내용과, 작성자 표기 , 주입.
+            replyHeader.innerHTML = reply.rno
+            updateReplyText.value = reply.replyText
+            updateReplyer.value = reply.replyer
+            updateModal.show()
+        })
+            .catch(e =>alert("예외 발생함"))
+    },false)
+
+    // 댓글 수정 로직 처리
+    updateBtn.addEventListener("click",function (e){
+        // 변경된 댓글 내용, 작성자 가져오기
+        const replyObj = {
+            bno: bno,
+            rno: replyHeader.innerHTML,
+            replyText: updateReplyText.value,
+            replyer: updateReplyer.value
+        }
+        console.log("replyHeader.innerHTML" + replyHeader.innerHTML)
+
+        // 비동기 통신 이용, 성공, 실패 작성
+        updateReply(replyObj)
+            .then(result => {
+                alert(result.rno +" 번 댓글 수정 완료")
+                updateReplyText.value = ""
+                updateReplyer.value = ""
+                updateModal.hide()
+                printReplies(page, size)
+            })
+            .catch(e => {
+                alert("댓글 수정 실패")
+            })
+    },false)
+
+    // 삭제 로직 처리 추가.
+    deleteBtn.addEventListener("click", function (e) {
+
+        const rno = replyHeader.innerHTML
+        console.log("replyHeader.innerHTML : " + replyHeader.innerHTML)
+        console.log("rno 확인 : " + rno)
+
+        // 비동기 통신 이용해서, 성공시, 실패시 나눠서 작업.
+        deleteReply(rno)
+            .then(result => {
+            alert(result.rno + "번 댓글 삭제 완료 ")
+            updateModal.hide()
+            printReplies(page, size, true)
+        })
+            .catch(e => {
+                alert("댓글 삭제 실패")
+            })
+    }, false)
+
 
 </script>
 

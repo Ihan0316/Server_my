@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -107,6 +108,16 @@ public class ReplyRepositoryTests {
         log.info("result.getSize() 크기  :" +result.getSize());
         log.info("result.hasNext() 다음  :" +result.hasNext());
         log.info("result.hasPrevious() 이전  :" +result.hasPrevious());
+    }
+
+    //댓글 하나 조회
+    @Test
+    @Transactional
+    public void testSelectOneReply() {
+        // rno 번호 찾기
+        Optional<Reply> result = replyRepository.findById(105L);
+        Reply reply = result.orElseThrow();
+        log.info("댓글 하나 조회 결과" + reply);
     }
 
 }
