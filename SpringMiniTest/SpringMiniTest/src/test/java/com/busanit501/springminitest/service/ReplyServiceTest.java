@@ -21,7 +21,7 @@ public class ReplyServiceTest {
         ReplyDTO replyDTO = ReplyDTO.builder()
                 .replyText("댓글 달기 테스트중")
                 .replyer("조이한")
-                .fno(203L)
+                .fno(100L)
                 .regDate(LocalDateTime.now())
                 .build();
 

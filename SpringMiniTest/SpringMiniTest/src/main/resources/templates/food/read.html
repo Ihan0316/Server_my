@@ -60,7 +60,68 @@
         </div>
     </div>
 
+    <!--    1)댓글의 목록, 2)댓글 추가 버튼 , 3)페이징 번호 화면 작업-->
+    <div class="row mt-3">
+        <!--        부트 스트랩에서, 전체 가로 영역을 12 등분으로 나눔.-->
+        <!--        col-md-12 : 전체를 차지-->
+        <div class="col-md-12">
+            <!--            2)댓글 추가 버튼 : addReplyBtn -->
+            <div class="my-4">
+                <button class="btn btn-info addReplyBtn">댓글 등록</button>
+            </div>
+            <!--            1)댓글의 목록 : replyList -->
+            <ul class="list-group replyList">
+                <!-- li  태그를 innerHTML 를 이용해서, 요소를 추가할 예정, 자바스크립트 문법으로-->
+            </ul>
+        </div>
 
+        <!--        댓글의 페이지 번호 출력-->
+        <div class="row mt-3">
+            <div class="col">
+                <ul class="pagination replyPaging">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--axios 도구 , 비동기 식으로 처리하는 문법을 마치 동기화된 코드 처럼 이용 가능 문법,-->
+    <!--async , await 키워드를 이용해서, 비동기 처리를 조금 더 쉽게 동기화 코드처럼 이용가능-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/reply.js"></script>
+
+    <!--    댓글 등록 모달창1-->
+    <div class="modal fade registerModal"  tabindex="-1"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">댓글 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--                    댓글 등록 입력폼 추가하기-->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">내용</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary registerCloseBtn" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary registerBtn">댓글 등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    댓글 등록 모달창1-->
+
+    <!--    댓글 수정 모달창 2-->
+
+    <!--    댓글 수정 모달창 2-->
 </div>
 <!--끝 나는 부분 layout:fragment="content"-->
 
@@ -74,6 +135,163 @@
            // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
            self.location = "/food/update?fno="+[[${dto.fno}]]+"&"+[[${pageRequestDTO.link}]]
                ,false})
+
+    // 비동기 함수, 테스트 작업.
+    // 순서2, 현재 게시글의  fno 번호를 알아야 함
+    const fno = [[${dto.fno}]]
+    // 함수 실행 해보기.
+    //
+    console.log("get 함수 실행1: ")
+    get(fno)
+
+    // 함수 정의,
+    // 주의사항, reply.js , 통신 이용해서, 데이터를 전달하는 업무, 백
+    // read.html,  받아온 데이터를 업데이트를 하는 역할. 화면 그려주는 역할. 프론트  react.jsx
+
+    // 순서3, 화면에 출력하는 역할,
+    function  printReplies(page,size,goLast) {
+        // 비동기 함수를 호출하게 되면, 호출된 데이터의 성공 여부에 따라서,
+        // 성공시, then  절 받아서 처리,
+        // 실패시, catch 절 받아서 처리.
+        // 순서4, 서버로 부터 넘어온 데이터를, 댓글 목록 출력하는 함수에 전달하는 역할
+        getList({fno,page,size,goLast})
+            .then(
+                // 연습용 콘솔 출력,
+                // data => console.log(data)
+                data => {printList(data.dtoList)// 댓글 목록 출력하기.
+                 printPage(data)}
+            )
+            .catch(e => {
+                    console.error(e)
+                }
+            )
+    }
+
+    // 함수 실행해보기.
+    console.log("printReplies 함수 실행2: ")
+    printReplies(1,10)
+    // printReplies(1,10, true)
+
+
+    // 비동기 함수 이용해서, 댓글 목록 출력 작업해보기.
+    // 순서5, 화면에 출력할 태그의 요소를 선택
+    const replyList = document.querySelector('.replyList')
+    const replyPaging = document.querySelector('.replyPaging')
+
+    // 순서6, 댓글을 출력하는 기능
+    // 함수 작성, dtoList: 서버로 부터 받아온 댓글의 목록(페이징 처리가 된 목록)
+    function printList(dtoList) {
+        // innerHTML, 동적 태그를 생성해서 추가할 예정.
+        // HTML 태그는 문자열로 작성,
+        // 임시로 담아둘 문자열 변수 생성,
+        let str = ""
+        if(dtoList && dtoList.length >0 ){
+            for(const dto of dtoList) {
+                str += `
+               <li class="list-group-item d-flex replyItem">
+               <span class="col-2">${dto.rno}</span>
+               <span class="col-6 data-rno="${dto.rno}">${dto.replyText}</span>
+               <span class="col-2">${dto.replyer}</span>
+               <span class="col-2">${dto.regDate}</span>
+               `
+            }
+        }
+        replyList.innerHTML = str
+    }
+
+   // 페이징 목록 처리,
+   // 순서7, 댓글의 페이징 번호를 출력하는 기능
+   function printPage(data) {
+       let pageStr = ""
+       if(data.prev){
+           pageStr += `
+            <li class="page-item">
+            <a class="page-link" data-page="${data.start-1}">이전</a>
+            </li>
+            `
+       }
+       // 페이지 번호 출력, 10개 출력
+       for(let i = data.start; i < data.end+1; i++) {
+           pageStr += `
+            <li class="${data.page == i}?'page-item active':'page-item'">
+            <a class="page-link" data-page="${i}">${i}</a>
+            </li>
+            `
+       }
+
+       // 다음 페이지 여부
+       if(data.next){
+           pageStr += `
+            <li class="page-item">
+            <a class="page-link" data-page="${data.end+1}">다음</a>
+            </li>
+            `
+       }
+       replyPaging.innerHTML = pageStr
+   }
+
+   // 페이징 번호 이벤트 핸들르
+   // 1) data-page=1 활용
+   // 페이징 번호 화면 구성 <ul> -> <li> : 동적변경
+   // ul 태그 기준으로 자식 태그 접근
+   let page = 1
+   let size = 10
+
+   replyPaging.addEventListener("click", function (e) {
+       e.preventDefault();
+       e.stopPropagation();
+
+       const target = e.target
+       if (!target || target.tagName!= 'A'){
+           return;
+       }
+       // a태그이고 작업 계속 진행함
+       const pageNum = target.getAttribute("data-page")
+       page = pageNum
+       printReplies(page,size)
+   }, false)
+
+   // 댓글 등록 버튼 이벤트 처리 작업, 모달창 띄우기
+
+   const registermodal = new bootstrap.Modal(document.querySelector(".registerModal"))
+   // 나머지 화면 요소를 미리 재사용하기 위해, 변수에 재할당 하기
+   const registerBtn = document.querySelector(".registerBtn")
+   const registerCloseBtn = document.querySelector(".registerCloseBtn")
+   const replyText = document.querySelector(".replyText")
+   const replyer = document.querySelector(".replyer")
+
+   // addReplyBtn 클릭시 모달창 띄우기
+   document.querySelector(".addReplyBtn").addEventListener("click",
+       function (e) {
+           registermodal.show()
+       })
+
+   // 취소할 경우 숨기기
+   registerCloseBtn.addEventListener("click",
+       function (e) {
+           registermodal.hide()
+       })
+
+   // 댓글 등록 로직 처리
+   registerBtn.addEventListener("click",
+       function (e) {
+           const replyObj = {
+               fno: fno,
+               replyText: replyText.value,
+               replyer: replyer.value,
+           }
+           addReply(replyObj)
+               .then(result => {
+                   alert("댓글 작성 번호"+result.rno)
+                   registermodal.hide()
+                   replyText.value = ""
+                   replyer.value = ""
+                   printReplies(1,10,true)
+               })
+               .catch(e => {
+                   alert("예외가 발생함")
+               })
+       },false)
 
 </script>
 

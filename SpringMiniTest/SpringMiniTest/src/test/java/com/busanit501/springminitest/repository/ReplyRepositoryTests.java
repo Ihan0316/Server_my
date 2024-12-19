@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.stream.IntStream;
+
 @SpringBootTest
 @Log4j2
 public class ReplyRepositoryTests {
@@ -35,6 +37,22 @@ public class ReplyRepositoryTests {
                 .build();
 
         replyRepository.save(reply);
+    }
+
+    @Test
+    public void testInsertMore() {
+        Long fno = 100L;
+
+        Food food = Food.builder().fno(fno).build();
+        IntStream.range(1, 101).forEach(i -> {
+            Reply reply = Reply.builder()
+                    .food(food)
+                    .replyText("샘플 댓글")
+                    .replyer("샘플 작성자")
+                    .build();
+
+            replyRepository.save(reply);
+        });
     }
 
 //    @Transactional
