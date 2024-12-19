@@ -55,3 +55,9 @@ async function addReply(replyObj){
     const response = await axios.post(`/replies/`, replyObj)
     return response.data
 }
+
+// 댓글 조회
+async function getReply(rno){
+    const response = await axios.get(`/replies/{rno}`)
+    return response.data
+}

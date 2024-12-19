@@ -60,7 +60,7 @@ public class ReplyController {
         return ResponseEntity.ok(map);
     }
 
-    // 댓글 목록 조회
+    // 댓글 목록 전체 조회
     @Tag(name = "댓글 목록 조회",description = "댓글 목록 조회 RESTful get방식")
     @GetMapping(value ="/list/{bno}")
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO)
@@ -68,6 +68,16 @@ public class ReplyController {
         log.info(" ReplyController getList: bno={}", bno);
         PageResponseDTO<ReplyDTO> responseDTO = replyService.listWithReply(bno, pageRequestDTO);
         return responseDTO;
+    }
+
+    // 댓글 목록 하나 조회
+    @Tag(name = "댓글 하나 조회",description = "댓글 하나 조회 RESTful get방식")
+    @GetMapping(value ="/{rno}")
+    public PageResponseDTO<ReplyDTO> getOne(@PathVariable("rno") Long rno, PageRequestDTO pageRequestDTO)
+    {
+        log.info(" ReplyController getOne: rno={}", rno);
+//        PageResponseDTO<ReplyDTO> responseDTO = replyService.listWithReply(rno, pageRequestDTO);
+        return null;
     }
 
 }
