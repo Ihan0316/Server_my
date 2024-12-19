@@ -154,7 +154,7 @@ public class FoodRepositoryTests {
         // 전달할 준비물
         // 1) 검색어, 2) 검색 유형
         String keyword = "샘플";
-        String[] types = {"t","w","c"};
+        String[] types = {"f","ct","ch"};
 
         Page<Food> result = foodRepository.searchAll(types,keyword,pageable);
 

@@ -36,8 +36,8 @@
                     [[${result}]]
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary">확인</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -63,16 +63,16 @@
                                         -----
                                     </option>
                                     <option value="t" th:selected="${pageRequestDTO.type == 't'}">
-                                        제목
+                                        음식이름
                                     </option>
                                     <option value="c" th:selected="${pageRequestDTO.type == 'c'}">
                                         내용
                                     </option>
                                     <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">
-                                        제목+내용
+                                        음식이름+내용
                                     </option>
                                     <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">
-                                        제목+내용+작성자
+                                        음식이름+내용+요리사
                                     </option>
 
                                 </select>
@@ -115,8 +115,8 @@
                         <thead>
                         <tr>
                             <th scope="col">Fno</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Writer</th>
+                            <th scope="col">FoodName</th>
+                            <th scope="col">ChefName</th>
                             <th scope="col">RegDate</th>
                         </tr>
                         </thead>
