@@ -28,7 +28,7 @@ public class Reply extends BaseEntity {
     public void changeFood(Food food) {
         this.food = food;
     }
-    // 수정시 내용변경 불변성 유지
+
     public void changeReplyTextReplyer(String replyText, String replyer) {
         this.replyText = replyText;
         this.replyer = replyer;

@@ -32,7 +32,6 @@ public class ReplyController {
             BindingResult bindingResult
     ) throws BindException {
         log.info(" ReplyController replyDTO: ", replyDTO);
-        // 확인용, 더미 데이터 ,
 
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
@@ -58,13 +57,13 @@ public class ReplyController {
     @GetMapping(value ="/{rno}")
     public ReplyDTO getOne(@PathVariable("rno") Long rno)
     {
-        log.info(" ReplyController getOne: rno={}", rno);
+        log.info(" ReplyController getList: rno={}", rno);
         ReplyDTO replyDTO = replyService.readOne(rno);
         return replyDTO;
     }
 
     // 수정 로직 처리
-    @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful get방식")
+    @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful put방식")
     @PutMapping(value ="/{rno}")
     public Map<String, Long> updateOne(@Valid @RequestBody ReplyDTO replyDTO,
                                        BindingResult bindingResult,
@@ -72,19 +71,19 @@ public class ReplyController {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
-        log.info(" ReplyController getOne: replyDTO={}", replyDTO);
-        log.info(" ReplyController getOne: rno={}", rno);
+        log.info(" ReplyController updateOne: replyDTO={}", replyDTO);
+        log.info(" ReplyController updateOne: rno={}", rno);
         replyService.update(replyDTO);
         Map<String, Long> map = Map.of("rno",rno);
         return map;
     }
 
     // 삭제 로직 처리
-    @Tag(name = "댓글 하나 삭제 로직처리",description = "댓글 하나 삭제 로직처리 RESTful get방식")
+    @Tag(name = "댓글 하나 삭제 로직처리",description = "댓글 하나 삭제 로직처리 RESTful delete방식")
     @DeleteMapping(value ="/{rno}")
     public Map<String, Long> deleteOne(
                                        @PathVariable("rno") Long rno) {
-        log.info(" ReplyController getOne: rno={}", rno);
+        log.info(" ReplyController deleteOne: rno={}", rno);
         replyService.delete(rno);
         Map<String, Long> map = Map.of("rno",rno);
         return map;
