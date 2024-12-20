@@ -157,7 +157,6 @@ public class UpdownController {
     public Map<String,Boolean> fileDelete(@PathVariable String filename) {
         // 업로드 저장소 위치는 동일, 파일명 동일해서, 재사용
         Resource resource = new FileSystemResource(uploadPath+File.separator+filename);
-        String resourceName = resource.getFilename();
 
         // 리턴 타입 Map 전달,
         Map<String,Boolean> resultMap = new HashMap<>();
