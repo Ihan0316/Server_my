@@ -153,12 +153,12 @@ public class UpdownController {
             description = "멀티파트 타입 형식 이용해서, delete 형식으로 이미지 삭제")
     @DeleteMapping(value = "/delete/{filename}")
     // Resource : 실제 이미지 자원을 말함.
-    public Map<String,Boolean> fileDelete(@PathVariable String filename) {
+    public Map<String, Boolean> fileDelete(@PathVariable String filename) {
         // 업로드 저장소 위치는 동일, 파일명 동일해서, 재사용
-        Resource resource = new FileSystemResource(uploadPath+File.separator+filename);
+        Resource resource = new FileSystemResource(uploadPath + File.separator + filename);
 
         // 리턴 타입 Map 전달,
-        Map<String,Boolean> resultMap = new HashMap<>();
+        Map<String, Boolean> resultMap = new HashMap<>();
         boolean deleteCheck = false;
         try {
             // 파일 삭제시, 이미지 파일일 경우, 원본 이미지와 , 썸네일 이미지 2개 있어서
@@ -166,16 +166,15 @@ public class UpdownController {
             String contentType = Files.probeContentType(resource.getFile().toPath());
             // 삭제 여부를 업데이트
             // 원본 파일을 제거하는 기능. (실제 물리 파일 삭제 )
-            deleteCheck =resource.getFile().delete();
+            deleteCheck = resource.getFile().delete();
 
             if (contentType.startsWith("image")) {
                 // 썸네일 파일을 생성해서, 파일 클래스로 삭제를 진행.
-                File thumbFile = new File(uploadPath+File.separator,"s_"+ filename);
+                File thumbFile = new File(uploadPath + File.separator, "s_" + filename);
                 // 실제 물리 파일 삭제
                 thumbFile.delete();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
         resultMap.put("result", deleteCheck);

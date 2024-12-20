@@ -10,6 +10,6 @@ public class SampleRestController {
 
     @PostMapping("/hiRest")
     public String[] hiRest() {
-        return new String[]{"aaa","bbb","ccc"};
+        return new String[]{"aaa", "bbb", "ccc"};
     }
 }
