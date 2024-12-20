@@ -65,14 +65,14 @@ public class ReplyController {
     // 수정 로직 처리
     @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful put방식")
     @PutMapping(value ="/{rno}")
-    public Map<String, Long> updateOne(@Valid @RequestBody ReplyDTO replyDTO,
+    public Map<String, Long> updateReply(@Valid @RequestBody ReplyDTO replyDTO,
                                        BindingResult bindingResult,
                                        @PathVariable("rno") Long rno) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
-        log.info(" ReplyController updateOne: replyDTO={}", replyDTO);
-        log.info(" ReplyController updateOne: rno={}", rno);
+        log.info(" ReplyController updateReply: replyDTO={}", replyDTO);
+        log.info(" ReplyController updateReply: rno={}", rno);
         replyService.update(replyDTO);
         Map<String, Long> map = Map.of("rno",rno);
         return map;

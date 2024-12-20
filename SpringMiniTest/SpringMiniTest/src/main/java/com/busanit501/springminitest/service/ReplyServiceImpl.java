@@ -46,6 +46,7 @@ public class ReplyServiceImpl implements ReplyService {
         Optional<Reply> result = replyRepository.findById(rno);
         Reply reply = result.orElseThrow();
         ReplyDTO replyDTO = modelMapper.map(reply, ReplyDTO.class);
+        replyDTO.setFno(reply.getFood().getFno());
         return replyDTO;
     }
 
