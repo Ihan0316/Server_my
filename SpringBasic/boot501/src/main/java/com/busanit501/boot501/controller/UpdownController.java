@@ -8,10 +8,12 @@ import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,7 +64,6 @@ public class UpdownController {
                 // 추가2. 이미지 여부
                 boolean image = false;
 
-
                 //화면 -> 서버, 이미지 파일을 받았고,
                 // 받은 이미지 파일명 중복 안되게 설정,
                 // 실제 저장 경로를 , 패스 클래스 이용해서, 설정,
@@ -86,7 +87,6 @@ public class UpdownController {
                         // 작은 이미지 변환 도구 이용해서, 축소 작업.
                         Thumbnailator.createThumbnail(savePath.toFile(),thumbFile, 200,200);
                     }
-
                 } catch (IOException e)
                 {
                     e.printStackTrace();
@@ -103,13 +103,12 @@ public class UpdownController {
             // 추가 6, 리스트 반환
             return list;
         } // end if
-
         return null;
     }// upload
 
     @Tag(name = "파일 조회 get",
             description = "멀티파트 타입 형식 이용해서, get 형식으로 이미지 읽기")
-    @PostMapping(value = "/view/{fileName}")
+    @GetMapping(value = "/view/{fileName}")
     // Resource : 실제 이미지 자원을 말함.
     public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName) {
 
@@ -133,9 +132,25 @@ public class UpdownController {
         }
         // http -> 비유, 편지 봉투(헤더), 편지 내용(바디)
         return ResponseEntity.ok().headers(headers).body(resource);
-
-
     }
 
+    @Tag(name = "파일 다운로드 get",
+            description = "멀티파트 타입 형식 이용해서, get 형식으로 이미지 다운로드")
+    @GetMapping(value = "/download/{filename}")
+    // Resource : 실제 이미지 자원을 말함.
+    public ResponseEntity<Resource> fileDownload(@PathVariable String filename) {
+        try {
+            Path filePath = Paths.get(uploadPath).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
 
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
