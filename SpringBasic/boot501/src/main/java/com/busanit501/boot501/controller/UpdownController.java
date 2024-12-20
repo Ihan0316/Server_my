@@ -13,19 +13,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @Log4j2
@@ -43,23 +38,23 @@ public class UpdownController {
             description = "멀티파트 타입 형식 이용해서, post 형식으로 업로드테스트")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<UploadResultDTO> upload(UploadFileDTO uploadFileDTO) {
-        log.info("UpdownController uploadFileDTO 내용 확인: "+uploadFileDTO);
+        log.info("UpdownController uploadFileDTO 내용 확인: " + uploadFileDTO);
 
-        if(uploadFileDTO.getFiles() != null && uploadFileDTO.getFiles().size() > 0){
+        if (uploadFileDTO.getFiles() != null && !uploadFileDTO.getFiles().isEmpty()) {
 
             // 서버로부터 전달 받은 이미지 파일 임시 목록 저장소
             // 추가1
             final List<UploadResultDTO> list = new ArrayList<>();
 
             uploadFileDTO.getFiles().forEach(multipartFile -> {
-                log.info("UpdownController multipartFile.getOriginalFilename() 실제 파일 이름 확인 : "+multipartFile.getOriginalFilename());
+                log.info("UpdownController multipartFile.getOriginalFilename() 실제 파일 이름 확인 : " + multipartFile.getOriginalFilename());
                 String originName = multipartFile.getOriginalFilename();
 
                 String uuid = UUID.randomUUID().toString();
-                log.info("UpdownController uuid 랜덤 생성 문자열 확인: "+uuid);
+                log.info("UpdownController uuid 랜덤 생성 문자열 확인: " + uuid);
 
                 // savePath -> /Users/ihanjo/Documents/K-Digital/Upload/SpringTest/UUID임시생성문자열_파일명
-                Path savePath = Paths.get(uploadPath,uuid+"_"+originName);
+                Path savePath = Paths.get(uploadPath, uuid + "_" + originName);
 
                 // 추가2. 이미지 여부
                 boolean image = false;
@@ -77,18 +72,17 @@ public class UpdownController {
                     // 컨텐츠 타입을 확인해서, 이미지라면, 썸네일 도구 이용해서,
                     // 작은 이미지로 변환 해서, 저장,
                     // 작은 이미지라는 표시, 이름 앞에 s_ 이런식으로 이름을 변경.
-                    if(Files.probeContentType(savePath).startsWith("image")){
+                    if (Files.probeContentType(savePath).startsWith("image")) {
 
                         // 추가 4, 이미지 상태 업데이트
                         image = true;
 
                         // 새로운 파일을 생성. 기존 원본 이미지 -> 작은 이미지
-                        File thumbFile = new File(uploadPath,"s_"+ uuid+"_"+originName);
+                        File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originName);
                         // 작은 이미지 변환 도구 이용해서, 축소 작업.
-                        Thumbnailator.createThumbnail(savePath.toFile(),thumbFile, 200,200);
+                        Thumbnailator.createThumbnail(savePath.toFile(), thumbFile, 200, 200);
                     }
-                } catch (IOException e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 // 추가 5, 이미지 임시 저장소 목록 추가 작업.
@@ -114,17 +108,17 @@ public class UpdownController {
 
         // Resource : 패키지, 스프링 시스템 꺼 사용하기.
         // /Users/ihanjo/Documents/K-Digital/Upload/SpringTest/UUID임시생성문자열_파일명
-        Resource resource = new FileSystemResource(uploadPath+File.separator+fileName);
+        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
 
         String resourceName = resource.getFilename();
-        log.info("UpdownController resourceName : "+resourceName);
+        log.info("UpdownController resourceName : " + resourceName);
 
         //http 헤더 작업,
         // http 통신 전달 할 때, 전달하는 데이터의 종류를 알려줘야 함. Content-Type , 키,
         // 이미지입니다. -> MIME , type image/*, image/jpg, image/png, image/jpeg
         //푸시
         HttpHeaders headers = new HttpHeaders();
-        try{// Files.probeContentType : 해당 파일명의 확장자를 확인해서, 타입을 지정하기.
+        try {// Files.probeContentType : 해당 파일명의 확장자를 확인해서, 타입을 지정하기.
             headers.add("Content-Type",
                     Files.probeContentType(resource.getFile().toPath()));
         } catch (Exception e) {
@@ -141,7 +135,9 @@ public class UpdownController {
     public ResponseEntity<Resource> fileDownload(@PathVariable String filename) {
         try {
             Path filePath = Paths.get(uploadPath).resolve(filename).normalize();
+            log.info("UpdownController fileDownload filePath : " + filePath);
             Resource resource = new UrlResource(filePath.toUri());
+            log.info("UpdownController fileDownload resource : " + resource);
 
             if (!resource.exists()) {
                 return ResponseEntity.notFound().build();
@@ -149,8 +145,35 @@ public class UpdownController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                     .body(resource);
-        } catch (Exception ex) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @Tag(name = "파일 삭제 delete",
+            description = "멀티파트 타입 형식 이용해서, delete 형식으로 이미지 삭제")
+    @DeleteMapping(value = "/delete/{filename}")
+    // Resource : 실제 이미지 자원을 말함.
+    public Map<String, Boolean> fileDelete(@PathVariable String filename) {
+        Resource resource = new FileSystemResource(uploadPath + File.separator + filename);
+        String resourceName = resource.getFilename();
+
+        Map<String, Boolean> resultMap = new HashMap<>();
+        boolean deleteCheck = false;
+        try {
+            // 파일 삭제시 이미지 파일일 경우, 원본, 썸네일 이미지 2개 존재
+            // 이미지 파일이면 썸네일도 같이 삭제
+            String contentType = Files.probeContentType(resource.getFile().toPath());
+
+            resource.getFile().delete();
+            if (contentType.startsWith("image")) {
+                File thumbFile = new File(uploadPath+File.separator, "s_" + filename);
+                thumbFile.delete();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        resultMap.put("deleteCheck", deleteCheck);
+        return resultMap;
     }
 }
