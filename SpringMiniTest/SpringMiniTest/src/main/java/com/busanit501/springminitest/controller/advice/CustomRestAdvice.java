@@ -15,8 +15,8 @@ import java.util.Map;
 @RestControllerAdvice
 @Log4j2
 public class CustomRestAdvice {
-    @ExceptionHandler(BindException.class)// 예외 처리할 종류를 알려주기
-    @ResponseStatus(HttpStatus.EXPECTATION_FAILED) // 응답코드, 예외 실패라서 안됐습니다. 메세지 코드 전달.
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String,String>> handleException(BindException e){
 
         log.error("CustomRestAdvice hadle exception ", e);

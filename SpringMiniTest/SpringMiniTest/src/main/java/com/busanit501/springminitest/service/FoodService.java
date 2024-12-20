@@ -12,6 +12,5 @@ public interface FoodService {
     void update(FoodDTO boardDTO);
     void delete(Long fno);
     PageResponseDTO<FoodDTO> list(PageRequestDTO pageRequestDTO);
-    //게시글에 댓글 갯수 포함한 메서드
     PageResponseDTO<FoodListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO);
 }

@@ -1,5 +1,4 @@
-    // 가져오기
-async function get(fno){// 비대칭 통신(비동기)
+async function get(fno){
     const result = await axios.get(`/replies/list/${fno}`)
     console.log(result)
     return result.data;
@@ -11,7 +10,7 @@ async function get(fno){// 비대칭 통신(비동기)
 //     return result.data;
 // }
 
-async function getList({fno, page, size, goLast}){// 비대칭 통신(비동기)
+async function getList({fno, page, size, goLast}){
     const result = await axios.get(`/replies/list/${fno}`,
         {params : {page,size}})
     if(goLast){
