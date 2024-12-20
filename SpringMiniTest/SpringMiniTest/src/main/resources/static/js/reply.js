@@ -1,15 +1,15 @@
-// 가져오기
+    // 가져오기
 async function get(fno){// 비대칭 통신(비동기)
     const result = await axios.get(`/replies/list/${fno}`)
     console.log(result)
     return result.data;
 }
 
-async function getList({fno, page, size}){// 비대칭 통신(비동기)
-    const result = await axios.get(`/replies/list/${fno}`,
-        {params : {page,size}})
-    return result.data;
-}
+// async function getList({fno, page, size}){// 비대칭 통신(비동기)
+//     const result = await axios.get(`/replies/list/${fno}`,
+//         {params : {page,size}})
+//     return result.data;
+// }
 
 async function getList({fno, page, size, goLast}){// 비대칭 통신(비동기)
     const result = await axios.get(`/replies/list/${fno}`,
