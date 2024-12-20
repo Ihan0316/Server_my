@@ -45,7 +45,7 @@ public class ReplyRepositoryTests {
     public void testInsert2() {
         Long bno = 99L;
 
-        IntStream.range(1, 100).forEach(i -> {
+        IntStream.range(1, 101).forEach(i -> {
             Board board = Board.builder().bno(bno).build();
             Reply reply = Reply.builder()
                     .board(board)
