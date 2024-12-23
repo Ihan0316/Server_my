@@ -28,15 +28,15 @@ public class ServiceTests {
                 .regDate(LocalDateTime.now())
                 .build();
 
-        Long bno = blogService.register(blogDTO);
-        log.info("입력한 게시글 번호: " + bno.toString());
+        Long blogno = blogService.register(blogDTO);
+        log.info("입력한 게시글 번호: " + blogno.toString());
     }
 
     @Test
     public void testSelectOneBlog() {
         // 더미 데이터 필요, 임시 DTO 생성.
-        Long bno = 103L;
-        BlogDTO blogDTO= blogService.readOne(bno);
+        Long blogno = 103L;
+        BlogDTO blogDTO= blogService.readOne(blogno);
         log.info("testSelectOneBlog , 하나 조회 blogDTO: " + blogDTO.toString());
     }
 
@@ -44,7 +44,7 @@ public class ServiceTests {
     public void testUpdateBlog() {
         // 수정할 더미 데이터 필요,
         BlogDTO blogDTO = BlogDTO.builder()
-                .bno(103L)
+                .blogno(103L)
                 .title("수정한 오늘 점심 뭐 먹지?")
                 .content("칼국수 먹을까?")
                 .build();

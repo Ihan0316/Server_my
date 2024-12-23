@@ -10,6 +10,6 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     // 기본적인 crud , 쿼리 스트링으로 가능함.
 
     // 댓글목록 조회 추가해보기.
-    @Query("select r from Reply r where r.blog.bno = :bno")
-    Page<Reply> listOfBlog(Long bno, Pageable pageable);
+    @Query("select r from Reply r where r.blog.blogno = :blogno")
+    Page<Reply> listOfBlog(Long blogno, Pageable pageable);
 }

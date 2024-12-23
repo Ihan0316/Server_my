@@ -24,28 +24,28 @@
 // axios 도구 역할 - 비동기 통신으로 문법 작성시, 콜백 안에 또 콜백 작성, 콜백 지옥
 // 문법 작성시는 동기적 함수 표현식으로 사용하되 동작은 비동기식으로 한다.
 
-async function get(bno){// 비대칭 통신(비동기)
-    const result = await axios.get(`/replies/list/${bno}`)
+async function get(blogno){// 비대칭 통신(비동기)
+    const result = await axios.get(`/replies/list/${blogno}`)
     console.log(result)
     return result.data;
 }
 
-async function getList({bno, page, size, goLast}){// 비대칭 통신(비동기)
-    const result = await axios.get(`/replies/list/${bno}`,
+async function getList({blogno, page, size, goLast}){// 비대칭 통신(비동기)
+    const result = await axios.get(`/replies/list/${blogno}`,
         {params : {page,size}})
     // console.log(result)
     return result.data;
 }
 
 // 마지막 댓글 위치로 이동하기
-async function getList({bno, page, size, goLast}){// 비대칭 통신(비동기)
-    const result = await axios.get(`/replies/list/${bno}`,
+async function getList({blogno, page, size, goLast}){// 비대칭 통신(비동기)
+    const result = await axios.get(`/replies/list/${blogno}`,
         {params : {page,size}})
     // console.log(result)
     if(goLast){
         const total = result.data.total;
         const lastpage = parseInt(Math.ceil(total/size))
-        return getList({bno:bno, page:lastpage, size:size})
+        return getList({blogno:blogno, page:lastpage, size:size})
     }
     return result.data;
 }

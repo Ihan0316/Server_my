@@ -58,11 +58,11 @@ public class BlogController {
             return "redirect:/blog/register";
         }
         //검사가 통과가 되고, 정상 입력
-        Long bno = blogService.register(blogDTO);
+        Long blogno = blogService.register(blogDTO);
 
         // 글 정상 등록후, 화면에 result 값을 전달하기.
         // 1회용 사용하기.
-        redirectAttributes.addFlashAttribute("result", bno);
+        redirectAttributes.addFlashAttribute("result", blogno);
         redirectAttributes.addFlashAttribute("resultType", "register");
 
         return "redirect:/blog/list";
@@ -70,16 +70,16 @@ public class BlogController {
     }
 
     @GetMapping("/read")
-    public void read(Long bno, PageRequestDTO pageRequestDTO,
+    public void read(Long blogno, PageRequestDTO pageRequestDTO,
                      Model model) {
-        BlogDTO blogDTO = blogService.readOne(bno);
+        BlogDTO blogDTO = blogService.readOne(blogno);
         model.addAttribute("dto", blogDTO);
     }
 
     @GetMapping("/update")
-    public void update(Long bno, PageRequestDTO pageRequestDTO,
+    public void update(Long blogno, PageRequestDTO pageRequestDTO,
                      Model model) {
-        BlogDTO blogDTO = blogService.readOne(bno);
+        BlogDTO blogDTO = blogService.readOne(blogno);
         model.addAttribute("dto", blogDTO);
     }
 
@@ -102,29 +102,29 @@ public class BlogController {
             log.info("has errors : 유효성 에러가 발생함.");
             // 1회용으로, 웹 브라우저에서, errors , 키로 조회 가능함. -> 뷰 ${errors}
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/blog/update?bno="+blogDTO.getBno()+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
+            return "redirect:/blog/update?blogno="+blogDTO.getBlogno()+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
         }
         //검사가 통과가 되고, 정상 입력
         blogService.update(blogDTO);
 
         // 글 정상 등록후, 화면에 result 값을 전달하기.
         // 1회용 사용하기.
-        redirectAttributes.addFlashAttribute("result", blogDTO.getBno());
+        redirectAttributes.addFlashAttribute("result", blogDTO.getBlogno());
         redirectAttributes.addFlashAttribute("resultType", "update");
 
-        return "redirect:/blog/read?bno="+blogDTO.getBno()+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
+        return "redirect:/blog/read?blogno="+blogDTO.getBlogno()+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
 
     }
 
     @PostMapping("/delete")
-    public String delete(Long bno,
+    public String delete(Long blogno,
                          String keyword2,String page2, String type2,
                          RedirectAttributes redirectAttributes) {
-        blogService.delete(bno);
+        blogService.delete(blogno);
         //키워드 한글 처리.
         String encodedKeyword = URLEncoder.encode(keyword2, StandardCharsets.UTF_8);
 
-        redirectAttributes.addFlashAttribute("result", bno);
+        redirectAttributes.addFlashAttribute("result", blogno);
         redirectAttributes.addFlashAttribute("resultType", "delete");
         return "redirect:/blog/list?"+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
     }

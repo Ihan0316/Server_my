@@ -125,10 +125,10 @@
                         <tbody th:with="link = ${pageRequestDTO.link}">
                         <tr th:each="dto:${responseDTO.dtoList}">
                             <th scope="row">
-                                [[${dto.bno}]]
+                                [[${dto.blogno}]]
                             </th>
                             <td>
-                                <a th:href="|@{/blog/read(bno=${dto.bno})}&${link}|">
+                                <a th:href="|@{/blog/read(blogno=${dto.blogno})}&${link}|">
                                 [[${dto.title}]]
                                 </a>
                                 <span class="badge progress-bar-success"

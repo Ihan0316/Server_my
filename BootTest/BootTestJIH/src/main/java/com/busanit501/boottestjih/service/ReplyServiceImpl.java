@@ -35,10 +35,10 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public Long register(ReplyBlogDTO replyBlogDTO) {
         // 화면에서 받은 데이터 DTO 타입 -> 엔티티 타입으로 변경,
-        // replyBlogDTO, bno 값이 존재.
+        // replyBlogDTO, blogno 값이 존재.
         log.info("Registering new replyBlogDTO: " + replyBlogDTO);
         Reply reply = modelMapper.map(replyBlogDTO, Reply.class);
-        Optional<Blog> result = blogRepository.findById(replyBlogDTO.getBno());
+        Optional<Blog> result = blogRepository.findById(replyBlogDTO.getBlogno());
         Blog blog = result.orElseThrow();
         reply.changeBlog(blog);
         log.info("Registering new reply: " + reply);
@@ -51,7 +51,7 @@ public class ReplyServiceImpl implements ReplyService {
         Optional<Reply> result = replyRepository.findById(rno);
         Reply reply = result.orElseThrow();
         ReplyBlogDTO replyBlogDTO = modelMapper.map(reply, ReplyBlogDTO.class);
-        replyBlogDTO.setBno(reply.getBlog().getBno());
+        replyBlogDTO.setBlogno(reply.getBlog().getBlogno());
         return replyBlogDTO;
     }
 
@@ -69,16 +69,16 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public PageResponseDTO<ReplyBlogDTO> listWithReplyBlog(Long bno, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<ReplyBlogDTO> listWithReplyBlog(Long blogno, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage()-1 <= 0 ? 0 : pageRequestDTO.getPage()-1, pageRequestDTO.getSize(),
                 Sort.by("rno").ascending());
 
-        Page<Reply> result = replyRepository.listOfBlog(bno, pageable);
+        Page<Reply> result = replyRepository.listOfBlog(blogno, pageable);
 
         List<ReplyBlogDTO> dtoList = result.getContent().stream().map(reply -> {
             ReplyBlogDTO replyBlogDTO = modelMapper.map(reply, ReplyBlogDTO.class);
-            replyBlogDTO.setBno(reply.getBlog().getBno());
+            replyBlogDTO.setBlogno(reply.getBlog().getBlogno());
             return replyBlogDTO;
         }).collect(Collectors.toList());
 

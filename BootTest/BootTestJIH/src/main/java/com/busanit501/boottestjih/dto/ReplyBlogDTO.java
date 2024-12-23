@@ -19,7 +19,7 @@ public class ReplyBlogDTO {
     private Long rno;// 댓글의 구분 번호,
 
     @NotNull
-    private Long bno; // 부모의 게시글 번호,
+    private Long blogno; // 부모의 게시글 번호,
 
     @NotEmpty
     private String replyText;

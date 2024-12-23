@@ -48,8 +48,8 @@ public class BlogSearchImpl extends QuerydslRepositorySupport
         booleanBuilder.or(blog.content.contains("7"));// "3" 제목 임시
         // query, 해당 조건을 적용함.
         query.where(booleanBuilder);
-        // 방법2, 추가 조건으로, bno 가 0보다 초과 하는 조건.
-        query.where(blog.bno.gt(0L));
+        // 방법2, 추가 조건으로, blogno 가 0보다 초과 하는 조건.
+        query.where(blog.blogno.gt(0L));
 
         // =================================.,조건3
 
@@ -91,8 +91,8 @@ public class BlogSearchImpl extends QuerydslRepositorySupport
             // where 조건을 적용해보기.
             query.where(booleanBuilder);
         } //end if
-        // bno >0
-        query.where(blog.bno.gt(0L));
+        // blogno >0
+        query.where(blog.blogno.gt(0L));
         // where 조건.
 
         // 페이징 조건,
@@ -124,8 +124,8 @@ public class BlogSearchImpl extends QuerydslRepositorySupport
         QReply reply = QReply.reply;
         JPQLQuery<Blog> query = from(blog);// select * from blog
         // 조인 설정 , 게시글에서 댓글에 포함된 게시글 번호와 , 게시글 번호 일치
-        query.leftJoin(reply).on(reply.blog.bno.eq(blog.bno));
-        // bno  title  content writer , rno  bno  replyText replyer
+        query.leftJoin(reply).on(reply.blog.blogno.eq(blog.blogno));
+        // blogno  title  content writer , rno  blogno  replyText replyer
         // 121   test   test    lsy      1    121    댓글    댓글작성자
         // 121   test   test    lsy      2    121    댓글2    댓글작성자2
 
@@ -154,8 +154,8 @@ public class BlogSearchImpl extends QuerydslRepositorySupport
             // where 조건을 적용해보기.
             query.where(booleanBuilder);
         } //end if
-        // bno >0
-        query.where(blog.bno.gt(0L));
+        // blogno >0
+        query.where(blog.blogno.gt(0L));
         // 위에서 사용한 검색 조건 , 재사용하기
 
         // 모델 맵핑 작업, DTO <-> 엔티티 클래스간에 형변환을 해야함.
@@ -168,7 +168,7 @@ public class BlogSearchImpl extends QuerydslRepositorySupport
         // modelMapper.map(blogDTO, Blog.class)
         JPQLQuery<BlogListReplyCountDTO> dtoQuery =
                 query.select(Projections.bean(BlogListReplyCountDTO.class,
-                        blog.bno,
+                        blog.blogno,
                         blog.title,
                         blog.content,
                         blog.writer,
@@ -178,7 +178,7 @@ public class BlogSearchImpl extends QuerydslRepositorySupport
         // 페이징 조건, 재사용, dto<-> 엔티티 형변환 할 때 사용했던 쿼리로 변
         // query -> dtoQuery
         // dtoQuery
-        // bno  title  content writer , replyCount
+        // blogno  title  content writer , replyCount
         // 121   test   test    lsy       2
         // 120   test3  test3   lsy3      2
 

@@ -25,24 +25,24 @@ public class BlogServiceTest {
                 .content("test content")
                 .regDate(LocalDateTime.now())
                 .build();
-        Long bno = blogService.register(blogDTO);
+        Long blogno = blogService.register(blogDTO);
 
-        log.info("blogService bno : " + bno.toString());
+        log.info("blogService blogno : " + blogno.toString());
     }
 
     @Test
     public void testReadOneBlog () {
-        Long bno = 102L;
-        BlogDTO blogDTO = blogService.readOne(bno);
+        Long blogno = 102L;
+        BlogDTO blogDTO = blogService.readOne(blogno);
         log.info("blogService blogDTO 하나 조회 : " + blogDTO);
     }
 
     @Test
     public void testUpdateBlog () {
-        Long bno = 95L;
+        Long blogno = 95L;
 
         BlogDTO blogDTO = BlogDTO.builder()
-                .bno(bno)
+                .blogno(blogno)
                 .title("test edit title")
                 .content("test edit content")
                 .build();
@@ -52,9 +52,9 @@ public class BlogServiceTest {
 
     @Test
     public void testDeleteBlog () {
-        Long bno = 103L;
+        Long blogno = 103L;
 
-        blogService.delete(bno);
+        blogService.delete(blogno);
     }
 
     @Test

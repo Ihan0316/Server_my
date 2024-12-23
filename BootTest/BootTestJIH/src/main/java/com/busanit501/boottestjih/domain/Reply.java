@@ -11,7 +11,7 @@ import lombok.*;
 // 주의사항, 너무 복잡한 복합키 설정이나, 또는 많은 복합키를 사용하게 되면,
 // 디비 자체에서 부하가 걸려서 효율적이지 못함, 가급적 너무 많은 복합키 사용은 주의.
 @Table(name = "Reply", indexes = {
-        @Index(name = "idx_reply_blog_bno", columnList = "blog_bno")
+        @Index(name = "idx_reply_blog_blogno", columnList = "blog_blogno")
 })
 @Getter
 @Builder

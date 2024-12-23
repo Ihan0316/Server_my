@@ -42,15 +42,15 @@ public class BlogReopositoryTests {
             //    values
             //        (?, ?, ?, ?, ?)
             Blog result = blogRepository.save(blog);
-            log.info("추가된 bno 번호 : " + result);
+            log.info("추가된 blogno 번호 : " + result);
         });
     }
 
     @Test
     public void testSelectOne() {
-        Long bno = 99L;
+        Long blogno = 99L;
         //Optional , 있으면, 해당 인스턴스 가져오기, 없으면, null 입니다.
-        Optional<Blog> result = blogRepository.findById(bno);
+        Optional<Blog> result = blogRepository.findById(blogno);
         // result 있으면, Blog 타입으로 받고, 없으면, 예외 발생시킴.
         Blog blog = result.orElseThrow();
         log.info("하나 조회 : " + blog);
@@ -71,9 +71,9 @@ public class BlogReopositoryTests {
 
     @Test
     public void testUpdate() {
-        Long bno = 96L;
+        Long blogno = 96L;
         // 수정 할 데이터가 해당 테이블에 있는지 조회 부터 하기.
-        Optional<Blog> result = blogRepository.findById(bno);
+        Optional<Blog> result = blogRepository.findById(blogno);
         // result 있으면, Blog 타입으로 받고, 없으면, 예외 발생시킴.
         // blog, 엔티티 클래스 인스턴스가, 하나의 데이터베이스의 내용임.
         Blog blog = result.orElseThrow();
@@ -89,8 +89,8 @@ public class BlogReopositoryTests {
 
     @Test
     public void testDelete() {
-        Long bno = 99L;
-        blogRepository.deleteById(bno);
+        Long blogno = 99L;
+        blogRepository.deleteById(blogno);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class BlogReopositoryTests {
 
         // 0 -> 1페이지, 1 -> 2페이지
         Pageable pageable = PageRequest.of(1, 10,
-                Sort.by("bno").descending());
+                Sort.by("blogno").descending());
         Page<Blog> result = blogRepository.findAll(pageable);
         log.info("result.getTotalElements()전체 갯수 :" + result.getTotalElements());
         log.info("result.getTotalPages()총페이지등 :" + result.getTotalPages());
@@ -111,8 +111,8 @@ public class BlogReopositoryTests {
     @Test
     public void testQueryString() {
         Pageable pageable = PageRequest.of(1, 10,
-                Sort.by("bno").descending());
-        Page<Blog> result = blogRepository.findByTitleContainingOrderByBnoDesc(
+                Sort.by("blogno").descending());
+        Page<Blog> result = blogRepository.findByTitleContainingOrderByBlognoDesc(
                 "3", pageable
         );
         log.info("result.getTotalElements()전체 갯수 :" + result.getTotalElements());
@@ -126,7 +126,7 @@ public class BlogReopositoryTests {
     @Test
     public void testQueryAnotation() {
         Pageable pageable = PageRequest.of(1, 10,
-                Sort.by("bno").descending());
+                Sort.by("blogno").descending());
         Page<Blog> result = blogRepository.findByKeyword("3", pageable);
 
         log.info("result.getTotalElements()전체 갯수 :" + result.getTotalElements());
@@ -142,7 +142,7 @@ public class BlogReopositoryTests {
     @Test
     public void testQuerydsl() {
         Pageable pageable = PageRequest.of(1, 10,
-                Sort.by("bno").descending());
+                Sort.by("blogno").descending());
 //        Page<Blog> result = blogRepository.search(pageable);
           blogRepository.search(pageable);
 
@@ -156,7 +156,7 @@ public class BlogReopositoryTests {
     @Test
     public void testQuerydsl2() {
         Pageable pageable = PageRequest.of(1, 10,
-                Sort.by("bno").descending());
+                Sort.by("blogno").descending());
 
         // 전달할 준비물
         // 1) 검색어, 2) 검색 유형

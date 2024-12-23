@@ -33,13 +33,13 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Long register(BlogDTO blogDTO) {
         Blog blog = modelMapper.map(blogDTO, Blog.class);
-        Long bno = blogRepository.save(blog).getBno();
-        return bno;
+        Long blogno = blogRepository.save(blog).getBlogno();
+        return blogno;
     }
 
     @Override
-    public BlogDTO readOne(Long bno) {
-        Optional<Blog> result = blogRepository.findById(bno);
+    public BlogDTO readOne(Long blogno) {
+        Optional<Blog> result = blogRepository.findById(blogno);
         Blog blog= result.orElseThrow();
         BlogDTO dto = modelMapper.map(blog, BlogDTO.class);
         return dto;
@@ -47,22 +47,22 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void update(BlogDTO blogDTO) {
-        Optional<Blog> result = blogRepository.findById(blogDTO.getBno());
+        Optional<Blog> result = blogRepository.findById(blogDTO.getBlogno());
         Blog blog = result.orElseThrow();
         blog.changeTitleConent(blogDTO.getTitle(),blogDTO.getContent());
         blogRepository.save(blog);
     }
 
     @Override
-    public void delete(Long bno) {
-        blogRepository.deleteById(bno);
+    public void delete(Long blogno) {
+        blogRepository.deleteById(blogno);
     }
 
     @Override
     public PageResponseDTO<BlogDTO> list(PageRequestDTO pageRequestDTO) {
         String[] types = pageRequestDTO.getTypes();
         String keyword = pageRequestDTO.getKeyword();
-        Pageable pageable = pageRequestDTO.getPageable("bno");
+        Pageable pageable = pageRequestDTO.getPageable("blogno");
 
         Page<Blog> result = blogRepository.searchAll(types,keyword,pageable);
         // list -> PageResponseDTO 타입으로 변경 필요.
@@ -86,7 +86,7 @@ public class BlogServiceImpl implements BlogService {
 
         String[] types = pageRequestDTO.getTypes();
         String keyword = pageRequestDTO.getKeyword();
-        Pageable pageable = pageRequestDTO.getPageable("bno");
+        Pageable pageable = pageRequestDTO.getPageable("blogno");
 
         // 수정1
         Page<BlogListReplyCountDTO> result = blogRepository.searchWithReplyCount(types,keyword,pageable);

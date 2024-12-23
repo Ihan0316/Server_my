@@ -17,7 +17,7 @@ public class Blog extends BaseEntity { // 전역으로 만든, 베이스 엔티�
     @Id // PK, 기본키,
     // Oracle, 시퀸스 객체, 이용시, SEQUENCE 설정, 추가 설정. 필요함.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 마리아디비,
-    private Long bno;
+    private Long blogno;
 
     //제약조건 넣기
     @Column(length = 500, nullable = false)// 길이 500자,  NotNull=nn

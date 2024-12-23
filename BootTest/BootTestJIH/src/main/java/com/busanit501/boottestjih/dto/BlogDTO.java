@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlogDTO {
-    private  Long bno;
+    private  Long blogno;
     @NotEmpty
     @Size(min = 3, max = 100)
     private  String title;

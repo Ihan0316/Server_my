@@ -23,13 +23,13 @@ public class ReplyServiceTest {
         ReplyBlogDTO replyDTO = ReplyBlogDTO.builder()
                 .replyText("오늘 점심 뭐 먹지?")
                 .replyer("조이한")
-                .bno(106L)
+                .blogno(106L)
                 .regDate(LocalDateTime.now())
                 .build();
 
         log.info("replyDTO, register 함수 호출 전 " + replyDTO);
-        Long bno = replyService.register(replyDTO);
-        log.info("입력한 댓글 번호: " + bno.toString());
+        Long blogno = replyService.register(replyDTO);
+        log.info("입력한 댓글 번호: " + blogno.toString());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ReplyServiceTest {
                 .replyText("수정 테스트 내용 변경?")
                 .replyer("조이한")
                 .rno(23L)
-                .bno(106L)
+                .blogno(106L)
                 .regDate(LocalDateTime.now())
                 .build();
 

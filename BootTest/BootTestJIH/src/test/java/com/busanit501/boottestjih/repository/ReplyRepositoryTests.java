@@ -28,9 +28,9 @@ public class ReplyRepositoryTests {
     public void testInsert() {
         // 댓글을 작성 하려면, 부모 게시글 번호가 필요,
         // 각자 데이터베이스에 따라서, 다르므로 꼭 확인하고, 작업.
-        Long bno = 99L;
+        Long blogno = 99L;
 
-        Blog blog = Blog.builder().bno(bno).build();
+        Blog blog = Blog.builder().blogno(blogno).build();
 
         Reply reply = Reply.builder()
                 .blog(blog)
@@ -43,10 +43,10 @@ public class ReplyRepositoryTests {
 
     @Test
     public void testInsert2() {
-        Long bno = 100L;
+        Long blogno = 100L;
 
         IntStream.range(1, 101).forEach(i -> {
-            Blog blog = Blog.builder().bno(bno).build();
+            Blog blog = Blog.builder().blogno(blogno).build();
             Reply reply = Reply.builder()
                     .blog(blog)
                     .replyText("샘플 댓글"+i)
@@ -60,12 +60,12 @@ public class ReplyRepositoryTests {
 //    @Transactional
 //    @Test
 //    public void testSelect() {
-//        Long bno = 121L;
+//        Long blogno = 121L;
 //        // 페이징 조건, 준비물 준비
 //        Pageable pageable = PageRequest.of(0,10, Sort.by("rno").descending());
 //
 //        //
-//        Page<Reply> result = replyRepository.listOfBlog(bno, pageable);
+//        Page<Reply> result = replyRepository.listOfBlog(blogno, pageable);
 //        // result 안에, 페이징 조건의 준비물이 다 있음.
 //        // 1) 전체 갯수, 2) 페이지 3) 페이지당 크기 4) 페이징 처리된 목록 요소
 //        result.getContent().forEach(reply -> {
@@ -76,7 +76,7 @@ public class ReplyRepositoryTests {
     @Test
     public void testSelectWithReplyCount() {
         Pageable pageable = PageRequest.of(0, 10,
-                Sort.by("bno").descending());
+                Sort.by("blogno").descending());
 
         // 전달할 준비물
         // 1) 검색어, 2) 검색 유형
