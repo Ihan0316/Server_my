@@ -32,14 +32,14 @@ public class BlogServiceTest {
 
     @Test
     public void testReadOneBlog () {
-        Long bno = 103L;
+        Long bno = 102L;
         BlogDTO blogDTO = blogService.readOne(bno);
         log.info("blogService blogDTO 하나 조회 : " + blogDTO);
     }
 
     @Test
     public void testUpdateBlog () {
-        Long bno = 103L;
+        Long bno = 95L;
 
         BlogDTO blogDTO = BlogDTO.builder()
                 .bno(bno)
