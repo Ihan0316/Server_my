@@ -46,7 +46,7 @@ public class BlogServiceImpl implements BlogService {
     public void update(BlogDTO blogDTO) {
         Optional<Blog> result = blogRepository.findById(blogDTO.getBlogno());
         Blog blog = result.orElseThrow();
-        blog.changeTitleConent(blogDTO.getTitle(),blogDTO.getContent());
+        blog.changeTitleContent(blogDTO.getTitle(),blogDTO.getContent());
         blogRepository.save(blog);
     }
 

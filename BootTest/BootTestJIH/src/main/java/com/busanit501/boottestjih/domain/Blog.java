@@ -24,7 +24,7 @@ public class Blog extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String writer;
 
-    public void changeTitleConent(String title, String content) {
+    public void changeTitleContent(String title, String content) {
         this.title = title;
         this.content = content;
     }

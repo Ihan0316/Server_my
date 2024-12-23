@@ -77,7 +77,7 @@ public class BlogReopositoryTests {
         // result 있으면, Blog 타입으로 받고, 없으면, 예외 발생시킴.
         // blog, 엔티티 클래스 인스턴스가, 하나의 데이터베이스의 내용임.
         Blog blog = result.orElseThrow();
-        blog.changeTitleConent("변경 제목 ", "변경 내용");
+        blog.changeTitleContent("변경 제목 ", "변경 내용");
         // 실제 디비 테이블 반영.
         // 순서 -> 1차 영속성 컨텍스트(임시 테이블) 적용 -> 실제 테이블 반영.
         // save -> 해당 실제 테이블 없다면, -> insert
