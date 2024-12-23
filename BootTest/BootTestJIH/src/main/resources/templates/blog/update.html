@@ -14,9 +14,6 @@
                     Blog update
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">
-                        Blog update
-                    </h5>
                     <form id="f1" method="post" th:action="@{/blog/update}">
                         <input type="hidden" name="keyword2" th:value="${pageRequestDTO.keyword}">
                         <input type="hidden" name="page2" th:value="${pageRequestDTO.page}">

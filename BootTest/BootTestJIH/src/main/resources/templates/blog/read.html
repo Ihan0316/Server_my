@@ -14,9 +14,6 @@
                     Blog Read
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">
-                        Blog Read
-                    </h5>
                     <!--                    <form method="post" action="/blog/update">-->
                     <div class="mb-3">
                         <label for="title" class="form-control">제목</label>
@@ -45,10 +42,7 @@
                                th:value="${#temporals.format(dto.modDate,'yyyy-MM-dd HH:mm:ss')}" readonly>
                     </div>
                     <div class="mb-3" th:with="link = ${pageRequestDTO.link}">
-                        <!--                            수정폼 가기 방법2-->
-                        <!--                            <a th:href="|@{/blog/update}?blogno=${dto.blogno}&${link}|">-->
                         <button type="button" class="btn btn-primary submitBtn">수정하기</button>
-                        <!--                            </a>-->
                         <a th:href="|@{/blog/list}?${link}|">
                             <button type="button" class="btn btn-danger">목록가기</button>
                         </a>
@@ -59,16 +53,14 @@
             </div>
         </div>
     </div>
-
+    
     <div class="row mt-3">
         <div class="col-md-12">
-            <!--            2)댓글 추가 버튼 : addReplyBtn -->
             <div class="my-4">
                 <button class="btn btn-info addReplyBtn">댓글 등록</button>
             </div>
-            <!--            1)댓글의 목록 : replyList -->
             <ul class="list-group replyList">
-
+                
             </ul>
         </div>
 
@@ -81,7 +73,7 @@
             </div>
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/reply.js"></script>
 
@@ -149,22 +141,22 @@
 
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
-
+    
     document.querySelector(".submitBtn").addEventListener("click",
         function (e) {
             self.location = "/blog/update?blogno="+[[${dto.blogno}]]+"&"+[[${pageRequestDTO.link}]]
                 ,false})
 
     const blogno = [[${dto.blogno}]]
-
+  
     console.log("get 함수 실행1: ")
     get(blogno)
 
     function  printReplies(page,size,goLast) {
-
+       
         getList({blogno,page,size,goLast})
             .then(
-                data => {printList(data.dtoList) // 댓글 목록 출력하기.
+                data => {printList(data.dtoList)
                 printPage(data)
                 }
             )
@@ -173,13 +165,13 @@
                 }
             )
     }
-
+    
     console.log("printReplies 함수 실행2: ")
     printReplies(1,10)
-
+    
     const replyList = document.querySelector('.replyList')
     const replyPaging = document.querySelector('.replyPaging')
-
+    
     function printList(dtoList) {
         let str = ""
         if(dtoList && dtoList.length >0 ){
@@ -195,7 +187,7 @@
         }
         replyList.innerHTML = str
     }
-
+    
     function printPage(data) {
         let pageStr = ""
         if(data.prev){
@@ -205,7 +197,7 @@
             </li>
             `
         }
-
+        
         for (let i = data.start; i <= data.end; i++) {
             pageStr += `
             <li class="page-item ${data.page === i ? "active" : ""}">
@@ -213,7 +205,7 @@
             </li>
             `
         }
-
+        
         if(data.next){
             pageStr += `
             <li class="page-item">
@@ -240,7 +232,6 @@
         printReplies(page,size)
     }, false)
 
-
     const registermodal = new bootstrap.Modal(document.querySelector(".registerModal"))
     const registerBtn = document.querySelector(".registerBtn")
     const registerCloseBtn = document.querySelector(".registerCloseBtn")
@@ -258,7 +249,7 @@
     function (e) {
         registermodal.show()
     })
-
+    
     // 취소할 경우 숨기기
     registerCloseBtn.addEventListener("click",
         function (e) {
@@ -286,8 +277,7 @@
                     alert("예외가 발생함")
                 })
     },false)
-
-
+    
     const updateModal = new bootstrap.Modal(document.querySelector(".updateModal"))
     const updateBtn = document.querySelector(".updateBtn")
     const replyHeader = document.querySelector(".replyHeader")
@@ -301,7 +291,7 @@
         e.stopPropagation()
 
         const target = e.target
-
+        
         if (!target || target.tagName != 'SPAN') {
             return
         }
@@ -332,7 +322,7 @@
             replyer: updateReplyer.value
         }
         console.log("replyHeader.innerHTML" + replyHeader.innerHTML)
-
+        
         updateReply(replyObj)
             .then(result => {
                 alert(result.rno +" 번 댓글 수정 완료")
@@ -352,7 +342,7 @@
         const rno = replyHeader.innerHTML
         console.log("replyHeader.innerHTML : " + replyHeader.innerHTML)
         console.log("rno 확인 : " + rno)
-
+        
         deleteReply(rno)
             .then(result => {
             alert(result.rno + "번 댓글 삭제 완료 ")

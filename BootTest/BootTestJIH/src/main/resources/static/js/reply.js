@@ -6,11 +6,11 @@ async function get(blogno){
 }
 
 // 개시글 정보 조회
-async function getList({blogno, page, size, goLast}){
-    const result = await axios.get(`/replies/list/${blogno}`,
-        {params : {page,size}})
-    return result.data;
-}
+// async function getList({blogno, page, size, goLast}){
+//     const result = await axios.get(`/replies/list/${blogno}`,
+//         {params : {page,size}})
+//     return result.data;
+// }
 
 // 마지막 댓글 위치로 이동하기
 async function getList({blogno, page, size, goLast}){
