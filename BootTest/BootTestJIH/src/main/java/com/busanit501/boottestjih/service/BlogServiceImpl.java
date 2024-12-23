@@ -24,10 +24,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class BlogServiceImpl implements BlogService {
 
-    //맵퍼에게 의존 해야함.
-    // 디비 작업 도구,
     private final BlogRepository blogRepository;
-    // DTO <-> Entity class
     private final ModelMapper modelMapper;
 
     @Override
@@ -65,9 +62,6 @@ public class BlogServiceImpl implements BlogService {
         Pageable pageable = pageRequestDTO.getPageable("blogno");
 
         Page<Blog> result = blogRepository.searchAll(types,keyword,pageable);
-        // list -> PageResponseDTO 타입으로 변경 필요.
-
-        // result.getContent() -> 페이징된 엔티티 클래스 목록
         List<BlogDTO> dtoList = result.getContent().stream()
                 .map(blog ->modelMapper.map(blog, BlogDTO.class))
                 .collect(Collectors.toList());
@@ -88,18 +82,7 @@ public class BlogServiceImpl implements BlogService {
         String keyword = pageRequestDTO.getKeyword();
         Pageable pageable = pageRequestDTO.getPageable("blogno");
 
-        // 수정1
         Page<BlogListReplyCountDTO> result = blogRepository.searchWithReplyCount(types,keyword,pageable);
-        // list -> PageResponseDTO 타입으로 변경 필요.
-
-        // result.getContent() -> 페이징된 엔티티 클래스 목록
-        // Projection.bean 이용해서, 데이터 조회시 , 바로 dto 변환을 다했음.
-        // 변환 작업이 필요가 없음.
-//        List<BlogDTO> dtoList = result.getContent().stream()
-//                .map(blog ->modelMapper.map(blog, BlogDTO.class))
-//                .collect(Collectors.toList());
-
-
         return PageResponseDTO.<BlogListReplyCountDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(result.getContent())

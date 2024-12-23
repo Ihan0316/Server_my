@@ -15,21 +15,14 @@ public class PageResponseDTO<E> {
 
     private int start;
     private int end;
-
-    // 이전페이지 존재여부
     private boolean prev;
-    // 다음페이지 존재여부
     private boolean next;
 
-    // 웹에 전달할 페이징 처리된 게시글 10개, 임의로
     private List<E> dtoList;
 
-    //방법2,
-    // 생성자를 특정이름으로 직접 정의해서, 호출해서 사용함.
     @Builder(builderMethodName = "withAll")
     public PageResponseDTO(List<E> dtoList, int total,
                            PageRequestDTO pageRequestDTO) {
-        // 기본 유효성,
         if(total <= 0){
             return;
         }

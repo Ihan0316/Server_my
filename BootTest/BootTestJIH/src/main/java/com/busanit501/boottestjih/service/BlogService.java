@@ -11,7 +11,6 @@ public interface BlogService {
     void update(BlogDTO blogDTO);
     void delete(Long blogno);
     PageResponseDTO<BlogDTO> list(PageRequestDTO pageRequestDTO);
-    // 게시글에 댓글 갯수 포함한 메서드
     PageResponseDTO<BlogListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO);
 
 }

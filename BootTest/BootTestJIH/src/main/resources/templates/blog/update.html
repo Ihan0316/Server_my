@@ -74,9 +74,6 @@
 
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
-
-    // 유효성 체크 오류 발생시, alert 경고창 알려주기.
-    // 서버에서 오류가 발생시, 전달한 키 : errors , 받아서, 처리하기.
     const errors = [[${errors}]]
     console.log(errors)
 
@@ -88,22 +85,17 @@
         alert(errorMsg)
     }
 
-    //삭제시, 폼안에 있는 내용 재사용하기.
     document.querySelector(".deleteBtn").addEventListener("click",
         function (e) {
             const formObj = document.querySelector("form")
 
             e.preventDefault()
-            e.stopPropagation() // 상위 태그로 전파 방지
-
+            e.stopPropagation()
 
             formObj.action = "/blog/delete"
             formObj.method = "post"
-
             formObj.submit()
         }, false)
-
 </script>
-
 </body>
 </html>

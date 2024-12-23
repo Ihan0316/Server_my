@@ -34,8 +34,6 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public Long register(ReplyBlogDTO replyBlogDTO) {
-        // 화면에서 받은 데이터 DTO 타입 -> 엔티티 타입으로 변경,
-        // replyBlogDTO, blogno 값이 존재.
         log.info("Registering new replyBlogDTO: " + replyBlogDTO);
         Reply reply = modelMapper.map(replyBlogDTO, Reply.class);
         Optional<Blog> result = blogRepository.findById(replyBlogDTO.getBlogno());

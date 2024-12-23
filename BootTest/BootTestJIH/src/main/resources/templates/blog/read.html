@@ -60,10 +60,7 @@
         </div>
     </div>
 
-    <!--    1)댓글의 목록, 2)댓글 추가 버튼 , 3)페이징 번호 화면 작업-->
     <div class="row mt-3">
-        <!--        부트 스트랩에서, 전체 가로 영역을 12 등분으로 나눔.-->
-        <!--        col-md-12 : 전체를 차지-->
         <div class="col-md-12">
             <!--            2)댓글 추가 버튼 : addReplyBtn -->
             <div class="my-4">
@@ -71,7 +68,7 @@
             </div>
             <!--            1)댓글의 목록 : replyList -->
             <ul class="list-group replyList">
-                <!-- li  태그를 innerHTML 를 이용해서, 요소를 추가할 예정, 자바스크립트 문법으로-->
+
             </ul>
         </div>
 
@@ -85,8 +82,6 @@
         </div>
     </div>
 
-    <!--axios 도구 , 비동기 식으로 처리하는 문법을 마치 동기화된 코드 처럼 이용 가능 문법,-->
-    <!--async , await 키워드를 이용해서, 비동기 처리를 조금 더 쉽게 동기화 코드처럼 이용가능-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/reply.js"></script>
 
@@ -155,35 +150,20 @@
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
 
-    // 수정폼으로 이동하기.
     document.querySelector(".submitBtn").addEventListener("click",
         function (e) {
-            // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
             self.location = "/blog/update?blogno="+[[${dto.blogno}]]+"&"+[[${pageRequestDTO.link}]]
                 ,false})
 
-    // 비동기 함수, 테스트 작업.
-    // 순서2, 현재 게시글의  blogno 번호를 알아야 함
     const blogno = [[${dto.blogno}]]
-    // 함수 실행 해보기.
-    //
+
     console.log("get 함수 실행1: ")
     get(blogno)
 
-    // 함수 정의,
-    // 주의사항, reply.js , 통신 이용해서, 데이터를 전달하는 업무, 백
-    // read.html,  받아온 데이터를 업데이트를 하는 역할. 화면 그려주는 역할. 프론트  react.jsx
-
-    // 순서3, 화면에 출력하는 역할,
     function  printReplies(page,size,goLast) {
-        // 비동기 함수를 호출하게 되면, 호출된 데이터의 성공 여부에 따라서,
-        // 성공시, then  절 받아서 처리,
-        // 실패시, catch 절 받아서 처리.
-        // 순서4, 서버로 부터 넘어온 데이터를, 댓글 목록 출력하는 함수에 전달하는 역할
+
         getList({blogno,page,size,goLast})
             .then(
-                // 연습용 콘솔 출력,
-                // data => console.log(data)
                 data => {printList(data.dtoList) // 댓글 목록 출력하기.
                 printPage(data)
                 }
@@ -194,24 +174,13 @@
             )
     }
 
-    // 함수 실행해보기.
     console.log("printReplies 함수 실행2: ")
     printReplies(1,10)
-    // 마지막 댓글 페이지로 이동 테스트
-    // printReplies(1,10, true)
 
-
-    // 비동기 함수 이용해서, 댓글 목록 출력 작업해보기.
-    // 순서5, 화면에 출력할 태그의 요소를 선택
     const replyList = document.querySelector('.replyList')
     const replyPaging = document.querySelector('.replyPaging')
 
-    // 순서6, 댓글을 출력하는 기능
-    // 함수 작성, dtoList: 서버로 부터 받아온 댓글의 목록(페이징 처리가 된 목록)
     function printList(dtoList) {
-        // innerHTML, 동적 태그를 생성해서 추가할 예정.
-        // HTML 태그는 문자열로 작성,
-        // 임시로 담아둘 문자열 변수 생성,
         let str = ""
         if(dtoList && dtoList.length >0 ){
             for(const dto of dtoList) {
@@ -227,8 +196,6 @@
         replyList.innerHTML = str
     }
 
-    // 페이징 목록 처리,
-    // 순서7, 댓글의 페이징 번호를 출력하는 기능
     function printPage(data) {
         let pageStr = ""
         if(data.prev){
@@ -238,7 +205,7 @@
             </li>
             `
         }
-        // 페이지 번호 출력, 10개 출력
+
         for (let i = data.start; i <= data.end; i++) {
             pageStr += `
             <li class="page-item ${data.page === i ? "active" : ""}">
@@ -247,7 +214,6 @@
             `
         }
 
-        // 다음 페이지 여부
         if(data.next){
             pageStr += `
             <li class="page-item">
@@ -258,10 +224,6 @@
         replyPaging.innerHTML = pageStr
     }
 
-    // 페이징 번호 이벤트 핸들르
-    // 1) data-page=1 활용
-    // 페이징 번호 화면 구성 <ul> -> <li> : 동적변경
-    // ul 태그 기준으로 자식 태그 접근
     let page = 1
     let size = 10
 
@@ -273,16 +235,13 @@
         if (!target || target.tagName!= 'A'){
             return;
         }
-        // a태그이고 작업 계속 진행함
         const pageNum = target.getAttribute("data-page")
         page = pageNum
         printReplies(page,size)
     }, false)
 
-    // 댓글 등록 버튼 이벤트 처리 작업, 모달창 띄우기
 
     const registermodal = new bootstrap.Modal(document.querySelector(".registerModal"))
-    // 나머지 화면 요소를 미리 재사용하기 위해, 변수에 재할당 하기
     const registerBtn = document.querySelector(".registerBtn")
     const registerCloseBtn = document.querySelector(".registerCloseBtn")
     const replyText = document.querySelector(".replyText")
@@ -290,8 +249,8 @@
 
     // 모달 초기화 함수
     function resetModal() {
-        replyText.value = ""; // 댓글 내용 초기화
-        replyer.value = "";   // 댓글 작성자 초기화
+        replyText.value = "";
+        replyer.value = "";
     }
 
     // addReplyBtn 클릭시 모달창 띄우기
@@ -299,7 +258,6 @@
     function (e) {
         registermodal.show()
     })
-
 
     // 취소할 경우 숨기기
     registerCloseBtn.addEventListener("click",
@@ -329,9 +287,8 @@
                 })
     },false)
 
-    // 댓글 수정 모달창 띄우기, 이벤트 처리, 댓글 내용을 클릭시 띄우기.
+
     const updateModal = new bootstrap.Modal(document.querySelector(".updateModal"))
-    // 나머지 , 화면 요소를 미리 , 재사용하기 위해서, 변수에 할당 해놓기.
     const updateBtn = document.querySelector(".updateBtn")
     const replyHeader = document.querySelector(".replyHeader")
     const updateReplyText = document.querySelector(".updateReplyText")
@@ -345,24 +302,19 @@
 
         const target = e.target
 
-        // span 태그가 아니면, 이벤트 처리를 안합니다.
         if (!target || target.tagName != 'SPAN') {
             return
         }
-
-        // span 태그이고, 작업 계속 진행함.
         const rno = target.getAttribute("data-rno")
         console.log("rno 확인 :"+ rno)
 
-        // rno 가 없다면, 이벤트 처리 안합니다.
         if(!rno){
             return;
         }
-        // rno 있으니, 추가 작업 계속함.
+
         getReply(rno)
             .then(reply =>{
             console.log("하나 조회 : replyDTO : " + reply)
-            // 모달 창 화면에 , 조회한 댓글 내용과, 작성자 표기 , 주입.
             replyHeader.innerHTML = reply.rno
             updateReplyText.value = reply.replyText
             updateReplyer.value = reply.replyer
@@ -373,7 +325,6 @@
 
     // 댓글 수정 로직 처리
     updateBtn.addEventListener("click",function (e){
-        // 변경된 댓글 내용, 작성자 가져오기
         const replyObj = {
             blogno: blogno,
             rno: replyHeader.innerHTML,
@@ -382,7 +333,6 @@
         }
         console.log("replyHeader.innerHTML" + replyHeader.innerHTML)
 
-        // 비동기 통신 이용, 성공, 실패 작성
         updateReply(replyObj)
             .then(result => {
                 alert(result.rno +" 번 댓글 수정 완료")
@@ -403,7 +353,6 @@
         console.log("replyHeader.innerHTML : " + replyHeader.innerHTML)
         console.log("rno 확인 : " + rno)
 
-        // 비동기 통신 이용해서, 성공시, 실패시 나눠서 작업.
         deleteReply(rno)
             .then(result => {
             alert(result.rno + "번 댓글 삭제 완료 ")
@@ -414,9 +363,6 @@
                 alert("댓글 삭제 실패")
             })
     }, false)
-
-
 </script>
-
 </body>
 </html>

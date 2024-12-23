@@ -9,6 +9,5 @@ public interface ReplyService {
     ReplyBlogDTO readOne(Long rno);
     void update(ReplyBlogDTO replyBlogDTO);
     void delete(Long rno);
-    // 부모 게시글에 대한 댓글 목록 조회
     PageResponseDTO<ReplyBlogDTO> listWithReplyBlog(Long blogno, PageRequestDTO pageRequestDTO);
 }

@@ -49,9 +49,6 @@
 
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
-
-    // 유효성 체크 오류 발생시, alert 경고창 알려주기.
-    // 서버에서 오류가 발생시, 전달한 키 : errors , 받아서, 처리하기.
     const errors = [[${errors}]]
     console.log(errors)
 

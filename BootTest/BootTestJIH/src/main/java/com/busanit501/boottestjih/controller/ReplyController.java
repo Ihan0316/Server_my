@@ -25,16 +25,14 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @Tag(name = "댓글 등록 post 방식",
-            description = "댓글 등록을 진행함, post 형식으로")
+    // 댓글 등록
+    @Tag(name = "댓글 등록 post 방식", description = "댓글 등록을 진행함, post 형식으로")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-
     public ResponseEntity<Map<String,Long>> register(
             @Valid @RequestBody ReplyBlogDTO replyBlogDTO,
             BindingResult bindingResult
     ) throws BindException {
         log.info(" ReplyController replyBlogDTO: ", replyBlogDTO);
-        // 확인용, 더미 데이터 ,
 
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
@@ -65,7 +63,7 @@ public class ReplyController {
         return replyBlogDTO;
     }
 
-    // 수정 로직 처리
+    // 댓글 하나수정 로직 처리
     @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful get방식")
     @PutMapping(value ="/{rno}")
     public Map<String, Long> updateOne(@Valid @RequestBody ReplyBlogDTO replyBlogDTO,
@@ -81,7 +79,7 @@ public class ReplyController {
         return map;
     }
 
-    // 삭제 로직 처리
+    // 댓글 삭제 로직 처리
     @Tag(name = "댓글 하나 삭제 로직처리",description = "댓글 하나 삭제 로직처리 RESTful get방식")
     @DeleteMapping(value ="/{rno}")
     public Map<String, Long> deleteOne(

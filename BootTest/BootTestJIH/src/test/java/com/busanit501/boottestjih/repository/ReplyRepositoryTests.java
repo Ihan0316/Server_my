@@ -24,10 +24,9 @@ public class ReplyRepositoryTests {
     @Autowired
     private BlogRepository blogRepository;
 
+    // insert
     @Test
     public void testInsert() {
-        // 댓글을 작성 하려면, 부모 게시글 번호가 필요,
-        // 각자 데이터베이스에 따라서, 다르므로 꼭 확인하고, 작업.
         Long blogno = 99L;
 
         Blog blog = Blog.builder().blogno(blogno).build();
@@ -41,6 +40,7 @@ public class ReplyRepositoryTests {
         replyRepository.save(reply);
     }
 
+    // 반복문을 이용한 insert
     @Test
     public void testInsert2() {
         Long blogno = 100L;
@@ -57,28 +57,12 @@ public class ReplyRepositoryTests {
         });
     }
 
-//    @Transactional
-//    @Test
-//    public void testSelect() {
-//        Long blogno = 121L;
-//        // 페이징 조건, 준비물 준비
-//        Pageable pageable = PageRequest.of(0,10, Sort.by("rno").descending());
-//
-//        //
-//        Page<Reply> result = replyRepository.listOfBlog(blogno, pageable);
-//        // result 안에, 페이징 조건의 준비물이 다 있음.
-//        // 1) 전체 갯수, 2) 페이지 3) 페이지당 크기 4) 페이징 처리된 목록 요소
-//        result.getContent().forEach(reply -> {
-//            log.info(reply);
-//        });
-//    }
-// 게시글 표시에 댓글 갯수 추가해서 조회하기.
+    // 게시글 표시에 댓글 갯수 추가해서 조회하기.
     @Test
     public void testSelectWithReplyCount() {
         Pageable pageable = PageRequest.of(0, 10,
                 Sort.by("blogno").descending());
 
-        // 전달할 준비물
         // 1) 검색어, 2) 검색 유형
         String keyword = "오늘";
         String[] types = {"t","w","c"};
@@ -94,6 +78,7 @@ public class ReplyRepositoryTests {
         log.info("result.hasPrevious() 이전  :" +result.hasPrevious());
     }
 
+    // 댓글 전체 조회
     @Test
     @Transactional
     public void testSelectReply() {
