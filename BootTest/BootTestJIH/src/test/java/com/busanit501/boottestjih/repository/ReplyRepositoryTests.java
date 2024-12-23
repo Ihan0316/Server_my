@@ -100,7 +100,7 @@ public class ReplyRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10,
                 Sort.by("rno").descending());
 
-        Page<Reply> result = replyRepository.listOfBlog(106L, pageable);
+        Page<Reply> result = replyRepository.listOfBlog(100L, pageable);
         log.info("result.getTotalElements()전체 갯수 :" +result.getTotalElements());
         log.info("result.getTotalPages()총페이지등 :" +result.getTotalPages());
         log.info("result.getContent() 페이징된 결과물 10개 :" +result.getContent());
@@ -115,7 +115,7 @@ public class ReplyRepositoryTests {
     @Transactional
     public void testSelectOneReply() {
         // rno 번호 찾기
-        Optional<Reply> result = replyRepository.findById(105L);
+        Optional<Reply> result = replyRepository.findById(100L);
         Reply reply = result.orElseThrow();
         log.info("댓글 하나 조회 결과" + reply);
     }

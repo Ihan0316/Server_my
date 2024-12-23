@@ -71,7 +71,7 @@ public class BlogReopositoryTests {
 
     @Test
     public void testUpdate() {
-        Long bno = 98L;
+        Long bno = 96L;
         // 수정 할 데이터가 해당 테이블에 있는지 조회 부터 하기.
         Optional<Blog> result = blogRepository.findById(bno);
         // result 있으면, Blog 타입으로 받고, 없으면, 예외 발생시킴.
