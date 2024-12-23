@@ -46,7 +46,7 @@
                     </div>
                     <div class="mb-3" th:with="link = ${pageRequestDTO.link}">
                         <!--                            수정폼 가기 방법2-->
-                        <!--                            <a th:href="|@{/blog/update}?bno=${dto.bno}&${link}|">-->
+                        <!--                            <a th:href="|@{/blog/update}?blogno=${dto.blogno}&${link}|">-->
                         <button type="button" class="btn btn-primary submitBtn">수정하기</button>
                         <!--                            </a>-->
                         <a th:href="|@{/blog/list}?${link}|">
@@ -159,16 +159,16 @@
     document.querySelector(".submitBtn").addEventListener("click",
         function (e) {
             // 수정폼으로 가야함. 그러면, 필요한 준비물 tno 번호가 필요함
-            self.location = "/blog/update?bno="+[[${dto.bno}]]+"&"+[[${pageRequestDTO.link}]]
+            self.location = "/blog/update?blogno="+[[${dto.blogno}]]+"&"+[[${pageRequestDTO.link}]]
                 ,false})
 
     // 비동기 함수, 테스트 작업.
-    // 순서2, 현재 게시글의  bno 번호를 알아야 함
-    const bno = [[${dto.bno}]]
+    // 순서2, 현재 게시글의  blogno 번호를 알아야 함
+    const blogno = [[${dto.blogno}]]
     // 함수 실행 해보기.
     //
     console.log("get 함수 실행1: ")
-    get(bno)
+    get(blogno)
 
     // 함수 정의,
     // 주의사항, reply.js , 통신 이용해서, 데이터를 전달하는 업무, 백
@@ -180,7 +180,7 @@
         // 성공시, then  절 받아서 처리,
         // 실패시, catch 절 받아서 처리.
         // 순서4, 서버로 부터 넘어온 데이터를, 댓글 목록 출력하는 함수에 전달하는 역할
-        getList({bno,page,size,goLast})
+        getList({blogno,page,size,goLast})
             .then(
                 // 연습용 콘솔 출력,
                 // data => console.log(data)
@@ -312,7 +312,7 @@
     registerBtn.addEventListener("click",
         function (e) {
             const replyObj = {
-                bno: bno,
+                blogno: blogno,
                 replyText: replyText.value,
                 replyer: replyer.value,
             }
@@ -375,7 +375,7 @@
     updateBtn.addEventListener("click",function (e){
         // 변경된 댓글 내용, 작성자 가져오기
         const replyObj = {
-            bno: bno,
+            blogno: blogno,
             rno: replyHeader.innerHTML,
             replyText: updateReplyText.value,
             replyer: updateReplyer.value
