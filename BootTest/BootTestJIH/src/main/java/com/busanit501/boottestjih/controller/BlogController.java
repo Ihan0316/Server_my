@@ -28,7 +28,7 @@ public class BlogController {
     private final BlogService blogService;
     // http://localhost:8080/blog/list
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model ) {
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
 
         PageResponseDTO<BlogListReplyCountDTO> responseDTO = blogService.listWithReplyCount(pageRequestDTO);
         log.info("pageRequestDTO 의 getLink 조사 : " + pageRequestDTO.getLink());
@@ -78,19 +78,19 @@ public class BlogController {
     public String updatePost(@Valid BlogDTO blogDTO,
                                BindingResult bindingResult,
                                PageRequestDTO pageRequestDTO,
-                               String keyword2,String page2, String type2,
+                               String keyword,String page, String type,
                                RedirectAttributes redirectAttributes) {
         log.info("BlogController updatePost post 로직처리: ");
         log.info("BlogController updatePost post  blogDTO : " + blogDTO);
 
         log.info("BlogController updatePost post  pageRequestDTO : " + pageRequestDTO);
 
-        String encodedKeyword = URLEncoder.encode(keyword2, StandardCharsets.UTF_8);
+        String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
         if (bindingResult.hasErrors()) {
             log.info("has errors : 유효성 에러가 발생함.");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/blog/update?blogno="+blogDTO.getBlogno()+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
+            return "redirect:/blog/update?blogno="+blogDTO.getBlogno()+"&keyword="+encodedKeyword+"&page="+page+"&type="+type;
         }
 
         blogService.update(blogDTO);
@@ -98,21 +98,21 @@ public class BlogController {
         redirectAttributes.addFlashAttribute("result", blogDTO.getBlogno());
         redirectAttributes.addFlashAttribute("resultType", "update");
 
-        return "redirect:/blog/read?blogno="+blogDTO.getBlogno()+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
+        return "redirect:/blog/read?blogno="+blogDTO.getBlogno()+"&keyword="+encodedKeyword+"&page="+page+"&type="+type;
 
     }
 
     @PostMapping("/delete")
     public String delete(Long blogno,
-                         String keyword2,String page2, String type2,
+                         String keyword,String page, String type,
                          RedirectAttributes redirectAttributes) {
         blogService.delete(blogno);
 
-        String encodedKeyword = URLEncoder.encode(keyword2, StandardCharsets.UTF_8);
+        String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
         redirectAttributes.addFlashAttribute("result", blogno);
         redirectAttributes.addFlashAttribute("resultType", "delete");
-        return "redirect:/blog/list?"+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
+        return "redirect:/blog/list?"+"&keyword="+encodedKeyword+"&page="+page+"&type="+type;
     }
 
 }

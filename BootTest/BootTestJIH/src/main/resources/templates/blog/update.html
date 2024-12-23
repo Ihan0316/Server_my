@@ -15,9 +15,9 @@
                 </div>
                 <div class="card-body">
                     <form id="f1" method="post" th:action="@{/blog/update}">
-                        <input type="hidden" name="keyword2" th:value="${pageRequestDTO.keyword}">
-                        <input type="hidden" name="page2" th:value="${pageRequestDTO.page}">
-                        <input type="hidden" name="type2" th:value="${pageRequestDTO.type}">
+                        <input type="hidden" name="keyword" th:value="${pageRequestDTO.keyword}">
+                        <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+                        <input type="hidden" name="type" th:value="${pageRequestDTO.type}">
                         <div class="mb-3">
                             <label for="blogno" class="form-control">blogno</label>
                             <input type="text" class="form-control" id="blogno" name="blogno"

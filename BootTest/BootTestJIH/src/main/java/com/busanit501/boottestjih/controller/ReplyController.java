@@ -64,7 +64,7 @@ public class ReplyController {
     }
 
     // 댓글 하나수정 로직 처리
-    @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful get방식")
+    @Tag(name = "댓글 하나 수정 로직처리",description = "댓글 하나 수정 로직처리 RESTful put방식")
     @PutMapping(value ="/{rno}")
     public Map<String, Long> updateOne(@Valid @RequestBody ReplyBlogDTO replyBlogDTO,
                                        BindingResult bindingResult,
@@ -80,7 +80,7 @@ public class ReplyController {
     }
 
     // 댓글 삭제 로직 처리
-    @Tag(name = "댓글 하나 삭제 로직처리",description = "댓글 하나 삭제 로직처리 RESTful get방식")
+    @Tag(name = "댓글 하나 삭제 로직처리",description = "댓글 하나 삭제 로직처리 RESTful delete방식")
     @DeleteMapping(value ="/{rno}")
     public Map<String, Long> deleteOne(
                                        @PathVariable("rno") Long rno) {
