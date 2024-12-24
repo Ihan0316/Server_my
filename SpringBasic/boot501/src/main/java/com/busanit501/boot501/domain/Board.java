@@ -12,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString (exclude = "imageSet") //로그를 해당 인스턴스 찍을 때, 해당 멤버를 쉽게 확인 가능.
+//@ToString
 public class Board extends BaseEntity { // 전역으로 만든, 베이스 엔티티 클래스  적용.
 
     //2 번째 작업, 제약조건 넣기, 각 멤버는 각 디비의 컬럼과 동일함,
@@ -34,8 +35,13 @@ public class Board extends BaseEntity { // 전역으로 만든, 베이스 엔티
     // 모든 테이블에 공통으로 들어갈수 있는, 등록시간, 수정시간, 등,
     // 베이스 엔티티에서 작업 할 예정.
 
-    // 연관관계 설정
-    @OneToMany(mappedBy = "board")
+    // 연관관계 설정,
+    @OneToMany(mappedBy = "board",
+            cascade = CascadeType.ALL, // 부모 테이블의 변경을 자식 테이블에도 적용
+            fetch = FetchType.LAZY, // 필요한 시점에 조회를 함.
+            orphanRemoval = true) // 고아 객체 자동 삭제 설정
+    // 자식테이블 : BoardImage 의 board
+    // 중간 테이블을 생성하지 않고, 데이터베이스 관점 처럼, 자식 테이블 입장에서 작업이 가능함.
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 
@@ -45,5 +51,23 @@ public class Board extends BaseEntity { // 전역으로 만든, 베이스 엔티
     public void changeTitleContent(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    // 불변성 유지 위해서,
+    // imageSet 관련해서, 추가및 삭제
+    public void addImages(String uuid, String fileName) {
+        BoardImage boardImage = BoardImage.builder()
+                .uuid(uuid)
+                .fileName(fileName)
+                .board(this)
+                .ord(imageSet.size())
+                .build();
+        // imageSet, 추가하기.
+        imageSet.add(boardImage);
+    }
+
+    public void clearImages() {
+        imageSet.forEach(boardImage -> boardImage.chageBoard(null));
+        this.imageSet.clear();
     }
 }

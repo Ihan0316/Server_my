@@ -1,6 +1,8 @@
 package com.busanit501.boot501.repository;
 
 import com.busanit501.boot501.domain.Board;
+import com.busanit501.boot501.domain.BoardImage;
+import jakarta.persistence.Column;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -22,6 +27,9 @@ public class BoardReopositoryTests {
     @Autowired
     // 아무 메소드가 없지만, 기본 탑재된 쿼리 메소드 이용해서, crud  해보기.
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Test
     public void testInsert() {
@@ -173,6 +181,90 @@ public class BoardReopositoryTests {
         log.info("result.getSize() 크기  :" +result.getSize());
         log.info("result.hasNext() 다음  :" +result.hasNext());
         log.info("result.hasPrevious() 이전  :" +result.hasPrevious());
+    }
+
+    // 순서1
+    // 부모 게시글 삭제시 자식 테이블 삭제 확인,
+    // 고아 객체 제거 옵션 설정 하지 않고 테스트 -> 오류
+    // 설정 후 테스트 -> 삭제 확인
+    @Test
+    public void testInsertWithImages() {
+        // 더미 데이터 만들기.
+        // 부모 더미 데이터 board , 0x100
+        Board board = Board.builder()
+                .title("오늘 점심 뭐 먹죠? 생각중. 한식쟁이 밥이 생각남")
+                .content("국밥, 된장찌개, 비빔밥")
+                .writer("이상용")
+                .build();
+
+        // 더미 데이터, 임의 사진을 추가 해보기.
+        for (int i = 0; i < 3; i++) {
+            String uuid = UUID.randomUUID().toString();
+            String fileName = "SampleImageFileName";
+            board.addImages(uuid, fileName + i + ".png");
+        }
+        boardRepository.save(board);
+    }
+
+    // 순서2
+    // 조회 -> 지연 로딩, 한번에 다 같이 조인해서 조회하기
+    @Test
+    @Transactional // 단위 테스트에서, 2개의 테이블에 같이 접근하는 간단한 해결책
+    public void testReadWithImages() {
+        //더미 데이터 2개, 게시글 1, 2번
+//        Optional<Board> result = boardRepository.findById(1L);
+        Optional<Board> result = boardRepository.findByIdWithImages(1L);
+        Board board = result.orElseThrow();
+
+        // 보드 출력해보기. 1차 캐시 테이블에서, 더티 체킹, select
+        // 단위 테스트 할 때, board 조회 할 때 세션이 하나 필요하고
+        // 단위 테스트 할 때, boardImage 이미지 조회 할 때 세션이 하나 더 필요하고
+        // 단위 테스트 이용시에는 디비 접근 세션을 하나만 이용해서, 오류가 발생함.
+
+        log.info("BoardRepositoryTests board 확인  : " + board);
+        log.info("========================================== ");
+        log.info("BoardRepositoryTests board.getImageSet() 확인2  : " + board.getImageSet());
+        // 1차 오류 발생함.
+        for (BoardImage boardImage : board.getImageSet()) {
+            log.info("BoardRepositoryTests board.getImageSet() 확인3  : " + boardImage);
+        }
+
+    }
+
+    // 순서3, 수정, -> 고아객체 만들기.
+    @Transactional
+    //단위 테스트에서, 수정을 반영하기.
+    @Commit
+    @Test
+    public void testUpdateImages() {
+        Optional<Board> result = boardRepository.findByIdWithImages(1L);
+        Board board = result.orElseThrow();
+
+        // 이미지 수정시, 기존 이미지를 전부 다 삭제 후 새로 추가하기.
+        board.clearImages();
+
+        // 새 첨부 이미지 추가하기.
+        for (int i = 0; i < 2; i++) {
+            String uuid = UUID.randomUUID().toString();
+            String fileName = "SampleImageFileName_수정2";
+            board.addImages(uuid, fileName + i + ".png");
+        }
+        boardRepository.save(board);
+    }
+
+
+    // 순서4
+    // 부모 게시글 삭제시 자식 테이블 삭제 확인.
+    @Test
+    @Transactional
+    @Commit
+    public void removeAll() {
+        Long bno = 2L;
+
+        // 댓글 삭제 후,
+        // replyRepository.deleteByBoard_Bno(bno);
+        // 게시글 삭제,
+        boardRepository.deleteById(bno);
     }
 
 
