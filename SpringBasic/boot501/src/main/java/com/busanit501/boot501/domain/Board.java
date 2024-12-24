@@ -2,6 +2,7 @@ package com.busanit501.boot501.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,9 +40,11 @@ public class Board extends BaseEntity { // 전역으로 만든, 베이스 엔티
     @OneToMany(mappedBy = "board",
             cascade = CascadeType.ALL, // 부모 테이블의 변경을 자식 테이블에도 적용
             fetch = FetchType.LAZY, // 필요한 시점에 조회를 함.
-            orphanRemoval = true) // 고아 객체 자동 삭제 설정
+            orphanRemoval = true)// 고아 객체 자동 삭제 설정
     // 자식테이블 : BoardImage 의 board
     // 중간 테이블을 생성하지 않고, 데이터베이스 관점 처럼, 자식 테이블 입장에서 작업이 가능함.
+    // N+1 문제 해결, 나눠서 조회
+    @BatchSize(size = 20)
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 
