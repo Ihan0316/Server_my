@@ -306,7 +306,30 @@ public class BoardReopositoryTests {
         }
     }
 
-    // N + 1 문제 테스트
+    // N+1 , 조회 확인.
+    @Transactional
+    @Test
+    public void testSearchWithAll() {
+        Pageable pageable = PageRequest.of(0,10,
+                Sort.by("bno").descending());
+        boardRepository.searchWithAll(null,null,pageable);
+    }
 
-
+//    @Transactional
+//    @Test
+//    public void testSearchWithAll2() {
+//        Pageable pageable = PageRequest.of(0,10,
+//                Sort.by("bno").descending());
+//
+//        //
+//        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null,null,pageable);
+//        // 전체 갯수
+//        log.info("test, result.getTotalElements() 확인1 : " + result.getTotalElements());
+//        // 각 목록의 요소 확인.
+//        result.getContent().forEach(boardListAllDTO -> {
+//            log.info("boardListAllDTO, 각 요소 확인2 : " + boardListAllDTO);
+//        });
+//
+//
+//    }
 }
