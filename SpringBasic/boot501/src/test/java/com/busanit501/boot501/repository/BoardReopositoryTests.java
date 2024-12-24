@@ -262,7 +262,7 @@ public class BoardReopositoryTests {
         Long bno = 1L;
 
         // 댓글 삭제 후,
-        // replyRepository.deleteByBoard_Bno(bno);
+        replyRepository.deleteByBoard_Bno(bno);
         // 게시글 삭제,
         boardRepository.deleteById(bno);
     }
