@@ -259,7 +259,7 @@ public class BoardReopositoryTests {
     @Transactional
     @Commit
     public void removeAll() {
-        Long bno = 2L;
+        Long bno = 1L;
 
         // 댓글 삭제 후,
         // replyRepository.deleteByBoard_Bno(bno);
