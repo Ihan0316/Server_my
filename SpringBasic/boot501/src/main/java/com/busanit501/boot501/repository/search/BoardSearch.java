@@ -22,4 +22,6 @@ public interface BoardSearch {
     // 그래서, 2개의 테이블을 연결 조인(외부조인? 댓글 null 일수도 있기때문에)
     Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
 
+    // 게시글 + 댓글 겟수 + 첨부 이미지
+    Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable);
 }

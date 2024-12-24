@@ -7,6 +7,7 @@ import com.busanit501.boot501.dto.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.List;
 // 반드시 이름 작성시: 인터페이스이름 + Impl
 // QuerydslRepositorySupport 의무 상속,
 // 만든 인터페이스 구현하기.
+@Log4j2
 public class BoardSearchImpl extends QuerydslRepositorySupport
         implements BoardSearch {
 
@@ -197,5 +199,25 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
 
         return result;
         // 페이징 조건, 재사용
+    }
+
+    @Override
+    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+        QBoard board = QBoard.board;
+        QReply reply = QReply.reply;
+        JPQLQuery<Board> boardJPQLQuery = from(board);
+
+        boardJPQLQuery.leftJoin(reply).on(reply.board.bno.eq(board.bno));
+
+        this.getQuerydsl().applyPagination(pageable, boardJPQLQuery);
+
+        // 페이징 데이터 가져오기
+        List<Board> boardList = boardJPQLQuery.fetch();
+
+        boardList.forEach(board1 -> {
+            log.info("board1 : " + board1.getBno());
+            log.info("board1 : " + board1.getImageSet());
+        });
+        return null;
     }
 }
