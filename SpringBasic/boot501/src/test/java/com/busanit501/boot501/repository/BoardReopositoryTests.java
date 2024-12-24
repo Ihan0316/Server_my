@@ -3,6 +3,7 @@ package com.busanit501.boot501.repository;
 import com.busanit501.boot501.domain.Board;
 import com.busanit501.boot501.domain.BoardImage;
 import com.busanit501.boot501.domain.Reply;
+import com.busanit501.boot501.dto.BoardListAllDTO;
 import jakarta.persistence.Column;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -315,21 +316,19 @@ public class BoardReopositoryTests {
         boardRepository.searchWithAll(null,null,pageable);
     }
 
-//    @Transactional
-//    @Test
-//    public void testSearchWithAll2() {
-//        Pageable pageable = PageRequest.of(0,10,
-//                Sort.by("bno").descending());
-//
-//        //
-//        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null,null,pageable);
-//        // 전체 갯수
-//        log.info("test, result.getTotalElements() 확인1 : " + result.getTotalElements());
-//        // 각 목록의 요소 확인.
-//        result.getContent().forEach(boardListAllDTO -> {
-//            log.info("boardListAllDTO, 각 요소 확인2 : " + boardListAllDTO);
-//        });
-//
-//
-//    }
+    @Transactional
+    @Test
+    public void testSearchWithAll2() {
+        Pageable pageable = PageRequest.of(0,10,
+                Sort.by("bno").descending());
+        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null,null,pageable);
+        // 전체 갯수
+        log.info("test, result.getTotalElements() 확인1 : " + result.getTotalElements());
+        // 각 목록의 요소 확인.
+        result.getContent().forEach(boardListAllDTO -> {
+            log.info("boardListAllDTO, 각 요소 확인2 : " + boardListAllDTO);
+        });
+
+
+    }
 }

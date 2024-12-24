@@ -3,8 +3,10 @@ package com.busanit501.boot501.repository.search;
 import com.busanit501.boot501.domain.Board;
 import com.busanit501.boot501.domain.QBoard;
 import com.busanit501.boot501.domain.QReply;
+import com.busanit501.boot501.dto.BoardListAllDTO;
 import com.busanit501.boot501.dto.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 // 반드시 이름 작성시: 인터페이스이름 + Impl
 // QuerydslRepositorySupport 의무 상속,
@@ -201,23 +204,71 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
         // 페이징 조건, 재사용
     }
 
+    // 1단계 -> 서비스, 모델 맵퍼 이용, 형변환
+    // 2단계 -> DTO 바로 변환, Projections.bean 이용
+    // 3단계 -> Tuple 타입을 이용해서 변환, 복잡도 증가, 조건 설정 변경 쉬워짐
     @Override
-    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+    public Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+        // 기본 세팅
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
         JPQLQuery<Board> boardJPQLQuery = from(board);
 
         boardJPQLQuery.leftJoin(reply).on(reply.board.bno.eq(board.bno));
+        boardJPQLQuery.groupBy(board);// 그룹 묶기
 
         this.getQuerydsl().applyPagination(pageable, boardJPQLQuery);
+        // 기본 세팅
+
+        // 3단계, 튜플 이용해서, 데이터 형변환
+        JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(
+                // 게시글과 댓글의 갯수를 조회한 결과
+                board,reply.countDistinct()
+        );
+        // 튜플에서 각 데이터를 꺼내서 형변환
+        // 꺼내는 형식이 조금 다름, 맵과 비슷
+
+        // tupleList, 튜플의 타입으로 조인된 테이블의 내용이 담겨 있음
+        List<Tuple> tupleList = tupleJPQLQuery.fetch();
+        // 형변환 작업, 디비에서 조회 후 바로 DTO로 변환
+        List<BoardListAllDTO> dtoList = tupleList.stream()
+                .map(tuple -> {
+                            Board board1 = (Board) tuple.get(board);
+                            long replyCount = tuple.get(1, Long.class);
+
+                            BoardListAllDTO dto = BoardListAllDTO.builder()
+                                    .bno(board1.getBno())
+                                    .title(board1.getTitle())
+                                    .writer(board1.getWriter())
+                                    .regDate(board1.getRegDate())
+                                    .replyCount(replyCount)
+                                    .build();
+                            return dto;
+                        }).collect(Collectors.toList());
 
         // 페이징 데이터 가져오기
-        List<Board> boardList = boardJPQLQuery.fetch();
-
-        boardList.forEach(board1 -> {
-            log.info("board1 : " + board1.getBno());
-            log.info("board1 : " + board1.getImageSet());
-        });
-        return null;
+        long totalCount = tupleJPQLQuery.fetchCount();
+        Page<BoardListAllDTO> page = new PageImpl<>(dtoList, pageable, totalCount);
+        return page;
     }
+
+//    @Override
+//    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+//        QBoard board = QBoard.board;
+//        QReply reply = QReply.reply;
+//        JPQLQuery<Board> boardJPQLQuery = from(board);
+//
+//        boardJPQLQuery.leftJoin(reply).on(reply.board.bno.eq(board.bno));
+//
+//        this.getQuerydsl().applyPagination(pageable, boardJPQLQuery);
+//
+//        // 페이징 데이터 가져오기
+//        List<Board> boardList = boardJPQLQuery.fetch();
+//
+//        boardList.forEach(board1 -> {
+//            log.info("board1 : " + board1.getBno());
+//            log.info("board1 : " + board1.getImageSet());
+//        });
+//        return null;
+//    }
 }
