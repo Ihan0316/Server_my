@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.UUID;
 
 @Log4j2
 @SpringBootTest
@@ -88,5 +90,26 @@ public class ServiceTests {
 
         PageResponseDTO<BoardListReplyCountDTO> list = boardService.listWithReplyCount(pageRequestDTO);
         log.info("list: " + list.toString());
+    }
+
+    @Test
+    public void testRegisterBoardWithImage() {
+        // 더미 게시글
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("첨부 이미지 추가 더미 게시글")
+                .content("첨부 이미지 추가 더미 게시글")
+                .writer("조이한 첨부 이미지 작업")
+                .build();
+
+        // 더미 파일 이름들
+        boardDTO.setFileNames(
+                Arrays.asList(
+                        UUID.randomUUID()+"_aa.png",
+                        UUID.randomUUID()+"_bb.png",
+                        UUID.randomUUID()+"_cc.png"
+                )
+        );
+        Long bno = boardService.register(boardDTO);
+        log.info("입력한 게시글 번호: " + bno.toString());
     }
 }
