@@ -112,4 +112,15 @@ public class ServiceTests {
         Long bno = boardService.register(boardDTO);
         log.info("입력한 게시글 번호: " + bno.toString());
     }
+
+    // 상세보기, 조회 기능 단위 테스트
+    @Test
+    public void testReadWithImage() {
+
+        BoardDTO boardDTO = boardService.readOne(102L);
+        log.info("testReadWithImage, 하나 조회 boardDTO : " + boardDTO);
+        for(String fileImage : boardDTO.getFileNames()){
+            log.info("각 이미지 파일명만 조회 : " + fileImage);
+        }
+    }
 }

@@ -49,15 +49,23 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO readOne(Long bno) {
         Optional<Board> result = boardRepository.findById(bno);
         Board board= result.orElseThrow();
-        BoardDTO dto = modelMapper.map(board, BoardDTO.class);
+        // 첨부 이미지 추가 버전
+//        BoardDTO dto = modelMapper.map(board, BoardDTO.class);
+        BoardDTO dto = entityToDto(board);
         return dto;
     }
 
     @Override
+    // 첨부 이미지 추가 버전으로 수정
     public void update(BoardDTO boardDTO) {
         Optional<Board> result = boardRepository.findById(boardDTO.getBno());
         Board board = result.orElseThrow();
         board.changeTitleContent(boardDTO.getTitle(),boardDTO.getContent());
+
+        // 첨부 이미지 처리 로직
+        // 기존 내용 다 삭제 후 첨부 내용 새로 업데이트하는 방식
+        board.clearImages();
+
         boardRepository.save(board);
     }
 
