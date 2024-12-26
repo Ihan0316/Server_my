@@ -1,8 +1,10 @@
 package com.busanit501.boot501.service;
 
 import com.busanit501.boot501.domain.Board;
+import com.busanit501.boot501.domain.Reply;
 import com.busanit501.boot501.dto.*;
 import com.busanit501.boot501.repository.BoardRepository;
+import com.busanit501.boot501.repository.ReplyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +26,9 @@ public class BoardServiceImpl implements BoardService {
     //맵퍼에게 의존 해야함.
     // 디비 작업 도구,
     private final BoardRepository boardRepository;
+
+    // 지원 받기, 댓글의 디비 작업이 가능한,
+    private final ReplyRepository replyRepository;
     // DTO <-> Entity class
     private final ModelMapper modelMapper;
 
@@ -66,13 +71,34 @@ public class BoardServiceImpl implements BoardService {
         // 기존 내용 다 삭제 후 첨부 내용 새로 업데이트하는 방식
         board.clearImages();
 
+        // 게시글 수정시, 첨부된 이미지 존재 -> 교체
+        if (boardDTO.getFileNames() != null) {
+            for (String fileName : boardDTO.getFileNames()) {
+                String[] arr = fileName.split("_");
+                board.addImages(arr[0], arr[1]);
+            }
+        }
+
         boardRepository.save(board);
     }
 
     @Override
     public void delete(Long bno) {
+        // 첨부 이미지 추가된 삭제 버전
+        // 댓글 존재 여부 확인 후, 있다면, 삭제
+        // 없다면, 기존 게시글 삭제 -> 자동 이미지 삭제
+        // replyRepository의 지원을 받아야 한다
+        List<Reply> result = replyRepository.findByBoardBno(bno);
+        boolean checkReply = result.isEmpty() ? false : true;
+        if(checkReply) {
+            replyRepository.deleteByBoard_Bno(bno);
+        }
+
+        // 게시글만 삭제
         boardRepository.deleteById(bno);
     }
+
+
 
     @Override
     public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {

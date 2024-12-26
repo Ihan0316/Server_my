@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -118,6 +119,15 @@ public class ReplyRepositoryTests {
         Optional<Reply> result = replyRepository.findById(105L);
         Reply reply = result.orElseThrow();
         log.info("댓글 하나 조회 결과" + reply);
+    }
+
+    // 게시글에서 삭제시, 게시글에 대한 댓글 존재 여부 확인
+    @Test
+    @Transactional
+    public void testSelectReplyWithBoardBno() {
+        Long bno = 102L;
+        List<Reply> replyList = replyRepository.findByBoardBno(bno);
+        replyList.forEach(reply -> log.info("게시글에 대한 댓글 조회 : "+reply));
     }
 
 }

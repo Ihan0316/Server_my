@@ -123,4 +123,35 @@ public class ServiceTests {
             log.info("각 이미지 파일명만 조회 : " + fileImage);
         }
     }
+
+    // 첨부 이미지 수정하기
+    @Test
+    public void testUpdateWithImages() {
+        // 변경시, 변경할 더미 데이터, 임시, 102L
+        // 화면에서 넘어온 더미 데이터 만들기. DTO 타입.
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(102L)
+                .title("제목 : 수정버전")
+                .content("내용 : 수정버전")
+                .build();
+
+        // 더미 데이터에 첨부 이미지 파일 추가.
+        boardDTO.setFileNames(
+                Arrays.asList(
+                        UUID.randomUUID()+"_sampleImage.png",
+                        UUID.randomUUID()+"_sampleImage2.png"
+                )
+        );
+
+        //디비에서 조회하기.
+        boardService.update(boardDTO);
+    }
+
+    // 삭제 테스트 - 댓글 있는경우, 없는 경우
+    @Test
+    public void testDeleteBoardReplyWithImage() {
+        Long bno = 102L;
+        boardService.delete(bno);
+    }
+
 }

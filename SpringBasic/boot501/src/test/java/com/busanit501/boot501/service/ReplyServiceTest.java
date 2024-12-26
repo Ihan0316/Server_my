@@ -26,9 +26,9 @@ public class ReplyServiceTest {
     public void testRegisterReply() {
         // 더미 데이터 필요, 임시 DTO 생성.
         ReplyDTO replyDTO = ReplyDTO.builder()
-                .replyText("오늘 점심 뭐 먹지?")
+                .replyText("댓글 삽입 테스트")
                 .replyer("조이한")
-                .bno(106L)
+                .bno(102L)
                 .regDate(LocalDateTime.now())
                 .build();
 
