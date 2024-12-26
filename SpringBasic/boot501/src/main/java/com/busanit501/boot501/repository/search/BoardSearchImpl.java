@@ -3,6 +3,7 @@ package com.busanit501.boot501.repository.search;
 import com.busanit501.boot501.domain.Board;
 import com.busanit501.boot501.domain.QBoard;
 import com.busanit501.boot501.domain.QReply;
+import com.busanit501.boot501.dto.BoardImageDTO;
 import com.busanit501.boot501.dto.BoardListAllDTO;
 import com.busanit501.boot501.dto.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -243,10 +244,30 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
                                     .regDate(board1.getRegDate())
                                     .replyCount(replyCount)
                                     .build();
-                            return dto;
+
+                    // board1에 있는 첨부 이미지를 꺼내서, DTO 담기.
+                    // 같이 형변환하기
+                    // 첨부 이미지를 추가하는 부분, 첨부이미지_추가1,
+                    // 게시글 1번에, 첨부 이미지가 3장있으면,
+                    // 3장을 각각 BoardImageDTO -> 형변환.
+                    List<BoardImageDTO> imageDTOS = board1.getImageSet().stream().sorted()
+                            .map(boardImage ->
+                                    BoardImageDTO.builder()
+                                            .uuid(boardImage.getUuid())
+                                            .fileName(boardImage.getFileName())
+                                            .ord(boardImage.getOrd())
+                                            .build()
+                            ).collect(Collectors.toList());
+
+                    // 최종 dto, 마지막, 첨부이미지 목록들도 추가.
+                    dto.setBoardImages(imageDTOS);
+
+                    return dto;
                         }).collect(Collectors.toList());
 
         // 페이징 데이터 가져오기
+
+        // 앞에서 사용했던 검색 조건
         long totalCount = tupleJPQLQuery.fetchCount();
         Page<BoardListAllDTO> page = new PageImpl<>(dtoList, pageable, totalCount);
         return page;
