@@ -318,17 +318,52 @@ public class BoardReopositoryTests {
 
     @Transactional
     @Test
+    // 1)댓글 갯수 와 2)첨부 이미지 목록 존재 여부
     public void testSearchWithAll2() {
         Pageable pageable = PageRequest.of(0,10,
                 Sort.by("bno").descending());
-        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null,null,pageable);
-        // 전체 갯수
-        log.info("test, result.getTotalElements() 확인1 : " + result.getTotalElements());
-        // 각 목록의 요소 확인.
-        result.getContent().forEach(boardListAllDTO -> {
-            log.info("boardListAllDTO, 각 요소 확인2 : " + boardListAllDTO);
-        });
-
-
+        Page< BoardListAllDTO> result =  boardRepository.searchWithAll(null,null,pageable);
+        log.info("result.getTotalElements"+result.getTotalElements());
+        result.getContent().forEach(dto -> log.info("dto :  " + dto));
     }
+
+    @Transactional
+    @Test
+    // 1)댓글 갯수 와 2)첨부 이미지 목록 존재 여부
+    // 3)검색 조건 추가해서, 테스트
+    public void testSearchWithAll3() {
+        Pageable pageable = PageRequest.of(0,10,
+                Sort.by("bno").descending());
+
+        // 전달할 준비물
+        // 1) 검색어, 2) 검색 유형
+        String keyword = "3";
+        String[] types = {"t","w","c"};
+
+        Page< BoardListAllDTO> result =  boardRepository.searchWithAll(types,keyword,pageable);
+        log.info("result.getTotalElements"+result.getTotalElements());
+        result.getContent().forEach(dto -> log.info("dto :  " + dto));
+    }
+
+
+
+//    @Transactional
+//    @Test
+//    public void testSearchWithAll2() {
+//        Pageable pageable = PageRequest.of(0,10,
+//                Sort.by("bno").descending());
+//
+//        //
+//        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null,null,pageable);
+//        // 전체 갯수
+//        log.info("test, result.getTotalElements() 확인1 : " + result.getTotalElements());
+//        // 각 목록의 요소 확인.
+//        result.getContent().forEach(boardListAllDTO -> {
+//            log.info("boardListAllDTO, 각 요소 확인2 : " + boardListAllDTO);
+//        });
+//
+//
+//    }
+
+
 }

@@ -180,7 +180,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
                         board.writer,
                         board.regDate,
                         reply.count().as("replyCount")));
-        
+
         // 페이징 조건, 재사용, dto<-> 엔티티 형변환 할 때 사용했던 쿼리로 변
         // query -> dtoQuery
         // dtoQuery
@@ -205,45 +205,71 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
         // 페이징 조건, 재사용
     }
 
-    // 1단계 -> 서비스, 모델 맵퍼 이용, 형변환
-    // 2단계 -> DTO 바로 변환, Projections.bean 이용
-    // 3단계 -> Tuple 타입을 이용해서 변환, 복잡도 증가, 조건 설정 변경 쉬워짐
+    // DTO <-> Entity 형변환
+    // 1단계 , 서비스, 모델맵퍼 이용해서,
+    // 2단계 , 디비에서 조회 하자마자, 바로 DTO변환,Projections.bean 이용,
+    // 3단계, Tuple 타입을 이용해서, 변환. 복잡도 증가, 조건 설정 변경 쉬워짐.
     @Override
     public Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
-        // 기본 세팅
+        // 기본 세팅.
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
-        JPQLQuery<Board> boardJPQLQuery = from(board);
-
+        JPQLQuery<Board> boardJPQLQuery = from(board);// select * from board
+        // 조인 설정 , 게시글에서 댓글에 포함된 게시글 번호와 , 게시글 번호 일치
         boardJPQLQuery.leftJoin(reply).on(reply.board.bno.eq(board.bno));
-        boardJPQLQuery.groupBy(board);// 그룹 묶기
 
-        this.getQuerydsl().applyPagination(pageable, boardJPQLQuery);
-        // 기본 세팅
+        //기존 , 검색 조건 추가. 위의 내용 재사용.
+        if (types != null && types.length > 0 && keyword != null) {
+            // 여러 조건을 하나의 객체에 담기.
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            for (String type : types) {
+                switch (type) {
+                    case "t":
+                        booleanBuilder.or(board.title.contains(keyword));
+                        break;
+                    case "c":
+                        booleanBuilder.or(board.content.contains(keyword));
+                        break;
+                    case "w":
+                        booleanBuilder.or(board.writer.contains(keyword));
+                        break;
+                } // switch
+            }// end for
+            // where 조건을 적용해보기.
+            boardJPQLQuery.where(booleanBuilder);
+        } //end if
+        // bno >0
+        boardJPQLQuery.where(board.bno.gt(0L));
 
-        // 3단계, 튜플 이용해서, 데이터 형변환
+        boardJPQLQuery.groupBy(board); // 그룹 묶기
+        this.getQuerydsl().applyPagination(pageable, boardJPQLQuery); //페이징
+        // 기본 세팅.
+
+        // 3단계, 튜플 이용해서, 데이터 형변환.
         JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(
-                // 게시글과 댓글의 갯수를 조회한 결과
+                // 게시글, 댓글의 갯수를 조회한 결과,
                 board,reply.countDistinct()
         );
-        // 튜플에서 각 데이터를 꺼내서 형변환
-        // 꺼내는 형식이 조금 다름, 맵과 비슷
+        // 튜플에서, 각 데이터를 꺼내서, 형변환 작업,
+        // 꺼내는 형식이 조금 다름. 맵과 비슷
 
-        // tupleList, 튜플의 타입으로 조인된 테이블의 내용이 담겨 있음
+        // tupleList, 튜플의 타입으로 조인된 테이블의 내용이 담겨 있음.
         List<Tuple> tupleList = tupleJPQLQuery.fetch();
-        // 형변환 작업, 디비에서 조회 후 바로 DTO로 변환
-        List<BoardListAllDTO> dtoList = tupleList.stream()
-                .map(tuple -> {
-                            Board board1 = (Board) tuple.get(board);
-                            long replyCount = tuple.get(1, Long.class);
 
-                            BoardListAllDTO dto = BoardListAllDTO.builder()
-                                    .bno(board1.getBno())
-                                    .title(board1.getTitle())
-                                    .writer(board1.getWriter())
-                                    .regDate(board1.getRegDate())
-                                    .replyCount(replyCount)
-                                    .build();
+        // 형변환 작업, 디비에서 조회 후 바로, DTO로 변환 작업,
+        List<BoardListAllDTO> dtoList =
+                tupleList.stream().map(tuple -> {
+                    // 디비에서 조회된 내용임.
+                    Board board1 = (Board)tuple.get(board);
+                    long replyCount = tuple.get(1, Long.class);
+                    // DTO로 형변환 하는 코드,
+                    BoardListAllDTO dto = BoardListAllDTO.builder()
+                            .bno(board1.getBno())
+                            .title(board1.getTitle())
+                            .writer(board1.getWriter())
+                            .regDate(board1.getRegDate())
+                            .replyCount(replyCount)
+                            .build();
 
                     // board1에 있는 첨부 이미지를 꺼내서, DTO 담기.
                     // 같이 형변환하기
@@ -262,14 +288,16 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
                     // 최종 dto, 마지막, 첨부이미지 목록들도 추가.
                     dto.setBoardImages(imageDTOS);
 
-                    return dto;
-                        }).collect(Collectors.toList());
+                    return dto; // 댓글의 갯수 , 첨부 이미지 목록들.
+                }).collect(Collectors.toList());
 
-        // 페이징 데이터 가져오기
+        // 위에 첨부
+        // 페이징 된 데이터 가져오기.
+        // 앞에서 사용했던, 검색 조건
 
-        // 앞에서 사용했던 검색 조건
-        long totalCount = tupleJPQLQuery.fetchCount();
-        Page<BoardListAllDTO> page = new PageImpl<>(dtoList, pageable, totalCount);
+        long totalCount = boardJPQLQuery.fetchCount();
+        Page<BoardListAllDTO> page
+                = new PageImpl<>(dtoList, pageable, totalCount);
         return page;
     }
 
@@ -277,19 +305,20 @@ public class BoardSearchImpl extends QuerydslRepositorySupport
 //    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
 //        QBoard board = QBoard.board;
 //        QReply reply = QReply.reply;
-//        JPQLQuery<Board> boardJPQLQuery = from(board);
-//
+//        JPQLQuery<Board> boardJPQLQuery = from(board);// select * from board
+//        // 조인 설정 , 게시글에서 댓글에 포함된 게시글 번호와 , 게시글 번호 일치
 //        boardJPQLQuery.leftJoin(reply).on(reply.board.bno.eq(board.bno));
-//
 //        this.getQuerydsl().applyPagination(pageable, boardJPQLQuery);
 //
-//        // 페이징 데이터 가져오기
+//        // 페이징 된 데이터 가져오기.
 //        List<Board> boardList = boardJPQLQuery.fetch();
 //
 //        boardList.forEach(board1 -> {
 //            log.info("board1 : " + board1.getBno());
 //            log.info("board1 : " + board1.getImageSet());
+//
 //        });
+//
 //        return null;
 //    }
 }
