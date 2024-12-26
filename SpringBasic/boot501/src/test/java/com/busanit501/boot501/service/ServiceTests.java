@@ -153,5 +153,4 @@ public class ServiceTests {
         Long bno = 102L;
         boardService.delete(bno);
     }
-
 }
