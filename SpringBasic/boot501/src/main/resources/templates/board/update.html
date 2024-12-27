@@ -157,6 +157,9 @@
         alert(errorMsg)
     }
 
+    // 추가, 수정폼 요소 전역 설정.
+    const formObj = document.querySelector("#f1")
+
     //삭제시, 폼안에 있는 내용 재사용하기.
     document.querySelector(".deleteBtn").addEventListener("click",
         function (e) {
@@ -281,7 +284,6 @@
 
     //수정 하기 버튼 클릭시, 이벤트 작업.
     document.querySelector(".modBtn").addEventListener("click",function (e){
-        const formObj = new formData();
         e.preventDefault()
         e.stopPropagation()
 
