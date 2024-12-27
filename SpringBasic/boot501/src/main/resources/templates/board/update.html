@@ -301,6 +301,17 @@
         const target = document.querySelector(".uploadHidden")
         // 추가할 이미지들의 모든 파일
         const uploadFiles = uploadResult.querySelectorAll("img")
+
+        // 첨부할 문자열, 태그를 저장할 변수 선언
+        let str = ""
+
+        for(let i = 0; i < uploadFiles.length; i++) {
+            const uploadFile = uploadFiles[i]
+            const imgLink = uploadFile.getAttribute("data-src")
+
+            str += `<input type="hidden" name="fileNames" value="${imgLink}">`
+        }
+        target.innerHTML = str;
     }
 
 
