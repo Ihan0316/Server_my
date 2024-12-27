@@ -149,7 +149,7 @@
 <!--    첨부된 이미지 출력해보기, 원본으로-->
     <div class="col">
         <div class="card" th:if="${dto.fileNames != null && dto.fileNames.size() > 0}">
-            <img class="card-img-top" th:each="fileName: ${dto.fileNames}" th:src="|/view/${fileName}|">
+            <img class="card-img-top" style="width: 400px" th:each="fileName: ${dto.fileNames}" th:src="|/view/${fileName}|">
         </div>
     </div>
     <!--    첨부된 이미지 출력해보기, 원본으로-->
