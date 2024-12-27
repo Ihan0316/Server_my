@@ -1,9 +1,6 @@
 package com.busanit501.boot501.service;
 
-import com.busanit501.boot501.dto.BoardDTO;
-import com.busanit501.boot501.dto.BoardListReplyCountDTO;
-import com.busanit501.boot501.dto.PageRequestDTO;
-import com.busanit501.boot501.dto.PageResponseDTO;
+import com.busanit501.boot501.dto.*;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,5 +149,22 @@ public class ServiceTests {
     public void testDeleteBoardReplyWithImage() {
         Long bno = 102L;
         boardService.delete(bno);
+    }
+
+    // 모두 조회
+    @Test
+    @Transactional
+    public void testSelectAllBoardWithReplyCountAndImage() {
+
+        PageRequestDTO pageRequestDTO =
+                PageRequestDTO.builder()
+                        .page(1)
+                        .type("tcw")
+                        .keyword("샘플")
+                        .size(10)
+                        .build();
+
+        PageResponseDTO<BoardListAllDTO> list = boardService.listWithAll(pageRequestDTO);
+        log.info("list: " + list.toString());
     }
 }
