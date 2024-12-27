@@ -5,14 +5,22 @@ import com.busanit501.boot501.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @Log4j2
@@ -20,6 +28,10 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 // http://localhost:8080/board, 시작하겠다.
 public class BoardController {
+    // 물리 저장소 경로 불러오기
+    @Value("${com.busanit501.upload.path}")
+    private String uploadPath;
+
     private final BoardService boardService;
     // http://localhost:8080/board/list
     @GetMapping("/list")
@@ -122,16 +134,62 @@ public class BoardController {
     // 주의사항,
     // 1) 댓글 여부 2) 첨부 이미지, (물리서버, 디비서버 삭제 확인)
     // Long bno -> BoardDTO 형식으로 변경할 예정.
-    public String delete(Long bno,
+    // 첨부 이미지, 물리 서버에서 삭제하려면,
+    // 1) 물리 서버 경로, 2) 실제 삭제 작업.
+    public String delete(BoardDTO boardDTO,
                          String keyword2,String page2, String type2,
                          RedirectAttributes redirectAttributes) {
+        Long bno = boardDTO.getBno();
+        // 게시글 삭제시, 댓글 삭제, 이미지 삭제, 영속성 전이 - 물리서버 삭제 x
         boardService.delete(bno);
+
+        // 물리 서버 삭제 추가
+        List<String> fileNames = boardDTO.getFileNames();
+        if(fileNames != null && fileNames.size() > 0) {
+            // uploadController 사용
+            removeFiles(fileNames);
+        }
+
         //키워드 한글 처리.
         String encodedKeyword = URLEncoder.encode(keyword2, StandardCharsets.UTF_8);
 
         redirectAttributes.addFlashAttribute("result", bno);
         redirectAttributes.addFlashAttribute("resultType", "delete");
         return "redirect:/board/list?"+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
+    }
+
+    // 물리 서버 첨부 이미지 삭제 함수
+    public void removeFiles(List<String> fileNames) {
+        for (String fileName : fileNames) {
+
+            // 업로드 저장소 위치는 동일, 파일명 동일해서, 재사용
+            Resource resource = new FileSystemResource(uploadPath+ File.separator+fileName);
+
+            // 리턴 타입 Map 전달,
+            Map<String,Boolean> resultMap = new HashMap<>();
+            boolean deleteCheck = false;
+            try {
+                // 파일 삭제시, 이미지 파일일 경우, 원본 이미지와 , 썸네일 이미지 2개 있어서
+                // 이미지 파일 인지 여부를 확인 후, 이미지 이면, 썸네일도 같이 제거해야함.
+                String contentType = Files.probeContentType(resource.getFile().toPath());
+                // 삭제 여부를 업데이트
+                // 원본 파일을 제거하는 기능. (실제 물리 파일 삭제 )
+                deleteCheck =resource.getFile().delete();
+
+                if (contentType.startsWith("image")) {
+                    // 썸네일 파일을 생성해서, 파일 클래스로 삭제를 진행.
+                    // uploadPath : /Users/ihanjo/Documents/K-Digital/Upload/SpringTest
+                    // File.separator : /Users/ihanjo/Documents/K-Digital/Upload/SpringTest/test1.jpg
+                    File thumbFile = new File(uploadPath+File.separator,"s_"+ fileName);
+                    // 실제 물리 파일 삭제
+                    thumbFile.delete();
+                }
+            }
+            catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            resultMap.put("result", deleteCheck);
+        }
     }
 
 }
