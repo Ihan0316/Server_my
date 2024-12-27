@@ -296,6 +296,7 @@
         formObj.submit()
     })
 
+    // 추가된 파잉ㄹ 이미지를 히든으로 추가해주는 함수
     function appendFileData(){
         // 히든으로 추가된 첨부 이미지
         const target = document.querySelector(".uploadHidden")
@@ -314,6 +315,11 @@
         target.innerHTML = str;
     }
 
+    function callRemoveFiles(){
+        removeFileList.forEach(({uuid,fileName}) => {
+            removeFileToServer({uuid,fileName})
+        })
+    }
 
 
 </script>
