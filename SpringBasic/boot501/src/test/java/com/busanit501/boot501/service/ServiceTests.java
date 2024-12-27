@@ -151,7 +151,7 @@ public class ServiceTests {
         boardService.delete(bno);
     }
 
-    // 모두 조회
+    // 모두 조회 - 이미지 포함
     @Test
     @Transactional
     public void testSelectAllBoardWithReplyCountAndImage() {
