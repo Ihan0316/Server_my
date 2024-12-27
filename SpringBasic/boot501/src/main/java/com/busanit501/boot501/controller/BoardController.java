@@ -42,6 +42,9 @@ public class BoardController {
 
     }
     @PostMapping("/register")
+    // 일반 글로만 받을때, DTO 클래스로 받음
+    //
+    //
     public String registerPost(@Valid BoardDTO boardDTO,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
