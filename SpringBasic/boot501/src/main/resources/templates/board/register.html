@@ -37,47 +37,46 @@
                                 <button type="button" class="btn btn-primary uploadFileBtn">파일 추가</button>
                             </div>
                         </div>
-                        <!--                        첨부한 이미지 섬네일 화면 미리보기 영역, -->
-                        <div class="row mt-3">
-                            <div class="col">
-                                <div class="d-flex uploadResult" style="flex-wrap: wrap">
-
-                                </div>
-                            </div>
-                            <!--                        첨부할 이미지 모달창 추가,(화면에 출력되어있지만 가려진 상태)-->
-                            <!--    첨부 파일 업로드 하는 폼 , 모달창 필요함. -->
-                            <!--    댓글 작성 모달 창 폼-->
-                            <div class="modal fade uploadModal" tabindex="-1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4>업로드 파일</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="input-group mb-3">
-                                                <!--                        <span class="input-group-text">첨부 파일</span>-->
-                                                <input type="file" name="files"
-                                                       class="form-control" multiple>
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary closeRegisterBtn" data-bs-dismiss="modal">닫기
-                                            </button>
-                                            <button type="button" class="btn btn-primary uploadBtn">업로드하기</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            <!--모달창 끝-->
-
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary submitBtn">작성</button>
                             <button type="reset" class="btn btn-danger">초기화</button>
                         </div>
                     </form>
+                    <!--                        첨부한 이미지 섬네일 화면 미리보기 영역, -->
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="d-flex uploadResult" style="flex-wrap: wrap">
+
+                            </div>
+                        </div>
+                        <!--                        첨부할 이미지 모달창 추가,(화면에 출력되어있지만 가려진 상태)-->
+                        <!--    첨부 파일 업로드 하는 폼 , 모달창 필요함. -->
+                        <!--    댓글 작성 모달 창 폼-->
+                        <div class="modal fade uploadModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>업로드 파일</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group mb-3">
+                                            <!--                        <span class="input-group-text">첨부 파일</span>-->
+                                            <input type="file" name="files"
+                                                   class="form-control" multiple>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary closeRegisterBtn" data-bs-dismiss="modal">닫기
+                                        </button>
+                                        <button type="button" class="btn btn-primary uploadBtn">업로드하기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--모달창 끝-->
                 </div>
             </div>
         </div>
@@ -168,6 +167,26 @@
         </div>
 `
         uploadResult.innerHTML += str
+    }
+
+    // 첨부된 이미지가 미리보기 화면에서 x클릭시 삭제되는 이벤트 처리
+    function removeFile(uuid, fileName, obj){
+        console.log("uuid : "+uuid)
+        console.log("fileName : "+fileName)
+        console.log("obj : "+obj)
+
+        // x, 삭제를 요청한 요소에서 가장 가까운 카드요소 선택
+        const targetDiv = obj.closest(".card")
+
+        // 미디어 서버에서 이미지가 삭제가 된다면,
+        removeFileToServer(uuid, fileName)
+            // 썸네일 이미지 화면에서 제거(카드도)
+            .then(
+                data => {
+                    targetDiv.remove()
+                }
+            )
+            .catch()
     }
 </script>
 
