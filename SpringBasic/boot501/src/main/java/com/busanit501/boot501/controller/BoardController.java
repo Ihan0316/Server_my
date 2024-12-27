@@ -118,6 +118,10 @@ public class BoardController {
     }
 
     @PostMapping("/delete")
+    // 삭제시,
+    // 주의사항,
+    // 1) 댓글 여부 2) 첨부 이미지, (물리서버, 디비서버 삭제 확인)
+    // Long bno -> BoardDTO 형식으로 변경할 예정.
     public String delete(Long bno,
                          String keyword2,String page2, String type2,
                          RedirectAttributes redirectAttributes) {

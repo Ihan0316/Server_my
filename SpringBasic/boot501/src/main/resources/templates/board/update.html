@@ -14,6 +14,9 @@
                     Board update
                 </div>
                 <div class="card-body">
+                    <h5 class="card-title">
+                        Board update
+                    </h5>
                     <form id="f1" method="post" th:action="@{/board/update}">
                         <input type="hidden" name="keyword2" th:value="${pageRequestDTO.keyword}">
                         <input type="hidden" name="page2" th:value="${pageRequestDTO.page}">
@@ -159,6 +162,7 @@
     const link = [[${pageRequestDTO.getLink()}]]
 
     //삭제시, 폼안에 있는 내용 재사용하기.
+    // 추가 작업.
     document.querySelector(".deleteBtn").addEventListener("click",
         function (e) {
             const formObj = document.querySelector("form")
@@ -166,12 +170,19 @@
             e.preventDefault()
             e.stopPropagation() // 상위 태그로 전파 방지
 
+            // 화면에 보이는 첨부 이미지를 포함해서 전달.
+            // 기존에 만든 함수 재사용
+            appendFileData()
+            // 화면에 안보이는 첨부 이미지를 form 태그에 추가.
+            // 추가.
+            appendNotShowData()
 
             formObj.action = "/board/delete"
             formObj.method = "post"
 
-            formObj.submit()
+            // formObj.submit()
         }, false)
+
 
     // 글작성에서 사용했던 이벤트 리스너를 재사용.
     // 파일 업로드 작업
@@ -321,6 +332,28 @@
             ({uuid,fileName})=>{
                 removeFileToServer({uuid,fileName})
             })
+    }
+
+    // 화면에 안보이는 첨부 이미지를 추가하는 작업.
+    // 삭제시, 서버에 전달할 때, 삭제할 파일이름이 필요하므로
+    function appendNotShowData() {
+        if(removeFileList.length == 0) {
+            return
+        }
+        const target = document.querySelector(".uploadHidden")
+        let str = ''
+
+        for(let i = 0; i < removeFileList.length; i++) {
+            // removeFileList, 객체를 요소로 가지는 리스트.
+            // 객체 구조 분해 할당.
+            const {uuid, fileName} = removeFileList[i]
+            str += `
+            <input type="hidden" name="fileNames" value="${uuid}_${fileName}" >
+            `
+        }
+        target.innerHTML += str;
+
+
     }
 
 
