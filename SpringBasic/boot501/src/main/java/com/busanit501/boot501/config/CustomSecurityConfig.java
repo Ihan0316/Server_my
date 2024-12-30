@@ -49,7 +49,7 @@ public class CustomSecurityConfig {
                 authorizeRequests -> {
                     authorizeRequests.requestMatchers("/css/**", "/js/**", "/member/login").permitAll();
                     authorizeRequests.requestMatchers("/board/list","/board/register").authenticated();
-                    authorizeRequests.requestMatchers("/admin/**").hasRole("ADMIN");
+                    authorizeRequests.requestMatchers("/admin/**", "/board/update").hasRole("ADMIN");
                     authorizeRequests.anyRequest().authenticated();
                 }
 

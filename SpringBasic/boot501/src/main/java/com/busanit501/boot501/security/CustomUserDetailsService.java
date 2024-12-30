@@ -32,10 +32,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         // 데이터 베이스 저장된 유저와 비교 작업 후, 처리
         // 테스트 더미데이터 작업
         // User : 스프링 시큐리티에서 제공하는 클래스, 주의!!
-        log.info("passwordEncoder.encode(\"1234\") : " + passwordEncoder.encode("1234"));
+        log.info("passwordEncoder.encode() : " + passwordEncoder.encode("1234"));
         UserDetails userDetials = User.builder()
                 .username("jih")
                 .password(passwordEncoder.encode("1234"))
+                // 인증된 유저
                 .authorities("ROLE_USER")
                 .build();
 
