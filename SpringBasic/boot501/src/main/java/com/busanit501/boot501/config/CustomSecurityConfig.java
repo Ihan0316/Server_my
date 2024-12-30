@@ -28,7 +28,7 @@ public class CustomSecurityConfig {
         // 현재 버전
         http.formLogin(
                 formLogin ->
-                        formLogin.loginPage("/login"));
+                        formLogin.loginPage("/member/login"));
         return http.build();
     }
 
