@@ -15,14 +15,24 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
 
+    // 순서1
     // 인증 및 인가 관련 구체적인 설정
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.info("===========Config===========");
 
+        // 순서3, 로그인 방식을 폼 로그인으로 설정
+        // 옛날 문법
+//        http.formLogin();
+
+        // 현재 버전
+        http.formLogin(
+                formLogin ->
+                        formLogin.loginPage("/login"));
         return http.build();
     }
 
+    // 순서2
     // css, js 등 정적 자원은 시큐리티 필터에서 제외하기
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -31,5 +41,6 @@ public class CustomSecurityConfig {
                 web.ignoring()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+
 
 }
