@@ -33,7 +33,7 @@ mavenRepository 사이트 들어가면, 2가지 경우의 도구 설치 링크 �
 Spring Boot Starter Security » 3.3.0
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.3.0'
+implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.4.0'
 
 설치시,
 스프링에서, 기본이, get 제외한 모든 형식의 통신을 다 차단함.
