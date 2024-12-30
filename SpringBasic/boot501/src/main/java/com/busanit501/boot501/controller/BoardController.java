@@ -1,6 +1,9 @@
 package com.busanit501.boot501.controller;
 
-import com.busanit501.boot501.dto.*;
+import com.busanit501.boot501.dto.BoardDTO;
+import com.busanit501.boot501.dto.BoardListAllDTO;
+import com.busanit501.boot501.dto.PageRequestDTO;
+import com.busanit501.boot501.dto.PageResponseDTO;
 import com.busanit501.boot501.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +15,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -29,7 +34,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 // http://localhost:8080/board, 시작하겠다.
 public class BoardController {
-    // 물리 저장소 경로 불러오기
+
+    // 물리 저장소 경로를 불러오기.
     @Value("${com.busanit501.upload.path}")
     private String uploadPath;
 
@@ -42,10 +48,10 @@ public class BoardController {
 //        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
         // 교체 작업, 수정1
 //        PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
-        // 수정2, 게시글 + 댓글 갯수 + 첨부된 이미지
+        // 교체 작업, 수정2, 게시글 + 댓글 갯수 + 첨부된 이미지들
         PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
         log.info("pageRequestDTO 의 getLink 조사 : " + pageRequestDTO.getLink());
-        log.info("pageRequestDTO 의 responseDTO 조사 : " + responseDTO);
+        log.info("PageResponseDTO 의 responseDTO 조사 : " + responseDTO);
         model.addAttribute("responseDTO", responseDTO);
     }
 
@@ -60,8 +66,8 @@ public class BoardController {
     // 화면에서, -> 파일 이미지들을 문자열 형태로 , 각각 따로 보내고 있음.
     // 받을 때 타입을 변경.
     public String registerPost(@Valid BoardDTO boardDTO,
-                             BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
         log.info("BoardController register post 로직처리: ");
         log.info("BoardController register post  boardDTO : " + boardDTO);
 
@@ -84,8 +90,9 @@ public class BoardController {
 
     }
 
-    // 권한별 접근 지정, 관리자만 접근 가능
-    @PreAuthorize("hasRole('ADMIN')")
+    //권한별로 접근 지정. 관리자만 접근 가능.
+//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/read")
     public void read(Long bno, PageRequestDTO pageRequestDTO,
                      Model model) {
@@ -95,17 +102,17 @@ public class BoardController {
 
     @GetMapping("/update")
     public void update(Long bno, PageRequestDTO pageRequestDTO,
-                     Model model) {
+                       Model model) {
         BoardDTO boardDTO = boardService.readOne(bno);
         model.addAttribute("dto", boardDTO);
     }
 
     @PostMapping("/update")
     public String updatePost(@Valid BoardDTO boardDTO,
-                               BindingResult bindingResult,
-                               PageRequestDTO pageRequestDTO,
-                               String keyword2,String page2, String type2,
-                               RedirectAttributes redirectAttributes) {
+                             BindingResult bindingResult,
+                             PageRequestDTO pageRequestDTO,
+                             String keyword2,String page2, String type2,
+                             RedirectAttributes redirectAttributes) {
         log.info("BoardController updatePost post 로직처리: ");
         log.info("BoardController updatePost post  boardDTO : " + boardDTO);
 
@@ -138,19 +145,20 @@ public class BoardController {
     // 주의사항,
     // 1) 댓글 여부 2) 첨부 이미지, (물리서버, 디비서버 삭제 확인)
     // Long bno -> BoardDTO 형식으로 변경할 예정.
-    // 첨부 이미지, 물리 서버에서 삭제하려면,
-    // 1) 물리 서버 경로, 2) 실제 삭제 작업.
+    // 첨부 이미지, 물리서버에서 삭제 할려면,
+    // 1)물리 서버 경로 필요 2) 실제 삭제 작업.
     public String delete(BoardDTO boardDTO,
                          String keyword2,String page2, String type2,
                          RedirectAttributes redirectAttributes) {
         Long bno = boardDTO.getBno();
-        // 게시글 삭제시, 댓글 삭제, 이미지 삭제, 영속성 전이 - 물리서버 삭제 x
+        // 게시글 삭제시, 댓글, 첨부 이미지 삭제, 하지만, 물리 서버는 삭제 안함.
         boardService.delete(bno);
 
-        // 물리 서버 삭제 추가
+        // 물리 서버에 저장된 이미지 삭제.
+        //추가
         List<String> fileNames = boardDTO.getFileNames();
-        if(fileNames != null && fileNames.size() > 0) {
-            // uploadController 사용
+        if(fileNames != null && fileNames.size() > 0){
+            // uploadController 가져와서 사용한다.
             removeFiles(fileNames);
         }
 
@@ -162,12 +170,11 @@ public class BoardController {
         return "redirect:/board/list?"+"&keyword="+encodedKeyword+"&page="+page2+"&type="+type2;
     }
 
-    // 물리 서버 첨부 이미지 삭제 함수
+    // 물리서버 , 첨부 이미지 삭제 함수.
     public void removeFiles(List<String> fileNames) {
-        for (String fileName : fileNames) {
-
-            // 업로드 저장소 위치는 동일, 파일명 동일해서, 재사용
-            Resource resource = new FileSystemResource(uploadPath+ File.separator+fileName);
+        for (String filename : fileNames) {
+            Resource resource = new FileSystemResource(uploadPath+ File.separator+filename);
+//            String resourceName = resource.getFilename();
 
             // 리턴 타입 Map 전달,
             Map<String,Boolean> resultMap = new HashMap<>();
@@ -182,9 +189,9 @@ public class BoardController {
 
                 if (contentType.startsWith("image")) {
                     // 썸네일 파일을 생성해서, 파일 클래스로 삭제를 진행.
-                    // uploadPath : /Users/ihanjo/Documents/K-Digital/Upload/SpringTest
-                    // File.separator : /Users/ihanjo/Documents/K-Digital/Upload/SpringTest/test1.jpg
-                    File thumbFile = new File(uploadPath+File.separator,"s_"+ fileName);
+                    // uploadPath : C:\\upload\springTest
+                    // File.separator : C:\\upload\springTest\test1.jpg
+                    File thumbFile = new File(uploadPath+File.separator,"s_"+ filename);
                     // 실제 물리 파일 삭제
                     thumbFile.delete();
                 }
@@ -193,7 +200,9 @@ public class BoardController {
                 log.error(e.getMessage());
             }
             resultMap.put("result", deleteCheck);
+//            return resultMap;
         }
     }
+
 
 }

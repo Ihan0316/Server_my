@@ -19,8 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 // 시큐리티 설정 on 추가
 @EnableWebSecurity
 // 권한별 설정 추가
-// 이전 문법
-// @EnableGlobalMethodSecurity(prePostEnabled = true)
+// 이전 문법 ://@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableMethodSecurity()
 public class CustomSecurityConfig {
 
@@ -46,21 +45,43 @@ public class CustomSecurityConfig {
 
         // 순서5
         // 기본은 csrf 설정이 on, 작업시에는 끄고 작업하기.
+        // 만약, 사용한다면,
+        // 웹 화면에서 -> 서버로,  csrf 토큰 생성해서 전송.
+        // 레스트로 작업시에도 , csrf 토큰 생성해서 전송.
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
-        // 순서6, 가장 중요
+
+        // 순서 6, 가장 중요함.
         // 시큐리티의 전체 허용 여부 관련 목록
+        // 주의사항, 위에서 부터 차례대로 설정 적용이 됨.
+        // 첫번째 줄에 너무 큰 범위로 막는 설정을 하고, 다음 줄에서 허용을해도
+        // 허용이 안됩니다.
         http.authorizeHttpRequests(
                 authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/css/**", "/js/**", "/member/login").permitAll();
-                    authorizeRequests.requestMatchers("/board/list","/board/register").authenticated();
-                    authorizeRequests.requestMatchers("/admin/**", "/board/update").hasRole("ADMIN");
+                    authorizeRequests.requestMatchers
+                            ("/css/**", "/js/**","/member/login").permitAll();
+                    authorizeRequests.requestMatchers
+                            ("/board/list","/board/register").authenticated();
+                    authorizeRequests.requestMatchers
+                            ("/admin/**","/board/update").hasRole("ADMIN");
+                    //위의 3가지 조건을 제외한 나머지 모든 접근은 인증이 되어야 접근이 가능함.
                     authorizeRequests.anyRequest().authenticated();
                 }
 
         );
+
+        // 순서 8, 로그아웃 설정.
+        // 로그 아웃 설정.
+        http.logout(
+                logout -> logout.logoutUrl("/member/logout")
+                        .logoutSuccessUrl("/member/login?logout")
+
+        );
+
+
         return http.build();
     }
+
 
     // 순서2,
     // css, js, 등 정적 자원은 시큐리티 필터에서 제외하기
@@ -72,10 +93,12 @@ public class CustomSecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
-    // 순서7
-    // 패스워드 암호화 해주는 도구
+    //순서7, 패스워드 암호화를 해주는 도구, 스프링 설정.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+
 }
