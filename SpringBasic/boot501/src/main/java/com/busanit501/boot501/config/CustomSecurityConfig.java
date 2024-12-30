@@ -18,9 +18,9 @@ public class CustomSecurityConfig {
     // 인증 및 인가 관련 구체적인 설정
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            log.info("CustomSecurityConfig");
+        log.info("===========Config===========");
 
-            return http.build();
+        return http.build();
     }
 
     // css, js 등 정적 자원은 시큐리티 필터에서 제외하기
