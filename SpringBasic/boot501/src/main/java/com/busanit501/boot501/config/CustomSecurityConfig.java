@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Log4j2
@@ -31,14 +33,17 @@ public class CustomSecurityConfig {
                         formLogin.loginPage("/member/login")
         );
 
+        // 순서4
         //로그인 후, 성공시 리다이렉트 될 페이지 지정, 간단한 버전.
         http.formLogin(formLogin ->
                 formLogin.defaultSuccessUrl("/board/list",true)
         );
 
+        // 순서5
         // 기본은 csrf 설정이 on, 작업시에는 끄고 작업하기.
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
+        // 순서6, 가장 중요
         // 시큐리티의 전체 허용 여부 관련 목록
         http.authorizeHttpRequests(
                 authorizeRequests -> {
@@ -49,8 +54,6 @@ public class CustomSecurityConfig {
                 }
 
         );
-
-
         return http.build();
     }
 
@@ -64,6 +67,12 @@ public class CustomSecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
+    // 순서7
+    // 패스워드 암호화 해주는 도구
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
 }
