@@ -2,7 +2,9 @@
 웹, 백, 앱, 응용,
 Spring web Security -> 시큐리티라고 부를 예정.
 
-인증(authentication, 로그인), 인가(authority 허가, 관리자, 유저)
+인증(authentication, 로그인),
+인가(authority 허가, 관리자, 유저)
+
 예)
 인증
 로그인 한 유저만 볼수 있고,
