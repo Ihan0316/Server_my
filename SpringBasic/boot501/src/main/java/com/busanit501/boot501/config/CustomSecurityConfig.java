@@ -39,9 +39,10 @@ public class CustomSecurityConfig {
         // 기본은 csrf 설정이 on, 작업시에는 끄고 작업하기.
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
+        // 시큐리티의 전체 허용 여부 관련 목록
         http.authorizeHttpRequests(
                 authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/css/**", "/js/**", "/images/**", "/images2/**","/member/login").permitAll();
+                    authorizeRequests.requestMatchers("/css/**", "/js/**", "/member/login").permitAll();
                     authorizeRequests.requestMatchers("/board/list","/board/register").authenticated();
                     authorizeRequests.requestMatchers("/admin/**").hasRole("ADMIN");
                     authorizeRequests.anyRequest().authenticated();
