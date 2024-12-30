@@ -72,6 +72,13 @@ public class CustomSecurityConfig {
 
         // 순서 8, 로그아웃 설정.
         // 로그 아웃 설정.
+        // 작업 진행순서
+        // 웹 -> http://localhost:8080/member/logout
+        // 시큐리티 동작, logout 자동 처리
+        // 성공시, 성공 후 이동할 페이지로 이동 시킴
+        // ?logout -> 파라미터
+        // /member/login?logout
+        // 멤버 컨트롤러
         http.logout(
                 logout -> logout.logoutUrl("/member/logout")
                         .logoutSuccessUrl("/member/login?logout")
