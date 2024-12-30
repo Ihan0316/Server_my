@@ -44,7 +44,7 @@ public class ReplyRepositoryTests {
 
     @Test
     public void testInsert2() {
-        Long bno = 99L;
+        Long bno = 100L;
 
         IntStream.range(1, 101).forEach(i -> {
             Board board = Board.builder().bno(bno).build();
