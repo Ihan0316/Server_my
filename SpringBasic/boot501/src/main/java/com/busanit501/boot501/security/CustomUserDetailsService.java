@@ -37,7 +37,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .username("jih")
                 .password(passwordEncoder.encode("1234"))
                 // 인증된 유저
-                .authorities("ROLE_USER", "ROLE_ADMIN")
+//                .authorities("ROLE_USER", "ROLE_ADMIN")
+                .authorities("ROLE_USER")
                 .build();
 
         return userDetials;
