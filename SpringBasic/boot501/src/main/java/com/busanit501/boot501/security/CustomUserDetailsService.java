@@ -16,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     // 시큐리티에서, 타입을 UserDetails로 반환해야 확인 가능
     // 결론 -> 로그인 했을 경우 입력한 username, password 값을 여기 매서드로 가지고 온다
     // 가지고 오는 키는 고정 username, password 주의사항
-    // input태그에서 name이름 작성시 주의
+    // input태그 에서 name 이름 작성시 주의
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("시큐리티 loadUserByUsername 확인 : " + username);
