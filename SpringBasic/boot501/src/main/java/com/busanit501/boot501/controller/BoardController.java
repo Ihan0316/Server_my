@@ -59,6 +59,7 @@ public class BoardController {
 
         // user 객체의 내용 확인
         log.info("user 객체의 내용 확인 : " + user);
+        log.info("user 객체의 내용 확인(getAuthorities) : " + user.getAuthorities());
 
         model.addAttribute("user", user);
         model.addAttribute("responseDTO", responseDTO);

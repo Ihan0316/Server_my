@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="www.thymeleaf.org">
+      xmlns:th="www.thymeleaf.org"
+      >
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,9 +43,14 @@
                                     <li class="nav-item" th:if="${user} != null">
                                         <a class="nav-link">[[${user.Username}]]님 환영합니다!</a>
                                     </li>
-
+                                    <!--로그아웃 표시-->
                                     <li class="nav-item" th:if="${user} != null">
                                         <a class="nav-link" aria-current="page" href="/member/logout">로그아웃</a>
+                                    </li>
+                                    <!--관리자페이지(관리자) 표시-->
+<!--                                    타임리프, sec 접두어 기능 따로 도구 설치-->
+                                    <li class="nav-item" th:if="${user != null}" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                        <a class="nav-link" href="#">관리자페이지</a>
                                     </li>
 
                                 </ul>
