@@ -1,5 +1,6 @@
 package com.busanit501.boot501.config;
 
+import com.busanit501.boot501.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -12,6 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
@@ -22,6 +27,10 @@ import org.springframework.security.web.SecurityFilterChain;
 // 이전 문법 ://@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableMethodSecurity()
 public class CustomSecurityConfig {
+    // 자동로그인 순서1,
+    private final DataSource dataSource;
+    // 시큐리티에서 로그인 처리 담당
+    private final CustomUserDetailsService customUserDetailsService;
 
     //순서1,
     // 인증, 인가 관련 구체적인 설정은 여기 메서드에서 작성
@@ -85,10 +94,29 @@ public class CustomSecurityConfig {
 
         );
 
+        // 자동로그인 순서2
+        http.rememberMe(httpsecurityRememberMeConfigurer ->
+                httpsecurityRememberMeConfigurer
+                        .key("12345678")
+                        .tokenRepository(persistentTokenRepository())
+                        .userDetailsService(customUserDetailsService)
+                        .tokenValiditySeconds(60*60*24*30)
+        );
+        // 자동로그인 순서2
 
         return http.build();
     }
 
+
+    /// 자동 로그인 순서3,
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        // 시큐리티에서 정의 해둔 구현체
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
+    }
+    // 자동 로그인 순서3,
 
     // 순서2,
     // css, js, 등 정적 자원은 시큐리티 필터에서 제외하기
