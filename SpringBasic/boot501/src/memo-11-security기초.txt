@@ -30,7 +30,7 @@ build.gradle
 파란색 교재, maven 빌드 툴, pom.xml
 mavenRepository 사이트 들어가면, 2가지 경우의 도구 설치 링크 다 있음.
 
-Spring Boot Starter Security » 3.3.0
+Spring Boot Starter Security » 3.4.0
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.4.0'
