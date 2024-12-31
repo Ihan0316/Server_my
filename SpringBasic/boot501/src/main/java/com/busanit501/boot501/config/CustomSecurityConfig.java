@@ -89,14 +89,16 @@ public class CustomSecurityConfig {
         // /member/login?logout
         // 멤버 컨트롤러
         http.logout(
-                logout -> logout.logoutUrl("/member/logout")
-                        .logoutSuccessUrl("/member/login?logout")
+                logout ->
+                        logout
+                                .logoutUrl("/member/logout")
+                                .logoutSuccessUrl("/member/login?logout")
 
         );
 
         // 자동로그인 순서2
-        http.rememberMe(httpsecurityRememberMeConfigurer ->
-                httpsecurityRememberMeConfigurer
+        http.rememberMe(remember ->
+                remember
                         .key("12345678")
                         .tokenRepository(persistentTokenRepository())
                         .userDetailsService(customUserDetailsService)
@@ -108,7 +110,7 @@ public class CustomSecurityConfig {
     }
 
 
-    /// 자동 로그인 순서3,
+    // 자동 로그인 순서3,
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         // 시큐리티에서 정의 해둔 구현체
@@ -124,7 +126,8 @@ public class CustomSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         log.info("시큐리티 동작 확인 ====webSecurityCustomizer======================");
         return (web) ->
-                web.ignoring()
+                web
+                        .ignoring()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
