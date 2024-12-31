@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang=en xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}"
+>
 
 <head>
     <meta charset="utf-8"/>
@@ -13,7 +17,7 @@
     <!--    <link th:href="@{/css/styles.css}" rel="stylesheet"/>-->
 </head>
 <body class="align-middle">
-<div>
+<div layout:fragment="content">
 
     <div class="card align-self-center">
         <div class="card-header">

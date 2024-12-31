@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,7 +44,9 @@ public class BoardController {
     private final BoardService boardService;
     // http://localhost:8080/board/list
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model ) {
+    // 로그인한 유저의 정보를 서버 -> 화면으로 제공
+    // 메서드 안에 파라미터로 @AuthenticationPrincipal 를 설정
+    public void list(@AuthenticationPrincipal UserDetails user,  PageRequestDTO pageRequestDTO, Model model) {
         // 서비스 이용해서, 데이터베이스 목록 페이징 처리해서 가져오기.
         // 앞단 화면에서, 검색어:keyword 내용, 페이징 내용(page = 1) 담아서 전달.
 //        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
@@ -52,14 +56,19 @@ public class BoardController {
         PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
         log.info("pageRequestDTO 의 getLink 조사 : " + pageRequestDTO.getLink());
         log.info("PageResponseDTO 의 responseDTO 조사 : " + responseDTO);
+
+        // user 객체의 내용 확인
+        log.info("user 객체의 내용 확인 : " + user);
+
+        model.addAttribute("user", user);
         model.addAttribute("responseDTO", responseDTO);
     }
 
     //등록 작업, 1) 등록화면 2) 로직처리
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/register")
-    public void register() {
-
+    public void register(@AuthenticationPrincipal UserDetails user, Model model) {
+        model.addAttribute("user", user);
     }
     @PostMapping("/register")
     // 일반글로 만 받을 때, DTO 클래스로 받고 있는데,
