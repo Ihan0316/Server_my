@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info("시큐리티 loadUserByUsername 확인 : " + username);
         // 데이터 베이스 저장된 유저와 비교 작업 후, 처리
         // 테스트 더미데이터 작업
-        // User : 스프링 시큐리티에서 제공하는 클래스, 주의!!
+        // User : 스프링 시큐리티에서 제공하는 클래스, 이름 주의!!
         log.info("passwordEncoder.encode() : " + passwordEncoder.encode("1234"));
         UserDetails userDetials = User.builder()
                 .username("jih")
