@@ -1,6 +1,7 @@
 package com.busanit501.boot501.config;
 
 import com.busanit501.boot501.security.CustomUserDetailsService;
+import com.busanit501.boot501.security.handler.Custom403Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -106,6 +108,11 @@ public class CustomSecurityConfig {
         );
         // 자동로그인 순서2
 
+        // 403 에러페이지 연결
+        http.exceptionHandling(exception ->
+                exception.accessDeniedPage("/error/403"
+                ));
+
         return http.build();
     }
 
@@ -135,6 +142,14 @@ public class CustomSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // 403 핸들러 추가
+    // 설정 클래스에 추가하기
+    // 레스트용
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
     }
 
 
