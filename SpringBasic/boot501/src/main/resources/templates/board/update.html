@@ -62,7 +62,8 @@
                         </div>
                         <div class="mb-3" th:with="link = ${pageRequestDTO.link}">
                             <div th:with="user=${#authentication.principal}">
-                                <button type="submit" th:if="${user.username != null && user.username == dto.writer}" class="btn btn-primary modBtn">수정하기</button>
+                                <button type="submit"  class="btn btn-primary modBtn">수정하기</button>
+<!--                                <button type="submit" th:if="${user.username != null && user.username == dto.writer}" class="btn btn-primary modBtn">수정하기</button>-->
                                 <button type="button" th:if="${user.username != null && user.username == dto.writer}" class="btn btn-danger deleteBtn">삭제하기</button>
                                 <a th:href="|@{/board/list}?${link}|">
                                     <button type="button" class="btn btn-secondary listBtn">목록가기</button>
