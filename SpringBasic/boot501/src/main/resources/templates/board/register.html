@@ -26,7 +26,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="writer" class="form-control">작성자</label>
-                            <input type="text" class="form-control" id="writer" name="writer" placeholder="지금은 직접 작성자를 입력해주세요, 로그인 후 로그인 유저가 자동으로 탑재됨.">
+
+                            <input type="text" th:value="${user.Username}" class="form-control" id="writer" name="writer" readonly>
                         </div>
                         <div class="mb-3 input-group">
                             <span class="input-group-text">첨부파일</span>
@@ -93,6 +94,13 @@
 
 <!--자바스크립트 추가하는 영역-->
 <script layout:fragment="javascript" th:inline="javascript">
+
+    // 서버로부터 인증 정보 받기
+    const auth = [[${user}]]
+    console.log("auth : "+auth)
+
+    const auth2 = [[${user.Username}]]
+    console.log("auth : "+auth2)
 
     // 유효성 체크 오류 발생시, alert 경고창 알려주기.
     // 서버에서 오류가 발생시, 전달한 키 : errors , 받아서, 처리하기.

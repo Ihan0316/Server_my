@@ -66,7 +66,7 @@ public class BoardController {
     }
 
     //등록 작업, 1) 등록화면 2) 로직처리
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/register")
     public void register(@AuthenticationPrincipal UserDetails user, Model model) {
         model.addAttribute("user", user);
@@ -102,12 +102,15 @@ public class BoardController {
 
     //권한별로 접근 지정. 관리자만 접근 가능.
 //    @PreAuthorize("hasRole('ADMIN')")
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
+    // 로그인 처리가 되었을 경우
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/read")
-    public void read(Long bno, PageRequestDTO pageRequestDTO,
+    public void read(@AuthenticationPrincipal UserDetails user, Long bno, PageRequestDTO pageRequestDTO,
                      Model model) {
         BoardDTO boardDTO = boardService.readOne(bno);
         model.addAttribute("dto", boardDTO);
+        model.addAttribute("user", user);
     }
 
     @GetMapping("/update")
