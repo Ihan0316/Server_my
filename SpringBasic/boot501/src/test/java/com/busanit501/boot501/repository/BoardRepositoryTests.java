@@ -4,7 +4,6 @@ import com.busanit501.boot501.domain.Board;
 import com.busanit501.boot501.domain.BoardImage;
 import com.busanit501.boot501.domain.Reply;
 import com.busanit501.boot501.dto.BoardListAllDTO;
-import jakarta.persistence.Column;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import java.util.stream.IntStream;
 
 @SpringBootTest
 @Log4j2
-public class BoardReopositoryTests {
+public class BoardRepositoryTests {
 
     @Autowired
     // 아무 메소드가 없지만, 기본 탑재된 쿼리 메소드 이용해서, crud  해보기.
