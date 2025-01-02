@@ -120,7 +120,9 @@ public class BoardController {
         model.addAttribute("dto", boardDTO);
     }
 
+    // 수정폼 접근시에도, 게시글 작성자와 유저가 일치한다면 허용
     @PostMapping("/update")
+    @PreAuthorize("principal.username == #boardDTO.writer")
     public String updatePost(@Valid BoardDTO boardDTO,
                              BindingResult bindingResult,
                              PageRequestDTO pageRequestDTO,
@@ -160,6 +162,7 @@ public class BoardController {
     // Long bno -> BoardDTO 형식으로 변경할 예정.
     // 첨부 이미지, 물리서버에서 삭제 할려면,
     // 1)물리 서버 경로 필요 2) 실제 삭제 작업.
+    @PreAuthorize("principal.username == #boardDTO.writer")
     public String delete(BoardDTO boardDTO,
                          String keyword2,String page2, String type2,
                          RedirectAttributes redirectAttributes) {
