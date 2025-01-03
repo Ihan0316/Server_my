@@ -117,7 +117,10 @@ public class CustomSecurityConfig {
                     exception.accessDeniedHandler(accessDeniedHandler());
                 });
 
-
+        //카카오 로그인 API 설정
+        http.oauth2Login(
+                oauthLogin -> oauthLogin.loginPage("/shopMember/login")
+        );
 
         return http.build();
     }
