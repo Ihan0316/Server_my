@@ -13,4 +13,8 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @EntityGraph(attributePaths = "roleSet")
     @Query("select m from Member m where m.mid = :mid and m.social = false")
     Optional<Member> getWithRoles(String mid);
+
+    // 이메일로 쿼리스트링으로 찾고 권한 추가
+    @EntityGraph(attributePaths = "roleSet")
+    Optional<Member> findByEmail(String email);
 }
