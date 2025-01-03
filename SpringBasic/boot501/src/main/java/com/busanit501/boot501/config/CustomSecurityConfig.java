@@ -119,7 +119,7 @@ public class CustomSecurityConfig {
 
         //카카오 로그인 API 설정
         http.oauth2Login(
-                oauthLogin -> oauthLogin.loginPage("/shopMember/login")
+                oauthLogin -> oauthLogin.loginPage("/member/login")
         );
         return http.build();
     }
