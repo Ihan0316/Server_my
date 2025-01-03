@@ -121,7 +121,6 @@ public class CustomSecurityConfig {
         http.oauth2Login(
                 oauthLogin -> oauthLogin.loginPage("/shopMember/login")
         );
-
         return http.build();
     }
 
