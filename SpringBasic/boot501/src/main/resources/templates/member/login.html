@@ -53,15 +53,29 @@
                     </label>
                 </div>
                 <div class="my-4">
-                    <button type="button" class="btn btn-primary w-100 joinBtn">Join</button>
+                    <button type="submit" class="btn btn-primary w-100 submitBtn">LOGIN</button>
                 </div>
                 <div class="my-4">
-                    <button type="submit" class="btn btn-primary w-100 submitBtn">LOGIN</button>
+                    <button type="button" class="btn btn-primary w-100 joinBtn" >JOIN</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script layout:fragment="javascript" th:inline="javascript">
+    document.querySelector('.joinBtn').addEventListener('click', (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        self.location = "/member/join"
+    })
+
+    const result = [[${result}]]
+
+    if (result && result === "success") {
+        alert("회원가입 완료")
+    }
+</script>
 
 </body>
 </html>
