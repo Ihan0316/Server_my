@@ -71,7 +71,7 @@ public class CustomSecurityConfig {
         http.authorizeHttpRequests(
                 authorizeRequests -> {
                     authorizeRequests.requestMatchers
-                            ("/css/**", "/js/**","/member/login", "/member/join", "/board/list").permitAll();
+                            ("/css/**", "/js/**", "/img/**","/member/login", "/member/join", "/board/list").permitAll();
                     authorizeRequests.requestMatchers
                             ("/board/register").authenticated();
                     authorizeRequests.requestMatchers
